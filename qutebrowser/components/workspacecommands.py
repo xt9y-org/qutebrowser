@@ -11,6 +11,58 @@ from qutebrowser.misc import objects
 from qutebrowser.utils import objreg
 
 
+def _open_filesystem(
+    *,
+    dispatcher,
+    tabbed_browser,
+    path,
+    related,
+    bg,
+    tab,
+    window,
+    count,
+    secure,
+    private,
+):
+    """Open a native filesystem workspace tab."""
+    cmdutils.check_exclusive(
+        (tab, bg, window, private),
+        ("t", "b", "w", "p"),
+    )
+    if secure:
+        raise cmdutils.CommandError(
+            "-s/--secure only applies to browser content."
+        )
+    if count is not None:
+        raise cmdutils.CommandError(
+            "A tab count is not supported for filesystem content yet."
+        )
+
+    filesystem_path = path if path not in (None, "") else None
+
+    if window or private:
+        if private:
+            is_private = True
+        else:
+            is_private = tabbed_browser.is_private
+        target = dispatcher._new_tabbed_browser(is_private)
+        new_tab = target.workspace_tabopen(
+            workspace.ContentKind.FILESYSTEM,
+            path=filesystem_path,
+            background=False,
+            related=related,
+        )
+        target.window().show()
+        return new_tab
+
+    return tabbed_browser.workspace_tabopen(
+        workspace.ContentKind.FILESYSTEM,
+        path=filesystem_path,
+        background=bg,
+        related=related,
+    )
+
+
 def _register_workspace_open() -> None:
     """Replace the stock :open command with a workspace-aware wrapper."""
     if "open" not in objects.commands:
@@ -40,7 +92,7 @@ def _register_workspace_open() -> None:
         filesystem.
 
         Args:
-            url: The URL to open for browser content.
+            url: URL for browser content, or path for filesystem content.
             related: Position a newly opened tab as related to the current one.
             bg: Open in a new background tab.
             tab: Open in a new tab.
@@ -59,8 +111,15 @@ def _register_workspace_open() -> None:
             window=win_id,
             from_command=True,
         )
+        tabbed_browser = dispatcher._tabbed_browser
 
         if content_kind is workspace.ContentKind.BROWSER:
+            current = tabbed_browser.widget.currentWidget()
+            if (
+                isinstance(current, workspace.WorkspaceTab)
+                and not any((bg, tab, window, private))
+            ):
+                tab = True
             return dispatcher.openurl(
                 url=url,
                 related=related,
@@ -72,10 +131,22 @@ def _register_workspace_open() -> None:
                 private=private,
             )
 
-        raise cmdutils.CommandError(
-            "{} workspace tabs are not connected yet.".format(
-                content_kind.value.capitalize()
+        if content_kind is workspace.ContentKind.FILESYSTEM:
+            return _open_filesystem(
+                dispatcher=dispatcher,
+                tabbed_browser=tabbed_browser,
+                path=url,
+                related=related,
+                bg=bg,
+                tab=tab,
+                window=window,
+                count=count,
+                secure=secure,
+                private=private,
             )
+
+        raise cmdutils.CommandError(
+            "Terminal workspace tabs are not connected yet."
         )
 
     workspace.add_application_selector_arguments(objects.commands["open"].parser)
