@@ -9,12 +9,13 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import enum
-from typing import TYPE_CHECKING, Protocol
+import pathlib
+from typing import Protocol
 
 from qutebrowser.api import cmdutils
-
-if TYPE_CHECKING:
-    from qutebrowser.qt.widgets import QWidget
+from qutebrowser.qt.core import QModelIndex, QUrl, pyqtSignal
+from qutebrowser.qt.gui import QFileSystemModel
+from qutebrowser.qt.widgets import QTreeView, QVBoxLayout, QWidget
 
 
 class ContentKind(enum.Enum):
@@ -54,6 +55,77 @@ class WorkspaceContent(Protocol):
     def session_state(self) -> ContentSession | None:
         """Return restorable state, or None when the content is ephemeral."""
         ...
+
+
+class FilesystemContent(QWidget):
+    """Native Qt filesystem manager content.
+
+    This deliberately uses QFileSystemModel/QTreeView rather than rendering a
+    file browser inside a web page. It is small for now, but already provides
+    the native model needed for keyboard navigation and future workspace panes.
+    """
+
+    kind = ContentKind.FILESYSTEM
+
+    path_changed = pyqtSignal(str)
+    file_activated = pyqtSignal(QUrl)
+
+    def __init__(
+        self,
+        path: str | pathlib.Path | None = None,
+        parent: QWidget | None = None,
+    ) -> None:
+        super().__init__(parent)
+
+        self.model = QFileSystemModel(self)
+        self.view = QTreeView(self)
+        self.view.setModel(self.model)
+        self.view.doubleClicked.connect(self._activate_index)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.view)
+
+        self._current_path = pathlib.Path()
+        self.set_path(pathlib.Path.home() if path is None else path)
+
+    @property
+    def widget(self) -> QWidget:
+        return self
+
+    @property
+    def current_path(self) -> pathlib.Path:
+        return self._current_path
+
+    def set_path(self, path: str | pathlib.Path) -> None:
+        resolved = pathlib.Path(path).expanduser().resolve()
+        if not resolved.is_dir():
+            raise ValueError("Filesystem workspace path is not a directory: {}".format(resolved))
+
+        root_path = str(resolved)
+        self.model.setRootPath(root_path)
+        self.view.setRootIndex(self.model.index(root_path))
+        self._current_path = resolved
+        self.path_changed.emit(root_path)
+
+    def _activate_index(self, index: QModelIndex) -> None:
+        path = pathlib.Path(self.model.filePath(index))
+        if path.is_dir():
+            self.set_path(path)
+        else:
+            self.file_activated.emit(QUrl.fromLocalFile(str(path)))
+
+    def title(self) -> str:
+        return str(self._current_path)
+
+    def focus(self) -> None:
+        self.view.setFocus()
+
+    def session_state(self) -> ContentSession:
+        return ContentSession(
+            ContentKind.FILESYSTEM,
+            {"path": str(self._current_path)},
+        )
 
 
 _SELECTOR_DEST = "workspace_application"
