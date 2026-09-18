@@ -5,6 +5,7 @@
 """Tests for native workspace content in qutebrowser's tab bar."""
 
 from qutebrowser.browser import workspace
+from qutebrowser.components import workspacetabs
 from qutebrowser.mainwindow import tabwidget
 from qutebrowser.qt.core import QUrl
 from qutebrowser.utils import usertypes
@@ -21,7 +22,7 @@ def test_tabwidget_accepts_filesystem_workspace(
         "backend",
         usertypes.Backend.QtWebKit,
     )
-    widget = tabwidget.TabWidget(0)
+    widget = workspacetabs.WorkspaceTabWidget(0)
     qtbot.addWidget(widget)
 
     content = workspace.FilesystemContent(tmp_path)
@@ -60,7 +61,7 @@ def test_workspace_title_updates_with_path(
         "backend",
         usertypes.Backend.QtWebKit,
     )
-    widget = tabwidget.TabWidget(0)
+    widget = workspacetabs.WorkspaceTabWidget(0)
     qtbot.addWidget(widget)
 
     child = tmp_path / "child"
