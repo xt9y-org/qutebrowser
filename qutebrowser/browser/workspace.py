@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import enum
+import itertools
 import pathlib
 from typing import Protocol
 
@@ -16,6 +17,7 @@ from qutebrowser.api import cmdutils
 from qutebrowser.qt.core import QModelIndex, QUrl, pyqtSignal
 from qutebrowser.qt.gui import QFileSystemModel
 from qutebrowser.qt.widgets import QTreeView, QVBoxLayout, QWidget
+from qutebrowser.utils import usertypes
 
 
 class ContentKind(enum.Enum):
@@ -58,12 +60,7 @@ class WorkspaceContent(Protocol):
 
 
 class FilesystemContent(QWidget):
-    """Native Qt filesystem manager content.
-
-    This deliberately uses QFileSystemModel/QTreeView rather than rendering a
-    file browser inside a web page. It is small for now, but already provides
-    the native model needed for keyboard navigation and future workspace panes.
-    """
+    """Native Qt filesystem manager content."""
 
     kind = ContentKind.FILESYSTEM
 
@@ -100,7 +97,11 @@ class FilesystemContent(QWidget):
     def set_path(self, path: str | pathlib.Path) -> None:
         resolved = pathlib.Path(path).expanduser().resolve()
         if not resolved.is_dir():
-            raise ValueError("Filesystem workspace path is not a directory: {}".format(resolved))
+            raise ValueError(
+                "Filesystem workspace path is not a directory: {}".format(
+                    resolved
+                )
+            )
 
         root_path = str(resolved)
         self.model.setRootPath(root_path)
@@ -126,6 +127,77 @@ class FilesystemContent(QWidget):
             ContentKind.FILESYSTEM,
             {"path": str(self._current_path)},
         )
+
+
+@dataclasses.dataclass
+class WorkspaceTabData:
+    """Tab state shared by native non-web workspace tabs."""
+
+    pinned: bool = False
+    input_mode: usertypes.KeyMode = usertypes.KeyMode.normal
+
+
+_workspace_tab_ids = itertools.count(-1, -1)
+
+
+class WorkspaceTab(QWidget):
+    """Generic tab host for native non-web workspace content."""
+
+    title_changed = pyqtSignal(str)
+    location_changed = pyqtSignal(QUrl)
+    pinned_changed = pyqtSignal(bool)
+
+    def __init__(
+        self,
+        content: WorkspaceContent,
+        *,
+        win_id: int,
+        private: bool,
+        parent: QWidget | None = None,
+    ) -> None:
+        super().__init__(parent)
+        self.content = content
+        self.kind = content.kind
+        self.win_id = win_id
+        self.is_private = private
+        self.tab_id = next(_workspace_tab_ids)
+        self.pending_removal = False
+        self.data = WorkspaceTabData()
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(content.widget)
+
+        if isinstance(content, FilesystemContent):
+            content.path_changed.connect(self._on_filesystem_path_changed)
+
+    def _on_filesystem_path_changed(self, path: str) -> None:
+        self.title_changed.emit(path)
+        self.location_changed.emit(QUrl.fromLocalFile(path))
+
+    def title(self) -> str:
+        return self.content.title()
+
+    def location(self) -> QUrl:
+        if isinstance(self.content, FilesystemContent):
+            return QUrl.fromLocalFile(str(self.content.current_path))
+        return QUrl()
+
+    def focus_content(self) -> None:
+        self.content.focus()
+
+    def session_state(self) -> ContentSession | None:
+        return self.content.session_state()
+
+    def set_pinned(self, pinned: bool) -> None:
+        if self.data.pinned == pinned:
+            return
+        self.data.pinned = pinned
+        self.pinned_changed.emit(pinned)
+
+    def shutdown(self) -> None:
+        """Mark the native content as shutting down."""
+        self.pending_removal = True
 
 
 _SELECTOR_DEST = "workspace_application"
