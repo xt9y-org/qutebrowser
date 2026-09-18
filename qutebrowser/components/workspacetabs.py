@@ -9,20 +9,21 @@ from __future__ import annotations
 import functools
 import pathlib
 
+from qutebrowser.api import hook
 from qutebrowser.browser import browsertab, workspace
 from qutebrowser.config import config
 from qutebrowser.keyinput import modeman
 from qutebrowser.mainwindow import mainwindow, tabbedbrowser, tabwidget
 from qutebrowser.qt.core import QTimer, QUrl, pyqtSignal, pyqtSlot
 from qutebrowser.qt.gui import QIcon
-from qutebrowser.qt.widgets import QApplication, QWidget
+from qutebrowser.qt.widgets import QApplication
 from qutebrowser.utils import log, usertypes
 
 
 class WorkspaceTabWidget(tabwidget.TabWidget):
     """TabWidget which accepts browser and native workspace tabs."""
 
-    def _tab_by_idx(
+    def _tab_by_idx(  # type: ignore[override]
         self,
         idx: int,
     ) -> browsertab.AbstractTab | workspace.WorkspaceTab | None:
@@ -72,9 +73,9 @@ class WorkspaceTabWidget(tabwidget.TabWidget):
 class WorkspaceTabbedBrowser(tabbedbrowser.TabbedBrowser):
     """TabbedBrowser with first-class native workspace tabs."""
 
-    workspace_tab_changed = pyqtSignal(workspace.WorkspaceTab)
+    workspace_tab_changed = pyqtSignal(object)
 
-    def _tab_by_idx(
+    def _tab_by_idx(  # type: ignore[override]
         self,
         idx: int,
     ) -> browsertab.AbstractTab | workspace.WorkspaceTab | None:
@@ -116,7 +117,9 @@ class WorkspaceTabbedBrowser(tabbedbrowser.TabbedBrowser):
     ) -> workspace.WorkspaceTab:
         """Open native workspace content as a normal qutebrowser tab."""
         if kind is not workspace.ContentKind.FILESYSTEM:
-            raise ValueError("Workspace content is not implemented: {}".format(kind.value))
+            raise ValueError(
+                "Workspace content is not implemented: {}".format(kind.value)
+            )
 
         prev_focus = QApplication.focusWidget()
 
@@ -236,7 +239,9 @@ class WorkspaceTabbedBrowser(tabbedbrowser.TabbedBrowser):
         if self.is_shutting_down:
             return
 
-        log.modes.debug("Current workspace tab changed, focusing {!r}".format(tab))
+        log.modes.debug(
+            "Current workspace tab changed, focusing {!r}".format(tab)
+        )
         tab.setFocus()
         tab.focus_content()
 
@@ -296,10 +301,8 @@ class WorkspaceTabbedBrowser(tabbedbrowser.TabbedBrowser):
         super().load_url(url, newtab)
 
 
-def install() -> None:
+@hook.init()
+def install(_context) -> None:
     """Install workspace-aware classes before qutebrowser creates windows."""
-    tabwidget.TabWidget = WorkspaceTabWidget  # type: ignore[misc]
-    tabbedbrowser.TabbedBrowser = WorkspaceTabbedBrowser  # type: ignore[misc]
-
-
-install()
+    tabwidget.TabWidget = WorkspaceTabWidget  # type: ignore[assignment]
+    tabbedbrowser.TabbedBrowser = WorkspaceTabbedBrowser  # type: ignore[assignment]
