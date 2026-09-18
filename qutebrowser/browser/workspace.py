@@ -134,6 +134,7 @@ class WorkspaceTabData:
     """Tab state shared by native non-web workspace tabs."""
 
     pinned: bool = False
+    fullscreen: bool = False
     input_mode: usertypes.KeyMode = usertypes.KeyMode.normal
 
 
