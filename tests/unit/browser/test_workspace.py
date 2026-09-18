@@ -104,3 +104,37 @@ def test_content_session_is_immutable():
 
     with pytest.raises(dataclasses.FrozenInstanceError):
         session.kind = workspace.ContentKind.BROWSER
+
+
+def test_filesystem_content_uses_native_widget(qtbot, tmp_path):
+    content = workspace.FilesystemContent(tmp_path)
+    qtbot.addWidget(content.widget)
+
+    assert content.kind is workspace.ContentKind.FILESYSTEM
+    assert content.widget is content
+    assert content.current_path == tmp_path.resolve()
+    assert content.title() == str(tmp_path.resolve())
+    assert content.session_state() == workspace.ContentSession(
+        workspace.ContentKind.FILESYSTEM,
+        {"path": str(tmp_path.resolve())},
+    )
+
+
+def test_filesystem_content_changes_directory(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = workspace.FilesystemContent(tmp_path)
+    qtbot.addWidget(content.widget)
+
+    content.set_path(child)
+
+    assert content.current_path == child.resolve()
+    assert content.model.filePath(content.view.rootIndex()) == str(child.resolve())
+
+
+def test_filesystem_content_rejects_files(qtbot, tmp_path):
+    file_path = tmp_path / "file.txt"
+    file_path.write_text("x", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="not a directory"):
+        workspace.FilesystemContent(file_path)
