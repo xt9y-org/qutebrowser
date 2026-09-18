@@ -1,0 +1,58 @@
+QUTEBROWSER WORKSPACE
+
+- [ ] Make browser, terminal, and filesystem first-class tab types in the same qutebrowser window
+- [ ] Keep browser tabs as the default tab/content type
+- [ ] Add native terminal/shell tabs usable for interactive programs such as nvim
+- [ ] Add native cross-platform filesystem-manager tabs for Linux, Windows, and macOS
+- [ ] Make all three tab types work with normal tab actions: focus, close, move, duplicate where applicable, and session restore where safe
+
+OPEN COMMAND
+
+- [ ] Add application selectors to :open:
+      -at  terminal
+      -ab  browser
+      -af  filesystem
+- [ ] Allow selectors to combine with existing :open flags
+      example: :open -t -at
+- [ ] Preserve all existing qutebrowser :open flag meanings
+- [ ] Use browser when no application selector is supplied
+- [ ] Reject conflicting application selectors cleanly
+
+SPLITS
+
+- [ ] Add vertical and horizontal pane splitting inside a qutebrowser window
+- [ ] Allow every pane to contain browser, terminal, or filesystem tabs
+- [ ] Allow mixed layouts, e.g. browser + terminal or filesystem + browser
+- [ ] Keep panes integrated with existing qutebrowser focus and command handling
+- [ ] Add pane focus, close, resize, and move commands
+- [ ] Preserve pane layout in sessions where possible
+
+KEYBINDS
+
+- [ ] hh opens the command line with a horizontal/side-by-side split selector for browser, filesystem, or terminal
+- [ ] vv opens the command line with a vertical/stacked split selector for browser, filesystem, or terminal
+- [ ] Shift+O keeps opening :open -t, now compatible with -at/-ab/-af
+
+TERMINAL
+
+- [ ] Use the platform's real shell and PTY/ConPTY backend
+- [ ] Linux/macOS: PTY-based shell sessions
+- [ ] Windows: ConPTY-based shell sessions
+- [ ] Support interactive TUI applications, colors, resize, mouse input, clipboard, and UTF-8
+- [ ] Inherit qutebrowser working directory/environment sensibly
+
+FILESYSTEM
+
+- [ ] Native keyboard-driven file manager tab
+- [ ] Cross-platform path, drive, volume, symlink, and permission handling
+- [ ] Open files/directories into appropriate qutebrowser workspace tabs/actions
+- [ ] Integrate filesystem cwd with terminal tabs
+
+ARCHITECTURE
+
+- [ ] Introduce a generic workspace/tab-content abstraction instead of assuming every tab is a web page
+- [ ] Keep existing browser-tab implementation behind a browser content adapter
+- [ ] Add terminal and filesystem content adapters without embedding them in web pages
+- [ ] Build pane/split management above the content abstraction
+- [ ] Keep existing qutebrowser behavior unchanged when workspace features are unused
+- [ ] Add unit/integration tests for commands, tab types, pane lifecycle, session handling, and all three operating systems
