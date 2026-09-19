@@ -200,6 +200,7 @@ class PaneManager(workspacesplit.SplitLayout):
         self._browsers.pop(widget, None)
         browser.shutdown()
         browser.deleteLater()
+        widget.deleteLater()
 
         remaining = self.pane_widgets()
         if remaining:
@@ -328,10 +329,11 @@ def _install_default_bindings() -> None:
         "vv": "cmd-set-text -s :workspace-split vertical ",
     }
     for key, command in bindings.items():
-        if key in commands or key in defaults:
+        sequence = keyutils.KeySequence.parse(key)
+        if sequence in commands or sequence in defaults:
             continue
         config.key_instance.bind(
-            keyutils.KeySequence.parse(key),
+            sequence,
             command,
             mode="normal",
             save_yaml=False,
