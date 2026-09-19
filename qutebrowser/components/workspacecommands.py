@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-"""Workspace-aware :open command integration."""
+"""Workspace-aware command integration."""
 
 from qutebrowser.qt.core import QUrl
 
@@ -162,6 +162,18 @@ def _terminal_cwd(dispatcher, value):
     return None
 
 
+def _clone_workspace_content(tab):
+    """Create a fresh adapter carrying the cloneable state of a native tab."""
+    if tab.kind is workspace.ContentKind.FILESYSTEM:
+        return filesystemcontent.FilesystemContent(tab.content.path)
+    if tab.kind is workspace.ContentKind.TERMINAL:
+        return workspaceterminal.TerminalContent(
+            cwd=tab.content.cwd,
+            shell=tab.content.shell,
+        )
+    raise cmdutils.CommandError("This workspace tab cannot be cloned")
+
+
 def _register_workspace_open() -> None:
     """Replace stock :open with the workspace-aware dispatcher command."""
     if "open" not in objects.commands:
@@ -271,4 +283,55 @@ def _register_workspace_open() -> None:
         raise cmdutils.CommandError("Unsupported workspace content type")
 
 
+def _register_workspace_tab_clone() -> None:
+    """Extend :tab-clone to native filesystem and terminal tabs."""
+    if "tab-clone" not in objects.commands:
+        return
+
+    objects.commands.pop("tab-clone")
+
+    @cmdutils.register(
+        name="tab-clone",
+        instance="command-dispatcher",
+        scope="window",
+    )
+    def workspace_tab_clone(dispatcher, bg=False, window=False, private=False):
+        """Duplicate the current browser or native workspace tab.
+
+        Filesystem tabs retain their path. Terminal clones start a new shell
+        with the same working directory and shell executable.
+
+        Args:
+            bg: Open in a background tab.
+            window: Open in a new window.
+            private: Open in a new private window.
+        """
+        current = dispatcher._tabbed_browser.widget.currentWidget()
+        if not isinstance(current, workspacehost.WorkspaceTab):
+            return dispatcher.tab_clone(bg=bg, window=window, private=private)
+
+        cmdutils.check_exclusive((bg, window, private), "bwp")
+        try:
+            content = _clone_workspace_content(current)
+        except (OSError, RuntimeError, ValueError) as error:
+            raise cmdutils.CommandError(str(error))
+
+        if window or private:
+            target = dispatcher._new_tabbed_browser(
+                private=dispatcher._tabbed_browser.is_private or private
+            )
+        else:
+            target = dispatcher._tabbed_browser
+
+        clone = target.tabopen_workspace(
+            content,
+            background=bg,
+            related=False,
+        )
+        clone.set_pinned(current.data.pinned)
+        target.window().show()
+        return clone
+
+
 _register_workspace_open()
+_register_workspace_tab_clone()
