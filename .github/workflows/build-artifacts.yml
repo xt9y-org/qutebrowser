@@ -144,6 +144,9 @@ jobs:
             --nowindow \
             --temp-basedir \
             about:blank \
+            ':open -af /tmp' \
+            ':open -ab about:blank' \
+            ':open -at /tmp' \
             ':cmd-later 500 quit'
 
       - name: Package standalone bundle
