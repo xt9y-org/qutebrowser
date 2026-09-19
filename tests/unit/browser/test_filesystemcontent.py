@@ -130,7 +130,8 @@ def test_filesystem_content_focuses_tree(qtbot, tmp_path):
     content = filesystemcontent.FilesystemContent(tmp_path)
     qtbot.addWidget(content.widget)
     content.widget.show()
+    content.widget.activateWindow()
 
     content.focus()
 
-    assert content.tree.hasFocus()
+    qtbot.waitUntil(content.tree.hasFocus)
