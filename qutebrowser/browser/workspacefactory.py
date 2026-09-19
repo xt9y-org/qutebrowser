@@ -18,7 +18,7 @@ def serialize_content(content: workspace.WorkspaceContent) -> dict[str, Any]:
         raise ValueError("Workspace content is not session-serializable")
     return {
         "kind": state.kind.value,
-        "state": dict(state.state),
+        "state": dict(state.state or {}),
     }
 
 
