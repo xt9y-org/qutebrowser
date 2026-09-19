@@ -94,19 +94,21 @@ def test_workspace_commands_register_without_replacing_open(monkeypatch):
 
     assert commands["open"] is stock_open
     for name in ["browser", "terminal", "filesystem"]:
-        command = commands[name]
-        assert next(iter(inspect.signature(command.handler).parameters)) == "self"
-        assert command.parser.parse_args([]).tab is False
-        assert command.parser.parse_args([]).bg is False
-        assert command.parser.parse_args([]).vertical is False
-        assert command.parser.parse_args([]).horizontal is False
+        registered = commands[name]
+        handler = getattr(registered, "handler")
+        parser = getattr(registered, "parser")
+        assert next(iter(inspect.signature(handler).parameters)) == "self"
+        assert parser.parse_args([]).tab is False
+        assert parser.parse_args([]).bg is False
+        assert parser.parse_args([]).vertical is False
+        assert parser.parse_args([]).horizontal is False
 
-        assert command.parser.parse_args(["-t"]).tab
-        assert command.parser.parse_args(["-b"]).bg
-        assert command.parser.parse_args(["-t", "-v"]).vertical
-        assert command.parser.parse_args(["-t", "-h"]).horizontal
+        assert parser.parse_args(["-t"]).tab
+        assert parser.parse_args(["-b"]).bg
+        assert parser.parse_args(["-t", "-v"]).vertical
+        assert parser.parse_args(["-t", "-h"]).horizontal
 
-        parsed = vars(command.parser.parse_args([]))
+        parsed = vars(parser.parse_args([]))
         assert "application_terminal" not in parsed
         assert "application_browser" not in parsed
         assert "application_filesystem" not in parsed
@@ -115,12 +117,30 @@ def test_workspace_commands_register_without_replacing_open(monkeypatch):
 @pytest.mark.parametrize(
     "kwargs,match",
     [
-        ({"tab": False, "bg": False, "vertical": True, "horizontal": False}, "require -t"),
-        ({"tab": False, "bg": False, "vertical": False, "horizontal": True}, "require -t"),
-        ({"tab": True, "bg": False, "vertical": True, "horizontal": True}, "-v/-h"),
-        ({"tab": False, "bg": True, "vertical": True, "horizontal": False}, "require -t|Background"),
-        ({"tab": False, "bg": True, "vertical": False, "horizontal": True}, "require -t|Background"),
-        ({"tab": True, "bg": True, "vertical": False, "horizontal": False}, "-t/-b"),
+        (
+            {"tab": False, "bg": False, "vertical": True, "horizontal": False},
+            "require -t",
+        ),
+        (
+            {"tab": False, "bg": False, "vertical": False, "horizontal": True},
+            "require -t",
+        ),
+        (
+            {"tab": True, "bg": False, "vertical": True, "horizontal": True},
+            "-v/-h",
+        ),
+        (
+            {"tab": False, "bg": True, "vertical": True, "horizontal": False},
+            "require -t|Background",
+        ),
+        (
+            {"tab": False, "bg": True, "vertical": False, "horizontal": True},
+            "require -t|Background",
+        ),
+        (
+            {"tab": True, "bg": True, "vertical": False, "horizontal": False},
+            "-t/-b",
+        ),
     ],
 )
 def test_validate_destination_rejects_invalid_combinations(kwargs, match):
@@ -266,7 +286,7 @@ def test_open_browser_content_replaces_workspace_tab_without_web_navigation(
     assert browser.removals == [(old, False)]
 
 
-def test_terminal_cwd_explicit_target_wins(monkeypatch):
+def _filesystem_workspace_tab(monkeypatch, path):
     class FakeWorkspaceTab:
         pass
 
@@ -277,24 +297,19 @@ def test_terminal_cwd_explicit_target_wins(monkeypatch):
     )
     current = FakeWorkspaceTab()
     current.kind = workspace.ContentKind.FILESYSTEM
-    current.content = SimpleNamespace(path="/inherited")
+    current.content = SimpleNamespace(path=path)
+    return current
+
+
+def test_terminal_cwd_explicit_target_wins(monkeypatch):
+    current = _filesystem_workspace_tab(monkeypatch, "/inherited")
     dispatcher = FakeDispatcher(FakeTabbedBrowser([current]))
 
     assert workspacecommands._terminal_cwd(dispatcher, "/explicit") == "/explicit"
 
 
 def test_terminal_cwd_inherits_filesystem_path(monkeypatch):
-    class FakeWorkspaceTab:
-        pass
-
-    monkeypatch.setattr(
-        workspacecommands.workspacehost,
-        "WorkspaceTab",
-        FakeWorkspaceTab,
-    )
-    current = FakeWorkspaceTab()
-    current.kind = workspace.ContentKind.FILESYSTEM
-    current.content = SimpleNamespace(path="/tmp/project")
+    current = _filesystem_workspace_tab(monkeypatch, "/tmp/project")
     dispatcher = FakeDispatcher(FakeTabbedBrowser([current]))
 
     assert workspacecommands._terminal_cwd(dispatcher, None) == "/tmp/project"
@@ -379,9 +394,13 @@ def test_terminal_failure_does_not_break_browser_or_filesystem(monkeypatch):
     browser = FakeTabbedBrowser([object()])
     dispatcher = FakeDispatcher(browser)
 
-    terminal = workspacecommands.objects.commands["terminal"].handler
-    browser_command = workspacecommands.objects.commands["browser"].handler
-    filesystem = workspacecommands.objects.commands["filesystem"].handler
+    terminal = getattr(workspacecommands.objects.commands["terminal"], "handler")
+    browser_command = getattr(
+        workspacecommands.objects.commands["browser"], "handler"
+    )
+    filesystem = getattr(
+        workspacecommands.objects.commands["filesystem"], "handler"
+    )
 
     with pytest.raises(cmdutils.CommandError, match="terminal unavailable"):
         terminal(dispatcher, target=None, tab=True)
@@ -400,8 +419,9 @@ def test_workspace_tab_clone_registers_instance_handler(monkeypatch):
 
     workspacecommands._register_workspace_tab_clone()
 
-    command = commands["tab-clone"]
-    assert next(iter(inspect.signature(command.handler).parameters)) == "self"
+    registered = commands["tab-clone"]
+    handler = getattr(registered, "handler")
+    assert next(iter(inspect.signature(handler).parameters)) == "self"
 
 
 def test_clone_filesystem_preserves_path(monkeypatch):
