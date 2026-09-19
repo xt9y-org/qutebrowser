@@ -124,6 +124,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/dev/update_3rdparty.py --gh-token "$GITHUB_TOKEN"
 
+      - name: Prepare packaged resources
+        run: mkdir -p qutebrowser/html/doc
+
       - name: Build standalone bundle
         run: tox -e pyinstaller
 
