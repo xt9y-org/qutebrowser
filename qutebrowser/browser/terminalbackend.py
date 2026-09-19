@@ -11,6 +11,7 @@ import signal
 import struct
 import subprocess
 from pathlib import Path
+from typing import Any, cast
 
 from qutebrowser.qt.core import QObject, QSocketNotifier, QTimer, pyqtSignal
 
@@ -37,7 +38,13 @@ class TerminalBackend(QObject):
 class UnixPtyBackend(TerminalBackend):
     """Linux/macOS/BSD pseudoterminal transport."""
 
-    def __init__(self, *, cwd: Path, shell: str, parent=None) -> None:
+    def __init__(
+        self,
+        *,
+        cwd: Path,
+        shell: str,
+        parent: QObject | None = None,
+    ) -> None:
         super().__init__(parent)
         self.cwd = Path(cwd)
         self.shell = shell
@@ -71,15 +78,19 @@ class UnixPtyBackend(TerminalBackend):
 
         self._master_fd = master_fd
         os.set_blocking(master_fd, False)
+        # Qt accepts native descriptors here, while the PyQt6 stub models the
+        # platform-dependent descriptor as voidptr. Keep the runtime integer
+        # and isolate that stub mismatch at the API boundary.
+        socket_descriptor = cast(Any, master_fd)
         self._notifier = QSocketNotifier(
-            master_fd,
+            socket_descriptor,
             QSocketNotifier.Type.Read,
             self,
         )
         self._notifier.activated.connect(self._read_ready)
         self._poll_timer.start()
 
-    def _read_ready(self, _fd=None) -> None:
+    def _read_ready(self, *_args: Any) -> None:
         if self._master_fd is None:
             return
         try:
