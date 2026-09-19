@@ -21,6 +21,7 @@ TerminalStyle = workspacevt.TerminalStyle
 TerminalCell = workspacevt.TerminalCell
 TerminalScreen = workspacevt.TerminalScreen
 
+
 def default_shell() -> str:
     if os.name == "nt":
         return os.environ.get("COMSPEC", "cmd.exe")
@@ -32,8 +33,8 @@ def create_backend(*, cwd: Path, shell: str | None = None):
     if os.name == "nt":
         from qutebrowser.browser import conpty
         return conpty.WindowsConPtyBackend(cwd=cwd, shell=selected)
-    from qutebrowser.browser import terminalcontent
-    return terminalcontent.UnixPtyBackend(cwd=cwd, shell=selected)
+    from qutebrowser.browser import terminalbackend
+    return terminalbackend.UnixPtyBackend(cwd=cwd, shell=selected)
 
 
 def _ansi_color(value: Color) -> QColor | None:
@@ -133,13 +134,18 @@ class TerminalView(QPlainTextEdit):
                 end = start + 1
                 while end < len(line) and line[end].style == style:
                     end += 1
-                cursor.insertText("".join(cell.char for cell in line[start:end]), self._format(style))
+                cursor.insertText(
+                    "".join(cell.char for cell in line[start:end]),
+                    self._format(style),
+                )
                 start = end
         cursor.endEditBlock()
         row, column = self.screen.cursor
         pos = row * (self.screen.columns + 1) + column
         visible = QTextCursor(self.document())
-        visible.setPosition(min(pos, max(0, self.document().characterCount() - 1)))
+        visible.setPosition(
+            min(pos, max(0, self.document().characterCount() - 1))
+        )
         self.setTextCursor(visible)
 
     def keyPressEvent(self, event) -> None:  # noqa: N802
@@ -183,14 +189,23 @@ class TerminalView(QPlainTextEdit):
         }
         return mapping.get(button)
 
-    def _send_mouse(self, code: int, x: int, y: int, *, release: bool = False) -> bool:
+    def _send_mouse(
+        self,
+        code: int,
+        x: int,
+        y: int,
+        *,
+        release: bool = False,
+    ) -> bool:
         if not self.screen.mouse_mode:
             return False
         if self.screen.sgr_mouse:
             suffix = "m" if release else "M"
             data = "\x1b[<{};{};{}{}".format(code, x, y, suffix).encode()
         else:
-            data = b"\x1b[M" + bytes((32 + code, min(255, 32 + x), min(255, 32 + y)))
+            data = b"\x1b[M" + bytes(
+                (32 + code, min(255, 32 + x), min(255, 32 + y))
+            )
         self.backend.write(data)
         return True
 
@@ -240,7 +255,10 @@ class TerminalView(QPlainTextEdit):
     def resizeEvent(self, event) -> None:  # noqa: N802
         super().resizeEvent(event)
         metrics = self.fontMetrics()
-        columns = max(1, self.viewport().width() // max(1, metrics.horizontalAdvance("M")))
+        columns = max(
+            1,
+            self.viewport().width() // max(1, metrics.horizontalAdvance("M")),
+        )
         rows = max(1, self.viewport().height() // max(1, metrics.height()))
         if rows != self.screen.rows or columns != self.screen.columns:
             self.screen.resize(rows=rows, columns=columns)
@@ -253,7 +271,13 @@ class TerminalContent:
 
     kind = workspace.ContentKind.TERMINAL
 
-    def __init__(self, cwd: str | Path | None = None, *, shell: str | None = None, parent: QWidget | None = None) -> None:
+    def __init__(
+        self,
+        cwd: str | Path | None = None,
+        *,
+        shell: str | None = None,
+        parent: QWidget | None = None,
+    ) -> None:
         self.cwd = Path(cwd or os.getcwd()).expanduser().resolve()
         if not self.cwd.is_dir():
             raise NotADirectoryError(str(self.cwd))
@@ -276,7 +300,10 @@ class TerminalContent:
         self._widget.setFocus()
 
     def session_state(self) -> workspace.ContentSession:
-        return workspace.ContentSession(self.kind, {"cwd": str(self.cwd), "shell": self.shell})
+        return workspace.ContentSession(
+            self.kind,
+            {"cwd": str(self.cwd), "shell": self.shell},
+        )
 
     def shutdown(self) -> None:
         self.backend.shutdown()
