@@ -82,14 +82,29 @@ class SplitLayout(QWidget):
             parent.insertWidget(current_index + 1, new_pane)
             return
 
-        nested = self._new_splitter(orientation, parent)
+        # Keep the new splitter detached until replaceWidget() adopts it. Giving
+        # it ``parent`` here makes it an existing sibling, which Qt refuses to
+        # use as a replacement.
+        nested = self._new_splitter(orientation)
         replaced = parent.replaceWidget(current_index, nested)
         if replaced is None:
+            nested.deleteLater()
             raise RuntimeError("Could not replace split pane")
         nested.addWidget(replaced)
         nested.addWidget(new_pane)
 
-    def close(self, pane: QWidget) -> bool:
+    def close(self, pane: QWidget | None = None) -> bool:
+        """Close this widget, or remove ``pane`` when one is supplied.
+
+        QWidget teardown calls ``close()`` without arguments, so keep that
+        contract intact while retaining the pane-closing API used by the
+        workspace manager.
+        """
+        if pane is None:
+            return super().close()
+        return self.close_pane(pane)
+
+    def close_pane(self, pane: QWidget) -> bool:
         """Remove a pane and collapse redundant nested splitters.
 
         Returns False when ``pane`` is the final remaining leaf.
@@ -108,6 +123,8 @@ class SplitLayout(QWidget):
             grandparent = parent.parentWidget()
             if not isinstance(grandparent, QSplitter):
                 raise RuntimeError("Nested splitter has no splitter parent")
+            if remaining is None:
+                raise RuntimeError("Nested splitter has no remaining pane")
             index = grandparent.indexOf(parent)
             replaced = grandparent.replaceWidget(index, remaining)
             if replaced is not None:
@@ -149,15 +166,17 @@ class SplitLayout(QWidget):
         def encode(widget: QWidget) -> dict[str, Any]:
             if not isinstance(widget, QSplitter):
                 return {"type": "pane", "value": leaf_serializer(widget)}
+
+            children: list[dict[str, Any]] = []
+            for index in range(widget.count()):
+                child = widget.widget(index)
+                if child is not None:
+                    children.append(encode(child))
             return {
                 "type": "split",
                 "orientation": _ORIENTATION_NAMES[widget.orientation()],
                 "sizes": list(widget.sizes()),
-                "children": [
-                    encode(widget.widget(index))
-                    for index in range(widget.count())
-                    if widget.widget(index) is not None
-                ],
+                "children": children,
             }
 
         return encode(self.root)
