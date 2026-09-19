@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   targeted:
-    runs-on: ubuntu-24.04
+    runs-on: macos-14
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
@@ -18,7 +18,7 @@ jobs:
           persist-credentials: true
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       - name: Apply terminal Escape binding
         if: github.actor != 'github-actions[bot]'
         shell: bash
@@ -50,20 +50,12 @@ jobs:
           git add qutebrowser/config/configdata.yml
           git commit -m "Use Escape to leave terminal passthrough"
           git push
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install --no-install-recommends \
-            dbus-x11 libyaml-dev libegl1 libxkbcommon-x11-0 \
-            libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
-            libxcb-render-util0 libxcb-xinerama0 libxcb-shape0 libxcb-cursor0 \
-            libjpeg-dev
       - name: Install test dependencies
         run: |
           python -m pip install -U pip
           python -m pip install -U -r misc/requirements/requirements-tox.txt
       - name: Run regressions
         run: |
-          dbus-run-session -- tox -e py313-pyqt68 -- \
+          tox -e py314-pyqt611 -- \
             tests/unit/config/test_workspace_keybindings.py \
             tests/unit/mainwindow/test_workspacehost.py
