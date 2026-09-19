@@ -15,7 +15,12 @@ from qutebrowser.api import cmdutils
 from qutebrowser.browser import filesystemcontent, terminalcontent, workspace
 from qutebrowser.config import config
 from qutebrowser.keyinput import keyutils
-from qutebrowser.mainwindow import mainwindow, tabbedbrowser, workspacesplit
+from qutebrowser.mainwindow import (
+    mainwindow,
+    tabbedbrowser,
+    workspacehost,  # imported for tabopen_workspace installation
+    workspacesplit,
+)
 from qutebrowser.utils import objreg, urlutils
 
 
@@ -42,7 +47,9 @@ class PaneManager(workspacesplit.SplitLayout):
         self._browsers: dict[QWidget, tabbedbrowser.TabbedBrowser] = {
             primary.widget: primary,
         }
-        QApplication.instance().focusChanged.connect(self._on_focus_changed)
+        app = QApplication.instance()
+        if app is not None:
+            app.focusChanged.connect(self._on_focus_changed)
 
     def browser_for_widget(self, widget: QWidget) -> tabbedbrowser.TabbedBrowser | None:
         """Return the pane browser which contains ``widget``."""
@@ -119,13 +126,19 @@ class PaneManager(workspacesplit.SplitLayout):
         target: str | None = None,
     ) -> tabbedbrowser.TabbedBrowser:
         """Split the active pane and populate the new pane."""
-        current_widget = self.active.widget
+        source = self.active
+        current_widget = source.widget
         browser = self._new_browser()
         self.split(current_widget, browser.widget, orientation)
         self.activate(browser)
 
         try:
-            self._populate(browser, application=application, target=target)
+            self._populate(
+                browser,
+                source=source,
+                application=application,
+                target=target,
+            )
         except Exception:
             self.close_browser(browser)
             raise
@@ -135,6 +148,7 @@ class PaneManager(workspacesplit.SplitLayout):
         self,
         browser: tabbedbrowser.TabbedBrowser,
         *,
+        source: tabbedbrowser.TabbedBrowser,
         application: str,
         target: str | None,
     ) -> None:
@@ -143,9 +157,7 @@ class PaneManager(workspacesplit.SplitLayout):
                 url = config.val.url.default_page
             else:
                 try:
-                    url = objreg.get(
-                        "quickmark-manager"
-                    ).get(target)
+                    url = objreg.get("quickmark-manager").get(target)
                 except Exception:
                     url = urlutils.fuzzy_url(target)
             browser.tabopen(url, background=False, related=False)
@@ -158,11 +170,11 @@ class PaneManager(workspacesplit.SplitLayout):
 
         if application == "terminal":
             cwd = target
-            current = self.primary.widget.currentWidget()
-            if cwd is None and hasattr(current, "content"):
-                current_content = current.content
-                if getattr(current_content, "kind", None) is workspace.ContentKind.FILESYSTEM:
-                    cwd = str(current_content.path)
+            source_tab = source.widget.currentWidget()
+            if cwd is None and isinstance(source_tab, workspacehost.WorkspaceTab):
+                source_content = source_tab.content
+                if source_content.kind is workspace.ContentKind.FILESYSTEM:
+                    cwd = str(source_content.path)
             content = terminalcontent.TerminalContent(cwd=cwd)
             browser.tabopen_workspace(content, background=False, related=False)
             return
@@ -173,8 +185,6 @@ class PaneManager(workspacesplit.SplitLayout):
 
     def close_browser(self, browser: tabbedbrowser.TabbedBrowser) -> bool:
         """Close a pane, preserving at least one pane in the window."""
-        if browser is self.primary and len(self._browsers) == 1:
-            return False
         if len(self._browsers) <= 1:
             return False
 
