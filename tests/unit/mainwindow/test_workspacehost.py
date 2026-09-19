@@ -10,7 +10,7 @@ from qutebrowser.browser import workspace
 from qutebrowser.mainwindow import workspacehost
 from qutebrowser.qt.core import QUrl
 from qutebrowser.qt.widgets import QLabel
-from qutebrowser.utils import usertypes
+from qutebrowser.utils import objreg, usertypes
 
 
 class FakeContent:
@@ -101,6 +101,26 @@ def test_terminal_tab_uses_passthrough_input_mode(qtbot):
     qtbot.addWidget(tab)
 
     assert tab.data.input_mode is usertypes.KeyMode.passthrough
+
+
+def test_workspace_tab_registers_for_tab_scoped_lookups(qtbot, win_registry):
+    win_registry.add_window(1)
+    tab_registry = objreg.ObjectRegistry()
+    objreg.register("tab-registry", tab_registry, scope="window", window=1)
+
+    tab = workspacehost.WorkspaceTab(FakeContent(), win_id=1, private=False)
+    qtbot.addWidget(tab)
+
+    try:
+        assert tab_registry[tab.tab_id] is tab
+        assert objreg.get(
+            "tab",
+            scope="tab",
+            window=1,
+            tab=tab.tab_id,
+        ) is tab
+    finally:
+        objreg.delete("tab-registry", scope="window", window=1)
 
 
 def test_workspace_tab_focus_delegates(qtbot):
