@@ -95,7 +95,7 @@ jobs:
             --nowindow `
             --temp-basedir `
             about:blank `
-            ':open -at .' `
+            ':terminal -t .' `
             ':cmd-later 1500 quit'
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
@@ -166,9 +166,10 @@ jobs:
             --nowindow \
             --temp-basedir \
             about:blank \
-            ':open -af /tmp' \
-            ':open -ab about:blank' \
-            ':open -at /tmp' \
+            ':filesystem -t /tmp' \
+            ':browser -t about:blank' \
+            ':browser -t -v about:blank' \
+            ':terminal -t /tmp' \
             ':cmd-later 500 quit'
 
       - name: Package standalone bundle
