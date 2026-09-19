@@ -160,7 +160,7 @@ class Command:
                             "supported!".format(self.name))
 
     def get_arg_info(self, param):
-        """Get an ArgInfo tuple for the given inspect.Parameter."""
+        """Get an ArgInfo tuple for an inspect.Parameter."""
         return self._qute_args.get(param.name, ArgInfo())
 
     def get_pos_arg_info(self, pos):
@@ -297,10 +297,10 @@ class Command:
         else:
             shortname = name[0]
 
-        if len(shortname) != 1:
-            raise ValueError("Flag '{}' of parameter {} (command {}) must be "
-                             "exactly 1 char!".format(shortname, name,
-                                                      self.name))
+        if (not shortname or shortname.startswith('-') or
+                any(char.isspace() for char in shortname)):
+            raise ValueError("Flag '{}' of parameter {} (command {}) is "
+                             "invalid!".format(shortname, name, self.name))
         if is_bool or param.kind == inspect.Parameter.KEYWORD_ONLY:
             long_flag = '--{}'.format(name)
             short_flag = '-{}'.format(shortname)

@@ -7,12 +7,19 @@
 from __future__ import annotations
 
 import functools
+from collections.abc import Callable
+from typing import Any
 
 from qutebrowser.qt.core import Qt
 from qutebrowser.qt.widgets import QApplication, QWidget
 
 from qutebrowser.api import cmdutils
-from qutebrowser.browser import filesystemcontent, terminalcontent, workspace
+from qutebrowser.browser import (
+    filesystemcontent,
+    workspace,
+    workspacefactory,
+    workspaceterminal,
+)
 from qutebrowser.config import config
 from qutebrowser.keyinput import keyutils
 from qutebrowser.mainwindow import (
@@ -175,7 +182,7 @@ class PaneManager(workspacesplit.SplitLayout):
                 source_content = source_tab.content
                 if source_content.kind is workspace.ContentKind.FILESYSTEM:
                     cwd = str(source_content.path)
-            content = terminalcontent.TerminalContent(cwd=cwd)
+            content = workspaceterminal.TerminalContent(cwd=cwd)
             browser.tabopen_workspace(content, background=False, related=False)
             return
 
@@ -217,6 +224,124 @@ class PaneManager(workspacesplit.SplitLayout):
         current = leaves.index(self.active.widget)
         widget = leaves[(current + offset) % len(leaves)]
         self.activate(self._browsers[widget])
+
+    def has_workspace_state(self) -> bool:
+        """Whether this window needs the extended workspace session format."""
+        if len(self._browsers) > 1:
+            return True
+        for browser in self._browsers.values():
+            if any(isinstance(tab, workspacehost.WorkspaceTab)
+                   for tab in browser.widgets()):
+                return True
+        return False
+
+    def _pane_session(
+        self,
+        browser: tabbedbrowser.TabbedBrowser,
+        save_browser_tab: Callable[[Any, bool], dict[str, Any]],
+    ) -> dict[str, Any]:
+        current = browser.widget.currentIndex()
+        tabs: list[dict[str, Any]] = []
+        for index, tab in enumerate(browser.widgets()):
+            active = index == current
+            if isinstance(tab, workspacehost.WorkspaceTab):
+                entry: dict[str, Any] = {
+                    "type": "workspace",
+                    "content": workspacefactory.serialize_content(tab.content),
+                }
+                if active:
+                    entry["active"] = True
+                if tab.data.pinned:
+                    entry["pinned"] = True
+            else:
+                entry = {
+                    "type": "browser",
+                    "data": save_browser_tab(tab, active),
+                }
+            tabs.append(entry)
+        return {"tabs": tabs}
+
+    def session_state(
+        self,
+        save_browser_tab: Callable[[Any, bool], dict[str, Any]],
+    ) -> dict[str, Any]:
+        """Serialize all panes/tabs plus the currently active pane."""
+        leaves = self.pane_widgets()
+        active_index = leaves.index(self.active.widget)
+        layout = self.serialize(
+            lambda widget: self._pane_session(
+                self._browsers[widget], save_browser_tab
+            )
+        )
+        return {"layout": layout, "active-pane": active_index}
+
+    def _clear_browser(self, browser: tabbedbrowser.TabbedBrowser) -> None:
+        for tab in list(browser.widgets()):
+            browser.close_tab(tab, add_undo=False)
+
+    def _restore_pane(
+        self,
+        browser: tabbedbrowser.TabbedBrowser,
+        pane_state: dict[str, Any],
+        load_browser_tab: Callable[[Any, dict[str, Any]], None],
+    ) -> None:
+        active_index = None
+        for index, entry in enumerate(pane_state.get("tabs", [])):
+            entry_type = entry.get("type")
+            if entry_type == "browser":
+                tab = browser.tabopen(background=False, related=False)
+                load_browser_tab(tab, entry["data"])
+                if entry["data"].get("active", False):
+                    active_index = index
+                continue
+            if entry_type == "workspace":
+                content = workspacefactory.create_content(entry["content"])
+                tab = browser.tabopen_workspace(
+                    content,
+                    background=False,
+                    related=False,
+                )
+                if entry.get("pinned", False):
+                    tab.set_pinned(True)
+                if entry.get("active", False):
+                    active_index = index
+                continue
+            raise ValueError("Invalid workspace session tab type")
+
+        if active_index is not None and active_index < browser.widget.count():
+            browser.widget.setCurrentIndex(active_index)
+
+    def restore_session(
+        self,
+        state: dict[str, Any],
+        load_browser_tab: Callable[[Any, dict[str, Any]], None],
+    ) -> None:
+        """Restore all mixed panes/tabs from session data."""
+        for browser in list(self._browsers.values()):
+            if browser is not self.primary:
+                browser.shutdown()
+                browser.deleteLater()
+        self._browsers = {self.primary.widget: self.primary}
+        self._clear_browser(self.primary)
+
+        first = True
+
+        def make_pane(pane_state):
+            nonlocal first
+            if first:
+                browser = self.primary
+                first = False
+            else:
+                browser = self._new_browser()
+            self._restore_pane(browser, pane_state, load_browser_tab)
+            return browser.widget
+
+        self.restore(state["layout"], make_pane)
+        leaves = self.pane_widgets()
+        active_index = int(state.get("active-pane", 0))
+        if not 0 <= active_index < len(leaves):
+            active_index = 0
+        self.activate(self._browsers[leaves[active_index]])
 
 
 def _pane_manager(window: mainwindow.MainWindow) -> PaneManager:

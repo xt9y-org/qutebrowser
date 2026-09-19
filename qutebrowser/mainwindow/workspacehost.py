@@ -4,16 +4,15 @@
 
 """Host native non-web workspace content in qutebrowser tabs.
 
-This module keeps the first workspace integration isolated from the web-tab
-implementation. Browser tabs remain untouched; native workspace tabs use a
-small QWidget shell and only branch at the tab-management boundaries which
-currently assume every tab is a web tab.
+Browser tabs remain unchanged while native workspace tabs use a small QWidget
+shell at tab-management boundaries which still expect web tabs.
 """
 
 from __future__ import annotations
 
 import dataclasses
 import itertools
+from pathlib import Path
 
 from qutebrowser.qt.core import QTimer, QUrl
 from qutebrowser.qt.gui import QIcon
@@ -56,7 +55,7 @@ class WorkspaceTab(QWidget):
         self.win_id = win_id
         self.is_private = private
         self.tab_id = next(_workspace_tab_ids)
-        self.data = WorkspaceTabData()
+        self.data = WorkspaceTabData(input_mode=usertypes.KeyMode.passthrough)
         self.pending_removal = False
 
         layout = QVBoxLayout(self)
@@ -112,6 +111,41 @@ def _workspace_fields(
         "protocol": "",
         "scroll_pos": "top",
     }
+
+
+def _refresh_title(browser, tab: WorkspaceTab) -> None:
+    """Refresh tab/window titles after native content state changes."""
+    index = browser.widget.indexOf(tab)
+    if index < 0:
+        return
+    browser.widget.set_page_title(index, tab.title())
+    browser._update_window_title()
+
+
+def _open_file(browser, path: str) -> None:
+    """Open an activated filesystem file in a related browser tab."""
+    local_path = Path(path).expanduser().absolute()
+    browser.tabopen(
+        QUrl.fromLocalFile(str(local_path)),
+        background=False,
+        related=True,
+    )
+
+
+def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
+    """Route optional native-content signals into qutebrowser behavior."""
+    widget = tab.content.widget
+    directory_changed = getattr(widget, "directory_changed", None)
+    if directory_changed is not None:
+        directory_changed.connect(
+            lambda _path, browser=browser, tab=tab: _refresh_title(browser, tab)
+        )
+
+    file_activated = getattr(widget, "file_activated", None)
+    if file_activated is not None:
+        file_activated.connect(
+            lambda path, browser=browser: _open_file(browser, path)
+        )
 
 
 def install() -> None:
@@ -209,14 +243,11 @@ def install() -> None:
             modeman.leave(self._win_id, mode, "workspace tab changed", maybe=True)
 
         mm = modeman.instance(self._win_id)
-        if (
-            config.val.tabs.mode_on_change == "restore"
-            and mm.mode not in modeman.PROMPT_MODES
-        ):
+        if mm.mode not in modeman.PROMPT_MODES:
             modeman.enter(
                 self._win_id,
-                tab.data.input_mode,
-                "restore workspace tab",
+                usertypes.KeyMode.passthrough,
+                "native workspace tab",
             )
 
         if self._now_focused is not None:
@@ -322,6 +353,7 @@ def install() -> None:
         if idx is None:
             idx = self._get_new_tab_idx(related)
         idx = self.widget.insertTab(idx, tab, tab.title())
+        _connect_content_signals(self, tab)
 
         if background:
             current = self.widget.currentWidget()
