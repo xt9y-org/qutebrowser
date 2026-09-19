@@ -59,7 +59,6 @@ class Command:
         _scope: The scope to get _instance for in the object registry.
     """
 
-    # CommandValue values which need a count
     COUNT_COMMAND_VALUES = [usertypes.CommandValue.count,
                             usertypes.CommandValue.count_tab]
 
@@ -106,7 +105,7 @@ class Command:
         self.parser.add_argument('-h', '--help', action=argparser.HelpAction,
                                  default=argparser.SUPPRESS, nargs=0,
                                  help=argparser.SUPPRESS)
-        if hasattr(self.parser, "color"):  # Python 3.14+
+        if hasattr(self.parser, "color"):
             self.parser.color = False
         self.opt_args: MutableMapping[str, tuple[str, str]] = collections.OrderedDict()
         self.namespace = None
@@ -117,26 +116,21 @@ class Command:
 
         self._signature = inspect.signature(handler)
         self._type_hints = typing.get_type_hints(handler)
-
         self._qute_args = getattr(self.handler, 'qute_args', {})
 
         self._check_func()
         self._inspect_func()
 
     def _check_prerequisites(self, win_id):
-        """Check if the command is permitted to run currently.
-
-        Args:
-            win_id: The window ID the command is run in.
-        """
+        """Check if the command is permitted to run currently."""
         from qutebrowser.keyinput import modeman
         mode_manager = modeman.instance(win_id)
         self.validate_mode(mode_manager.mode)
 
         if self.backend is not None and objects.backend != self.backend:
             raise cmdexc.PrerequisitesError(
-                "{}: Only available with {} "
-                "backend.".format(self.name, self.backend.name))
+                "{}: Only available with {} backend.".format(
+                    self.name, self.backend.name))
 
         if self.deprecated:
             message.warning(f'{self.name} is deprecated - {self.deprecated}')
@@ -171,14 +165,7 @@ class Command:
         return self._qute_args.get(name, ArgInfo())
 
     def _inspect_special_param(self, param):
-        """Check if the given parameter is a special one.
-
-        Args:
-            param: The inspect.Parameter to handle.
-
-        Return:
-            True if the parameter is special, False otherwise.
-        """
+        """Check if the given parameter is a special one."""
         arg_info = self.get_arg_info(param)
         if arg_info.value is None:
             return False
@@ -195,14 +182,7 @@ class Command:
         raise utils.Unreachable
 
     def _inspect_func(self):
-        """Inspect the function to get useful information from it.
-
-        Sets instance attributes (desc, type_conv, name_conv) based on the
-        information.
-
-        Return:
-            How many user-visible arguments the command has.
-        """
+        """Inspect the function to get useful information from it."""
         doc = inspect.getdoc(self.handler)
         if doc is not None:
             self.desc = doc.splitlines()[0].strip()
@@ -210,11 +190,6 @@ class Command:
             self.desc = ""
 
         for param in self._signature.parameters.values():
-            # https://docs.python.org/3/library/inspect.html#inspect.Parameter.kind
-            # "Python has no explicit syntax for defining positional-only
-            # parameters, but many built-in and extension module functions
-            # (especially those that accept only one or two parameters) accept
-            # them."
             assert param.kind != inspect.Parameter.POSITIONAL_ONLY
             if param.name == 'self':
                 continue
@@ -240,15 +215,7 @@ class Command:
         return self._signature.parameters.values()
 
     def _param_to_argparse_kwargs(self, param, is_bool):
-        """Get argparse keyword arguments for a parameter.
-
-        Args:
-            param: The inspect.Parameter object to get the args for.
-            is_bool: Whether the parameter is a boolean.
-
-        Return:
-            A kwargs dict.
-        """
+        """Get argparse keyword arguments for a parameter."""
         kwargs = {}
 
         try:
@@ -257,7 +224,6 @@ class Command:
             pass
 
         kwargs['dest'] = param.name
-
         arg_info = self.get_arg_info(param)
 
         if is_bool:
@@ -277,15 +243,7 @@ class Command:
         return kwargs
 
     def _param_to_argparse_args(self, param, is_bool):
-        """Get argparse positional arguments for a parameter.
-
-        Args:
-            param: The inspect.Parameter object to get the args for.
-            is_bool: Whether the parameter is a boolean.
-
-        Return:
-            A list of args.
-        """
+        """Get argparse positional arguments for a parameter."""
         args = []
         name = argparser.arg_name(param.name)
         arg_info = self.get_arg_info(param)
@@ -297,10 +255,12 @@ class Command:
         else:
             shortname = name[0]
 
-        if len(shortname) != 1:
-            raise ValueError("Flag '{}' of parameter {} (command {}) must be "
-                             "exactly 1 char!".format(shortname, name,
-                                                      self.name))
+        if not shortname or shortname.startswith('-') or any(
+                char.isspace() for char in shortname):
+            raise ValueError(
+                "Flag '{}' of parameter {} (command {}) is invalid!".format(
+                    shortname, name, self.name))
+
         if is_bool or param.kind == inspect.Parameter.KEYWORD_ONLY:
             long_flag = '--{}'.format(name)
             short_flag = '-{}'.format(shortname)
@@ -314,18 +274,12 @@ class Command:
         return args
 
     def _get_type(self, param):
-        """Get the type of an argument from its default value or annotation.
-
-        Args:
-            param: The inspect.Parameter to look at.
-        """
+        """Get the type of an argument from its default value or annotation."""
         arg_info = self.get_arg_info(param)
         if arg_info.value:
-            # Filled values are passed 1:1
             return None
         elif param.kind in [inspect.Parameter.VAR_POSITIONAL,
                             inspect.Parameter.VAR_KEYWORD]:
-            # For *args/**kwargs we only support strings
             if param.name in self._type_hints and self._type_hints[param.name] != str:
                 raise TypeError("Expected str annotation for {}, got {}".format(
                     param, self._type_hints[param.name]))
@@ -338,7 +292,7 @@ class Command:
             return str
 
     def _get_objreg(self, *, win_id, name, scope):
-        """Get an object from the objreg."""
+        """Get the correct registered object."""
         if scope == 'global':
             tab_id = None
             win_id = None
@@ -352,14 +306,7 @@ class Command:
                           from_command=True)
 
     def _add_special_arg(self, *, value, param, args, kwargs):
-        """Add a special argument value to a function call.
-
-        Arguments:
-            value: The value to add.
-            param: The parameter being filled.
-            args: The positional argument list. Gets modified directly.
-            kwargs: The keyword argument dict. Gets modified directly.
-        """
+        """Add a special argument value to a function call."""
         if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD:
             args.append(value)
         elif param.kind == inspect.Parameter.KEYWORD_ONLY:
@@ -394,9 +341,6 @@ class Command:
                 self.name))
 
         origin = typing.get_origin(typ)
-        # `str | int` results in types.UnionType instead of Union with Python
-        # 3.10 to 3.13. With Python 3.14, types.UnionType is an alias for typing.Union
-        # again, so we can remove this again once we drop support for Python 3.13.
         if origin in [Union, types.UnionType]:
             arg_types = list(typing.get_args(typ))
             if param.default is not inspect.Parameter.empty:
@@ -408,7 +352,7 @@ class Command:
         elif typ is str:
             choices = self.get_arg_info(param).choices
             value = argparser.type_conv(param, typ, value, str_choices=choices)
-        elif typ is bool:  # no type conversion for flags
+        elif typ is bool:
             assert isinstance(value, bool)
         elif typ is None:
             pass
@@ -418,17 +362,7 @@ class Command:
         return value
 
     def _handle_special_call_arg(self, *, pos, param, win_id, args, kwargs):
-        """Check whether the argument is special, and if so, fill it in.
-
-        Args:
-            pos: The position of the argument.
-            param: The argparse.Parameter.
-            win_id: The window ID the command is run in.
-            args/kwargs: The args/kwargs to fill.
-
-        Return:
-            True if it was a special arg, False otherwise.
-        """
+        """Check whether the argument is special, and if so, fill it in."""
         arg_info = self.get_arg_info(param)
         if pos == 0 and self._instance is not None:
             assert param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD
@@ -467,14 +401,7 @@ class Command:
         return False
 
     def _get_call_args(self, win_id):
-        """Get arguments for a function call.
-
-        Args:
-            win_id: The window id this command should be executed in.
-
-        Return:
-            An (args, kwargs) tuple.
-        """
+        """Get arguments for a function call."""
         args: Any = []
         kwargs: MutableMapping[str, Any] = {}
 
@@ -499,15 +426,7 @@ class Command:
         return args, kwargs
 
     def run(self, win_id, args=None, count=None):
-        """Run the command.
-
-        Note we don't catch CommandError here as it might happen async.
-
-        Args:
-            win_id: The window ID the command is run in.
-            args: Arguments to the command.
-            count: Command repetition count.
-        """
+        """Run the command."""
         dbgout = ["command called:", self.name]
         if args:
             dbgout.append(str(args))
@@ -535,11 +454,7 @@ class Command:
         self.handler(*posargs, **kwargs)
 
     def validate_mode(self, mode):
-        """Raise cmdexc.PrerequisitesError unless allowed in the given mode.
-
-        Args:
-            mode: The usertypes.KeyMode to check.
-        """
+        """Raise cmdexc.PrerequisitesError unless allowed in the given mode."""
         if mode not in self.modes:
             mode_names = '/'.join(sorted(m.name for m in self.modes))
             raise cmdexc.PrerequisitesError(
