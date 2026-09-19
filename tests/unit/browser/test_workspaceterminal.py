@@ -4,7 +4,7 @@
 
 """Tests for the native workspace terminal."""
 
-from qutebrowser.browser import workspaceterminal
+from qutebrowser.browser import terminalcontent, workspaceterminal
 
 
 def test_sgr_style_is_stored_per_cell():
@@ -64,14 +64,17 @@ def test_alternate_screen_restores_main_screen():
     assert screen.lines()[0].startswith("main")
 
 
-def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch):
-    class FakeBackend:
+def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch, qtbot):
+    class FakeBackend(terminalcontent.TerminalBackend):
         def start(self):
             pass
+
         def shutdown(self):
             pass
+
         def write(self, _data):
             pass
+
         def resize(self, _rows, _columns):
             pass
 
@@ -81,6 +84,7 @@ def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch):
         lambda **_kwargs: FakeBackend(),
     )
     content = workspaceterminal.TerminalContent(tmp_path, shell="test-shell")
+    qtbot.addWidget(content.widget)
 
     state = content.session_state()
 
