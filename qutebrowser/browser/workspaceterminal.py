@@ -19,7 +19,19 @@ from qutebrowser.browser import workspace, workspacevt
 Color = workspacevt.Color
 TerminalStyle = workspacevt.TerminalStyle
 TerminalCell = workspacevt.TerminalCell
-TerminalScreen = workspacevt.TerminalScreen
+
+
+class TerminalScreen(workspacevt.TerminalScreen):
+    """VT screen plus input modes needed by the interactive Qt view."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.application_cursor = False
+
+    def _set_private_modes(self, params, *, enabled: bool) -> None:
+        if 1 in params:
+            self.application_cursor = enabled
+        super()._set_private_modes(params, enabled=enabled)
 
 
 def default_shell() -> str:
@@ -77,6 +89,14 @@ class TerminalView(QPlainTextEdit):
         Qt.Key.Key_F7: b"\x1b[18~", Qt.Key.Key_F8: b"\x1b[19~",
         Qt.Key.Key_F9: b"\x1b[20~", Qt.Key.Key_F10: b"\x1b[21~",
         Qt.Key.Key_F11: b"\x1b[23~", Qt.Key.Key_F12: b"\x1b[24~",
+    }
+    _APPLICATION_CURSOR_KEYS = {
+        Qt.Key.Key_Up: b"\x1bOA",
+        Qt.Key.Key_Down: b"\x1bOB",
+        Qt.Key.Key_Right: b"\x1bOC",
+        Qt.Key.Key_Left: b"\x1bOD",
+        Qt.Key.Key_Home: b"\x1bOH",
+        Qt.Key.Key_End: b"\x1bOF",
     }
 
     def __init__(self, backend, parent=None) -> None:
@@ -162,7 +182,12 @@ class TerminalView(QPlainTextEdit):
                 data = b"\x1b[200~" + data + b"\x1b[201~"
             self.backend.write(data)
             return
-        data = self._KEYS.get(event.key())
+        if self.screen.application_cursor:
+            data = self._APPLICATION_CURSOR_KEYS.get(event.key())
+        else:
+            data = None
+        if data is None:
+            data = self._KEYS.get(event.key())
         if data is None and control and Qt.Key.Key_A <= event.key() <= Qt.Key.Key_Z:
             data = bytes([event.key() - Qt.Key.Key_A + 1])
         if data is None and event.text():
