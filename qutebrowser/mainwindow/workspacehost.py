@@ -4,10 +4,8 @@
 
 """Host native non-web workspace content in qutebrowser tabs.
 
-This module keeps the first workspace integration isolated from the web-tab
-implementation. Browser tabs remain untouched; native workspace tabs use a
-small QWidget shell and only branch at the tab-management boundaries which
-currently assume every tab is a web tab.
+Browser tabs remain unchanged while native workspace tabs use a small QWidget
+shell at tab-management boundaries which still expect web tabs.
 """
 
 from __future__ import annotations
@@ -56,7 +54,12 @@ class WorkspaceTab(QWidget):
         self.win_id = win_id
         self.is_private = private
         self.tab_id = next(_workspace_tab_ids)
-        self.data = WorkspaceTabData()
+        input_mode = (
+            usertypes.KeyMode.passthrough
+            if self.kind is workspace.ContentKind.TERMINAL
+            else usertypes.KeyMode.normal
+        )
+        self.data = WorkspaceTabData(input_mode=input_mode)
         self.pending_removal = False
 
         layout = QVBoxLayout(self)
@@ -209,15 +212,19 @@ def install() -> None:
             modeman.leave(self._win_id, mode, "workspace tab changed", maybe=True)
 
         mm = modeman.instance(self._win_id)
-        if (
-            config.val.tabs.mode_on_change == "restore"
-            and mm.mode not in modeman.PROMPT_MODES
-        ):
-            modeman.enter(
-                self._win_id,
-                tab.data.input_mode,
-                "restore workspace tab",
-            )
+        if mm.mode not in modeman.PROMPT_MODES:
+            if tab.kind is workspace.ContentKind.TERMINAL:
+                modeman.enter(
+                    self._win_id,
+                    usertypes.KeyMode.passthrough,
+                    "terminal workspace tab",
+                )
+            elif config.val.tabs.mode_on_change == "restore":
+                modeman.enter(
+                    self._win_id,
+                    tab.data.input_mode,
+                    "restore workspace tab",
+                )
 
         if self._now_focused is not None:
             self.tab_deque.on_switch(self._now_focused)
