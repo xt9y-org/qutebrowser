@@ -7,7 +7,7 @@
 from qutebrowser.qt.core import QUrl
 
 from qutebrowser.api import cmdutils
-from qutebrowser.browser import filesystemcontent, workspace
+from qutebrowser.browser import filesystemcontent, terminalcontent, workspace
 from qutebrowser.completion.models import urlmodel
 from qutebrowser.mainwindow import workspacehost
 from qutebrowser.misc import objects
@@ -148,6 +148,21 @@ def _open_browser_from_workspace(
     return None
 
 
+def _terminal_cwd(dispatcher, value):
+    """Resolve terminal cwd, inheriting it from a filesystem tab when possible."""
+    explicit = _filesystem_path(value)
+    if explicit is not None:
+        return explicit
+
+    current = dispatcher._tabbed_browser.widget.currentWidget()
+    if (
+        isinstance(current, workspacehost.WorkspaceTab)
+        and current.kind is workspace.ContentKind.FILESYSTEM
+    ):
+        return current.content.path
+    return None
+
+
 def _register_workspace_open() -> None:
     """Replace the stock :open command with a workspace-aware wrapper."""
     if "open" not in objects.commands:
@@ -228,9 +243,25 @@ def _register_workspace_open() -> None:
                 private=private,
             )
 
-        raise cmdutils.CommandError(
-            "Terminal workspace tabs are the next implementation step."
-        )
+        if content_kind is workspace.ContentKind.TERMINAL:
+            try:
+                content = terminalcontent.TerminalContent(
+                    cwd=_terminal_cwd(dispatcher, url)
+                )
+            except (OSError, RuntimeError, ValueError) as error:
+                raise cmdutils.CommandError(str(error))
+            return _open_workspace_content(
+                dispatcher,
+                content,
+                related=related,
+                bg=bg,
+                tab=tab,
+                window=window,
+                count=count,
+                private=private,
+            )
+
+        raise cmdutils.CommandError("Unsupported workspace content type")
 
     workspace.add_application_selector_arguments(objects.commands["open"].parser)
 
