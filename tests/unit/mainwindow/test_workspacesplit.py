@@ -106,3 +106,59 @@ def test_swap_across_nested_splitters(qtbot):
     layout.swap(first, third)
 
     assert layout.pane_widgets() == [third, second, first]
+
+
+def test_serialize_nested_split_tree(qtbot):
+    first = QLabel("first")
+    second = QLabel("second")
+    third = QLabel("third")
+    layout = workspacesplit.SplitLayout(first)
+    qtbot.addWidget(layout)
+    layout.split(first, second, Qt.Orientation.Horizontal)
+    layout.split(second, third, Qt.Orientation.Vertical)
+
+    state = layout.serialize(lambda widget: widget.text())
+
+    assert state["type"] == "split"
+    assert state["orientation"] == "horizontal"
+    assert state["children"][0] == {"type": "pane", "value": "first"}
+    assert state["children"][1]["orientation"] == "vertical"
+    assert state["children"][1]["children"] == [
+        {"type": "pane", "value": "second"},
+        {"type": "pane", "value": "third"},
+    ]
+    assert len(state["sizes"]) == 2
+
+
+def test_restore_split_tree(qtbot):
+    primary = QLabel("primary")
+    layout = workspacesplit.SplitLayout(primary)
+    qtbot.addWidget(layout)
+    state = {
+        "type": "split",
+        "orientation": "horizontal",
+        "sizes": [300, 500],
+        "children": [
+            {"type": "pane", "value": "one"},
+            {
+                "type": "split",
+                "orientation": "vertical",
+                "sizes": [200, 600],
+                "children": [
+                    {"type": "pane", "value": "two"},
+                    {"type": "pane", "value": "three"},
+                ],
+            },
+        ],
+    }
+
+    created = layout.restore(state, lambda value: QLabel(value))
+
+    assert [widget.text() for widget in layout.pane_widgets()] == [
+        "one", "two", "three"
+    ]
+    assert [widget.text() for widget in created] == ["one", "two", "three"]
+    assert layout.root.orientation() is Qt.Orientation.Horizontal
+    nested = layout.root.widget(1)
+    assert isinstance(nested, QSplitter)
+    assert nested.orientation() is Qt.Orientation.Vertical
