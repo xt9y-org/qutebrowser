@@ -42,6 +42,18 @@ def filesystem_roots() -> list[Path]:
     return roots
 
 
+def _path_is_within(root: Path, path: Path) -> bool:
+    """Return whether ``path`` belongs to ``root`` on the current platform."""
+    root_text = os.path.normcase(str(root.expanduser().absolute()))
+    path_text = os.path.normcase(str(path.expanduser().absolute()))
+    try:
+        common = os.path.normcase(os.path.commonpath([root_text, path_text]))
+    except ValueError:
+        # Windows raises for paths on different drives.
+        return False
+    return common == root_text
+
+
 class _FilesystemTree(QTreeView):
     """Keyboard-first filesystem tree."""
 
@@ -152,13 +164,7 @@ class FilesystemContent:
         roots = self.roots
         if not roots:
             return
-        current = os.path.normcase(str(self._path))
-        containing = [
-            root
-            for root in roots
-            if current == os.path.normcase(str(root))
-            or current.startswith(os.path.normcase(str(root)) + os.sep)
-        ]
+        containing = [root for root in roots if _path_is_within(root, self._path)]
         if containing:
             self.set_path(max(containing, key=lambda path: len(str(path))))
         else:
