@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-"""Tests for native terminal workspace content."""
+"""Tests for native terminal workspace content compatibility exports."""
 
 from qutebrowser.browser import terminalcontent
-from qutebrowser.components import terminalcursor  # noqa: F401
 
 
 class FakeBackend(terminalcontent.TerminalBackend):
