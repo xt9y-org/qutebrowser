@@ -55,12 +55,7 @@ class WorkspaceTab(QWidget):
         self.win_id = win_id
         self.is_private = private
         self.tab_id = next(_workspace_tab_ids)
-        input_mode = (
-            usertypes.KeyMode.passthrough
-            if self.kind is workspace.ContentKind.TERMINAL
-            else usertypes.KeyMode.normal
-        )
-        self.data = WorkspaceTabData(input_mode=input_mode)
+        self.data = WorkspaceTabData(input_mode=usertypes.KeyMode.passthrough)
         self.pending_removal = False
 
         layout = QVBoxLayout(self)
@@ -249,18 +244,11 @@ def install() -> None:
 
         mm = modeman.instance(self._win_id)
         if mm.mode not in modeman.PROMPT_MODES:
-            if tab.kind is workspace.ContentKind.TERMINAL:
-                modeman.enter(
-                    self._win_id,
-                    usertypes.KeyMode.passthrough,
-                    "terminal workspace tab",
-                )
-            elif config.val.tabs.mode_on_change == "restore":
-                modeman.enter(
-                    self._win_id,
-                    tab.data.input_mode,
-                    "restore workspace tab",
-                )
+            modeman.enter(
+                self._win_id,
+                usertypes.KeyMode.passthrough,
+                "native workspace tab",
+            )
 
         if self._now_focused is not None:
             self.tab_deque.on_switch(self._now_focused)
