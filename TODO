@@ -2,9 +2,9 @@ QUTEBROWSER WORKSPACE
 
 - [x] Make browser, terminal, and filesystem first-class tab types in the same qutebrowser window
 - [x] Keep browser tabs as the default tab/content type
-- [ ] Add native terminal/shell tabs usable for interactive programs such as nvim
-- [ ] Add native cross-platform filesystem-manager tabs for Linux, Windows, and macOS
-- [ ] Make all three tab types work with normal tab actions: focus, close, move, duplicate where applicable, and session restore where safe
+- [x] Add native terminal/shell tabs usable for interactive programs such as nvim
+- [x] Add native cross-platform filesystem-manager tabs for Linux, Windows, and macOS
+- [x] Make all three tab types work with normal tab actions: focus, close, move, duplicate where applicable, and session restore where safe
 
 OPEN COMMAND
 
@@ -25,7 +25,7 @@ SPLITS
 - [x] Allow mixed layouts, e.g. browser + terminal or filesystem + browser
 - [x] Keep panes integrated with existing qutebrowser focus and command handling
 - [x] Add pane focus, close, resize, and move commands
-- [ ] Preserve pane layout in sessions where possible
+- [x] Preserve pane layout in sessions where possible
 
 KEYBINDS
 
@@ -38,21 +38,21 @@ TERMINAL
 - [x] Use the platform's real shell and PTY/ConPTY backend
 - [x] Linux/macOS: PTY-based shell sessions
 - [x] Windows: ConPTY-based shell sessions
-- [ ] Support interactive TUI applications, colors, resize, mouse input, clipboard, and UTF-8
+- [x] Support interactive TUI applications, colors, resize, mouse input, clipboard, and UTF-8
 - [x] Inherit qutebrowser working directory/environment sensibly
 
 FILESYSTEM
 
 - [x] Native keyboard-driven file manager tab
-- [ ] Cross-platform path, drive, volume, symlink, and permission handling
+- [x] Cross-platform path, drive, volume, symlink, and permission handling
 - [x] Open files/directories into appropriate qutebrowser workspace tabs/actions
 - [x] Integrate filesystem cwd with terminal tabs
 
 ARCHITECTURE
 
 - [x] Introduce a generic workspace/tab-content abstraction instead of assuming every tab is a web page
-- [ ] Keep existing browser-tab implementation behind a browser content adapter
+- [x] Keep existing browser-tab implementation behind a browser content adapter
 - [x] Add terminal and filesystem content adapters without embedding them in web pages
 - [x] Build pane/split management above the content abstraction
 - [x] Keep existing qutebrowser behavior unchanged when workspace features are unused
-- [ ] Add unit/integration tests for commands, tab types, pane lifecycle, session handling, and all three operating systems
+- [x] Add unit/integration tests for commands, tab types, pane lifecycle, session handling, and all three operating systems
