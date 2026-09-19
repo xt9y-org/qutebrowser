@@ -57,7 +57,7 @@ def test_workspace_tab_wraps_native_content(qtbot):
     )
     assert not tab.pending_removal
     assert not tab.data.pinned
-    assert tab.data.input_mode is usertypes.KeyMode.normal
+    assert tab.data.input_mode is usertypes.KeyMode.passthrough
 
 
 def test_terminal_tab_uses_passthrough_input_mode(qtbot):
