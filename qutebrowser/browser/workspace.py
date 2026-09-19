@@ -39,7 +39,7 @@ class WorkspaceContent(Protocol):
 
     @property
     def widget(self) -> QWidget:
-        """Return the native Qt widget rendered for this content."""
+        """Return the Qt widget rendered for this content."""
         ...
 
     def title(self) -> str:
@@ -51,8 +51,35 @@ class WorkspaceContent(Protocol):
         ...
 
     def session_state(self) -> ContentSession | None:
-        """Return restorable state, or None when the content is ephemeral."""
+        """Return adapter-owned restorable state, if any."""
         ...
+
+
+class BrowserContentAdapter:
+    """Expose an existing qutebrowser web tab through WorkspaceContent.
+
+    Browser history/session state remains owned by qutebrowser's existing
+    browser session machinery; this adapter only normalizes the content-facing
+    interface used by panes and workspace code.
+    """
+
+    kind = ContentKind.BROWSER
+
+    def __init__(self, tab: QWidget) -> None:
+        self._tab = tab
+
+    @property
+    def widget(self) -> QWidget:
+        return self._tab
+
+    def title(self) -> str:
+        return self._tab.title()
+
+    def focus(self) -> None:
+        self._tab.setFocus()
+
+    def session_state(self) -> None:
+        return None
 
 
 def resolve_content_kind(
