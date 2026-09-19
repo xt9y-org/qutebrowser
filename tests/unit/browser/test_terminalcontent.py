@@ -5,6 +5,7 @@
 """Tests for native terminal workspace content."""
 
 from qutebrowser.browser import terminalcontent
+from qutebrowser.components import terminalcursor  # noqa: F401
 
 
 class FakeBackend(terminalcontent.TerminalBackend):
