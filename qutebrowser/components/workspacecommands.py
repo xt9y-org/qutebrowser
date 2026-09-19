@@ -193,7 +193,7 @@ def _register_workspace_open() -> None:
     @cmdutils.argument("application_browser", flag="ab")
     @cmdutils.argument("application_filesystem", flag="af")
     def workspace_open(
-        dispatcher,
+        self,
         url=None,
         related=False,
         bg=False,
@@ -233,7 +233,7 @@ def _register_workspace_open() -> None:
 
         if content_kind is workspace.ContentKind.BROWSER:
             return _open_browser_from_workspace(
-                dispatcher,
+                self,
                 url=url,
                 related=related,
                 bg=bg,
@@ -252,7 +252,7 @@ def _register_workspace_open() -> None:
             except (OSError, ValueError) as error:
                 raise cmdutils.CommandError(str(error))
             return _open_workspace_content(
-                dispatcher,
+                self,
                 content,
                 related=related,
                 bg=bg,
@@ -265,12 +265,12 @@ def _register_workspace_open() -> None:
         if content_kind is workspace.ContentKind.TERMINAL:
             try:
                 content = workspaceterminal.TerminalContent(
-                    cwd=_terminal_cwd(dispatcher, url)
+                    cwd=_terminal_cwd(self, url)
                 )
             except (OSError, RuntimeError, ValueError) as error:
                 raise cmdutils.CommandError(str(error))
             return _open_workspace_content(
-                dispatcher,
+                self,
                 content,
                 related=related,
                 bg=bg,
@@ -295,7 +295,7 @@ def _register_workspace_tab_clone() -> None:
         instance="command-dispatcher",
         scope="window",
     )
-    def workspace_tab_clone(dispatcher, bg=False, window=False, private=False):
+    def workspace_tab_clone(self, bg=False, window=False, private=False):
         """Duplicate the current browser or native workspace tab.
 
         Filesystem tabs retain their path. Terminal clones start a new shell
@@ -306,9 +306,9 @@ def _register_workspace_tab_clone() -> None:
             window: Open in a new window.
             private: Open in a new private window.
         """
-        current = dispatcher._tabbed_browser.widget.currentWidget()
+        current = self._tabbed_browser.widget.currentWidget()
         if not isinstance(current, workspacehost.WorkspaceTab):
-            return dispatcher.tab_clone(bg=bg, window=window, private=private)
+            return self.tab_clone(bg=bg, window=window, private=private)
 
         cmdutils.check_exclusive((bg, window, private), "bwp")
         try:
@@ -317,11 +317,11 @@ def _register_workspace_tab_clone() -> None:
             raise cmdutils.CommandError(str(error))
 
         if window or private:
-            target = dispatcher._new_tabbed_browser(
-                private=dispatcher._tabbed_browser.is_private or private
+            target = self._new_tabbed_browser(
+                private=self._tabbed_browser.is_private or private
             )
         else:
-            target = dispatcher._tabbed_browser
+            target = self._tabbed_browser
 
         clone = target.tabopen_workspace(
             content,

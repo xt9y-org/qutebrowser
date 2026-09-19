@@ -18,6 +18,13 @@ on:
       - "v*"
     paths:
       - ".github/workflows/build-artifacts.yml"
+      - "qutebrowser/**"
+      - "misc/qutebrowser.spec"
+      - "scripts/dev/build_release.py"
+      - "scripts/dev/update_3rdparty.py"
+      - "tox.ini"
+      - "requirements.txt"
+      - "misc/requirements/**"
 
 permissions:
   contents: read

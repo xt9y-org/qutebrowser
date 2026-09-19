@@ -4,6 +4,7 @@
 
 """Tests for workspace-aware command helpers."""
 
+import inspect
 from types import SimpleNamespace
 
 from qutebrowser.browser import workspace
@@ -17,6 +18,7 @@ def test_workspace_open_keeps_legacy_flags_with_application_selector(monkeypatch
     workspacecommands._register_workspace_open()
 
     command = commands["open"]
+    assert next(iter(inspect.signature(command.handler).parameters)) == "self"
     namespace = command.parser.parse_args(
         ["-t", "-at", "--secure", "--related", "example.org"]
     )
@@ -35,6 +37,16 @@ def test_workspace_open_keeps_legacy_flags_with_application_selector(monkeypatch
     ]:
         parsed = command.parser.parse_args([flag])
         assert getattr(parsed, attribute)
+
+
+def test_workspace_tab_clone_registers_instance_handler(monkeypatch):
+    commands = {"tab-clone": object()}
+    monkeypatch.setattr(workspacecommands.objects, "commands", commands)
+
+    workspacecommands._register_workspace_tab_clone()
+
+    command = commands["tab-clone"]
+    assert next(iter(inspect.signature(command.handler).parameters)) == "self"
 
 
 def test_clone_filesystem_preserves_path(monkeypatch):
