@@ -4,7 +4,7 @@
 
 """Workspace-aware command integration."""
 
-from qutebrowser.qt.core import QUrl
+from qutebrowser.qt.core import Qt, QUrl
 
 from qutebrowser.api import cmdutils
 from qutebrowser.browser import filesystemcontent, workspace, workspaceterminal
@@ -14,7 +14,7 @@ from qutebrowser.misc import objects
 
 
 def _filesystem_path(value):
-    """Turn :open's optional URL argument into a filesystem path."""
+    """Turn a command's optional target argument into a filesystem path."""
     if value is None:
         return None
     if isinstance(value, QUrl):
@@ -62,7 +62,7 @@ def _open_workspace_content(
     count=None,
     private=False,
 ):
-    """Apply existing :open destination flags to native workspace content."""
+    """Apply tab destinations to native workspace content."""
     cmdutils.check_exclusive((tab, bg, window, private), "tbwp")
 
     tabbed_browser = dispatcher._tabbed_browser
@@ -99,7 +99,7 @@ def _open_browser_from_workspace(
     secure,
     private,
 ):
-    """Preserve normal :open behavior when the selected tab is native content."""
+    """Preserve normal browser opening when the selected tab is native content."""
     tabbed_browser = dispatcher._tabbed_browser
     if tab or bg or window or private:
         return dispatcher.openurl(
@@ -174,113 +174,179 @@ def _clone_workspace_content(tab):
     raise cmdutils.CommandError("This workspace tab cannot be cloned")
 
 
-def _register_workspace_open() -> None:
-    """Replace stock :open with the workspace-aware dispatcher command."""
-    if "open" not in objects.commands:
-        return
+def _validate_destination(*, tab, bg, vertical, horizontal):
+    """Validate a workspace destination and return its split orientation."""
+    if tab and bg:
+        raise cmdutils.CommandError("Only one of -t/-b can be given!")
+    if vertical and horizontal:
+        raise cmdutils.CommandError("Only one of -v/-h can be given!")
+    if (vertical or horizontal) and not tab:
+        raise cmdutils.CommandError("-v/-h require -t")
+    if bg and (vertical or horizontal):
+        raise cmdutils.CommandError("Background tabs cannot create a split")
+    if vertical:
+        return Qt.Orientation.Horizontal
+    if horizontal:
+        return Qt.Orientation.Vertical
+    return None
 
-    objects.commands.pop("open")
+
+def _claim_horizontal_short_flag(command) -> None:
+    """Give a workspace command ``-h`` while retaining ``--help``.
+
+    qutebrowser installs ``-h/--help`` on every command before inspecting its
+    handler.  The workspace command contract deliberately uses ``-h`` for a
+    horizontal split, so only these command parsers release the short help
+    spelling.  ``--help`` remains unchanged.
+    """
+    parser = command.parser
+    help_action = parser._option_string_actions.pop("-h")
+    help_action.option_strings.remove("-h")
+
+    horizontal_action = parser._option_string_actions.pop("-H")
+    horizontal_action.option_strings.remove("-H")
+    horizontal_action.option_strings.append("-h")
+    parser._option_string_actions["-h"] = horizontal_action
+    command.opt_args["horizontal"] = ("--horizontal", "-h")
+
+
+def _register_workspace_commands() -> None:
+    """Register independent browser, terminal, and filesystem commands."""
 
     @cmdutils.register(
-        name="open",
+        name="browser",
         maxsplit=0,
         instance="command-dispatcher",
         scope="window",
     )
-    @cmdutils.argument("url", completion=urlmodel.url)
-    @cmdutils.argument("count", value=cmdutils.Value.count)
-    @cmdutils.argument("application_terminal", flag="at")
-    @cmdutils.argument("application_browser", flag="ab")
-    @cmdutils.argument("application_filesystem", flag="af")
-    def workspace_open(
+    @cmdutils.argument("target", completion=urlmodel.url)
+    @cmdutils.argument("vertical", flag="v")
+    @cmdutils.argument("horizontal", flag="H")
+    def browser(
         self,
-        url=None,
-        related=False,
-        bg=False,
+        target=None,
         tab=False,
-        window=False,
-        count=None,
-        secure=False,
-        private=False,
-        application_terminal=False,
-        application_browser=False,
-        application_filesystem=False,
+        bg=False,
+        vertical=False,
+        horizontal=False,
     ):
-        """Open browser, terminal, or filesystem workspace content.
-
-        Existing :open destination flags keep their original meanings.
-        `-at`, `-ab`, and `-af` select terminal, browser, and filesystem
-        content respectively. Browser remains the default.
+        """Open browser content in the current tab, a new tab, or a split.
 
         Args:
-            url: URL, filesystem path, or application-specific target.
-            related: Position a newly opened tab as related to the current one.
+            target: URL to open, or None for qutebrowser's normal default.
+            tab: Open in a new foreground tab.
             bg: Open in a new background tab.
-            tab: Open in a new tab.
-            window: Open in a new window.
-            count: The tab index to replace/open into, or None.
-            secure: Force HTTPS for browser content.
-            private: Open a new private window.
-            application_terminal: Open native terminal content.
-            application_browser: Explicitly select browser content.
-            application_filesystem: Open native filesystem content.
+            vertical: Split side-by-side; requires -t.
+            horizontal: Split stacked; requires -t.
         """
-        content_kind = workspace.resolve_content_kind(
-            application_terminal=application_terminal,
-            application_browser=application_browser,
-            application_filesystem=application_filesystem,
+        _validate_destination(
+            tab=tab,
+            bg=bg,
+            vertical=vertical,
+            horizontal=horizontal,
+        )
+        return _open_browser_from_workspace(
+            self,
+            url=target,
+            related=False,
+            bg=bg,
+            tab=tab,
+            window=False,
+            count=None,
+            secure=False,
+            private=False,
         )
 
-        if content_kind is workspace.ContentKind.BROWSER:
-            return _open_browser_from_workspace(
-                self,
-                url=url,
-                related=related,
-                bg=bg,
-                tab=tab,
-                window=window,
-                count=count,
-                secure=secure,
-                private=private,
-            )
+    @cmdutils.register(
+        name="terminal",
+        maxsplit=0,
+        instance="command-dispatcher",
+        scope="window",
+    )
+    @cmdutils.argument("vertical", flag="v")
+    @cmdutils.argument("horizontal", flag="H")
+    def terminal(
+        self,
+        target=None,
+        tab=False,
+        bg=False,
+        vertical=False,
+        horizontal=False,
+    ):
+        """Open terminal content in the current tab, a new tab, or a split.
 
-        if content_kind is workspace.ContentKind.FILESYSTEM:
-            try:
-                content = filesystemcontent.FilesystemContent(
-                    _filesystem_path(url)
-                )
-            except (OSError, ValueError) as error:
-                raise cmdutils.CommandError(str(error))
-            return _open_workspace_content(
-                self,
-                content,
-                related=related,
-                bg=bg,
-                tab=tab,
-                window=window,
-                count=count,
-                private=private,
+        Args:
+            target: Working directory, or None for the inherited/default cwd.
+            tab: Open in a new foreground tab.
+            bg: Open in a new background tab.
+            vertical: Split side-by-side; requires -t.
+            horizontal: Split stacked; requires -t.
+        """
+        _validate_destination(
+            tab=tab,
+            bg=bg,
+            vertical=vertical,
+            horizontal=horizontal,
+        )
+        try:
+            content = workspaceterminal.TerminalContent(
+                cwd=_terminal_cwd(self, target)
             )
+        except (OSError, RuntimeError, ValueError) as error:
+            raise cmdutils.CommandError(str(error))
+        return _open_workspace_content(
+            self,
+            content,
+            bg=bg,
+            tab=tab,
+        )
 
-        if content_kind is workspace.ContentKind.TERMINAL:
-            try:
-                content = workspaceterminal.TerminalContent(
-                    cwd=_terminal_cwd(self, url)
-                )
-            except (OSError, RuntimeError, ValueError) as error:
-                raise cmdutils.CommandError(str(error))
-            return _open_workspace_content(
-                self,
-                content,
-                related=related,
-                bg=bg,
-                tab=tab,
-                window=window,
-                count=count,
-                private=private,
+    @cmdutils.register(
+        name="filesystem",
+        maxsplit=0,
+        instance="command-dispatcher",
+        scope="window",
+    )
+    @cmdutils.argument("vertical", flag="v")
+    @cmdutils.argument("horizontal", flag="H")
+    def filesystem(
+        self,
+        target=None,
+        tab=False,
+        bg=False,
+        vertical=False,
+        horizontal=False,
+    ):
+        """Open filesystem content in the current tab, a new tab, or a split.
+
+        Args:
+            target: Filesystem path, or None for the default path.
+            tab: Open in a new foreground tab.
+            bg: Open in a new background tab.
+            vertical: Split side-by-side; requires -t.
+            horizontal: Split stacked; requires -t.
+        """
+        _validate_destination(
+            tab=tab,
+            bg=bg,
+            vertical=vertical,
+            horizontal=horizontal,
+        )
+        try:
+            content = filesystemcontent.FilesystemContent(
+                _filesystem_path(target)
             )
+        except (OSError, ValueError) as error:
+            raise cmdutils.CommandError(str(error))
+        return _open_workspace_content(
+            self,
+            content,
+            bg=bg,
+            tab=tab,
+        )
 
-        raise cmdutils.CommandError("Unsupported workspace content type")
+    for name in ("browser", "terminal", "filesystem"):
+        _claim_horizontal_short_flag(objects.commands[name])
 
 
 def _register_workspace_tab_clone() -> None:
@@ -333,5 +399,5 @@ def _register_workspace_tab_clone() -> None:
         return clone
 
 
-_register_workspace_open()
+_register_workspace_commands()
 _register_workspace_tab_clone()
