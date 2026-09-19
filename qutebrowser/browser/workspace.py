@@ -10,8 +10,6 @@ import dataclasses
 import enum
 from typing import TYPE_CHECKING, Protocol
 
-from qutebrowser.api import cmdutils
-
 if TYPE_CHECKING:
     from qutebrowser.qt.widgets import QWidget
 
@@ -80,25 +78,3 @@ class BrowserContentAdapter:
 
     def session_state(self) -> None:
         return None
-
-
-def resolve_content_kind(
-    *,
-    application_terminal: bool = False,
-    application_browser: bool = False,
-    application_filesystem: bool = False,
-) -> ContentKind:
-    """Resolve application selector booleans to a workspace content kind.
-
-    Browser content remains the default when no selector is supplied.
-    """
-    cmdutils.check_exclusive(
-        (application_terminal, application_browser, application_filesystem),
-        ("at", "ab", "af"),
-    )
-
-    if application_terminal:
-        return ContentKind.TERMINAL
-    if application_filesystem:
-        return ContentKind.FILESYSTEM
-    return ContentKind.BROWSER
