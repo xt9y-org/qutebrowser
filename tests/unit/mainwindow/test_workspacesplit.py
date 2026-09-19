@@ -80,3 +80,29 @@ def test_cannot_close_last_pane(qtbot):
 
     assert not layout.close(primary)
     assert layout.pane_widgets() == [primary]
+
+
+def test_swap_simple_panes(qtbot):
+    first = QLabel("first")
+    second = QLabel("second")
+    layout = workspacesplit.SplitLayout(first)
+    qtbot.addWidget(layout)
+    layout.split(first, second, Qt.Orientation.Horizontal)
+
+    layout.swap(first, second)
+
+    assert layout.pane_widgets() == [second, first]
+
+
+def test_swap_across_nested_splitters(qtbot):
+    first = QLabel("first")
+    second = QLabel("second")
+    third = QLabel("third")
+    layout = workspacesplit.SplitLayout(first)
+    qtbot.addWidget(layout)
+    layout.split(first, second, Qt.Orientation.Horizontal)
+    layout.split(second, third, Qt.Orientation.Vertical)
+
+    layout.swap(first, third)
+
+    assert layout.pane_widgets() == [third, second, first]
