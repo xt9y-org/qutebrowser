@@ -7,6 +7,20 @@
 from qutebrowser.browser import terminalcontent
 
 
+class FakeBackend(terminalcontent.TerminalBackend):
+    def start(self):
+        pass
+
+    def write(self, data):
+        pass
+
+    def resize(self, rows, columns):
+        pass
+
+    def shutdown(self):
+        pass
+
+
 def test_terminal_screen_writes_text():
     screen = terminalcontent.TerminalScreen(rows=3, columns=8)
 
@@ -68,6 +82,19 @@ def test_terminal_screen_resizes_preserving_content():
 
     assert screen.lines()[0] == "abcd  "
     assert len(screen.lines()) == 3
+
+
+def test_terminal_view_tracks_terminal_cursor(qtbot):
+    backend = FakeBackend()
+    view = terminalcontent.TerminalView(backend)
+    qtbot.addWidget(view)
+    view.screen.resize(rows=3, columns=8)
+
+    view._on_data(b"abc\x1b[2;4HZ")
+
+    row, column = view.screen.cursor
+    expected = row * (view.screen.columns + 1) + column
+    assert view.textCursor().position() == expected
 
 
 def test_terminal_content_kind():
