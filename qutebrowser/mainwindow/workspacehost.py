@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import dataclasses
 import itertools
+from pathlib import Path
 
 from qutebrowser.qt.core import QTimer, QUrl
 from qutebrowser.qt.gui import QIcon
@@ -115,6 +116,41 @@ def _workspace_fields(
         "protocol": "",
         "scroll_pos": "top",
     }
+
+
+def _refresh_title(browser, tab: WorkspaceTab) -> None:
+    """Refresh tab/window titles after native content state changes."""
+    index = browser.widget.indexOf(tab)
+    if index < 0:
+        return
+    browser.widget.set_page_title(index, tab.title())
+    browser._update_window_title()
+
+
+def _open_file(browser, path: str) -> None:
+    """Open an activated filesystem file in a related browser tab."""
+    local_path = Path(path).expanduser().absolute()
+    browser.tabopen(
+        QUrl.fromLocalFile(str(local_path)),
+        background=False,
+        related=True,
+    )
+
+
+def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
+    """Route optional native-content signals into qutebrowser behavior."""
+    widget = tab.content.widget
+    directory_changed = getattr(widget, "directory_changed", None)
+    if directory_changed is not None:
+        directory_changed.connect(
+            lambda _path, browser=browser, tab=tab: _refresh_title(browser, tab)
+        )
+
+    file_activated = getattr(widget, "file_activated", None)
+    if file_activated is not None:
+        file_activated.connect(
+            lambda path, browser=browser: _open_file(browser, path)
+        )
 
 
 def install() -> None:
@@ -329,6 +365,7 @@ def install() -> None:
         if idx is None:
             idx = self._get_new_tab_idx(related)
         idx = self.widget.insertTab(idx, tab, tab.title())
+        _connect_content_signals(self, tab)
 
         if background:
             current = self.widget.currentWidget()
