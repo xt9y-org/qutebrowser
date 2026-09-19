@@ -7,7 +7,7 @@
 from qutebrowser.qt.core import QUrl
 
 from qutebrowser.api import cmdutils
-from qutebrowser.browser import filesystemcontent, terminalcontent, workspace
+from qutebrowser.browser import filesystemcontent, workspace, workspaceterminal
 from qutebrowser.completion.models import urlmodel
 from qutebrowser.mainwindow import workspacehost
 from qutebrowser.misc import objects
@@ -245,7 +245,7 @@ def _register_workspace_open() -> None:
 
         if content_kind is workspace.ContentKind.TERMINAL:
             try:
-                content = terminalcontent.TerminalContent(
+                content = workspaceterminal.TerminalContent(
                     cwd=_terminal_cwd(dispatcher, url)
                 )
             except (OSError, RuntimeError, ValueError) as error:
