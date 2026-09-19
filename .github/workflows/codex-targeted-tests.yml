@@ -36,6 +36,14 @@ jobs:
                command:
                  <Ctrl-P>: command-history-prev
                  <Ctrl-N>: command-history-next
+          @@ -3988,7 +3988,7 @@ bindings.commands:
+
+             * passthrough: Similar to insert mode, but passes through all keypresses
+          -    except `<Shift+Escape>` to leave the mode. Note that single keys can't be
+          +    except `<Escape>` to leave the mode. Note that single keys can't be
+               bound in this mode.
+
+             * command: Entered when pressing the `:` key in order to enter a command.
           PATCH
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
