@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-"""Workspace-aware command extensions."""
+"""Workspace-aware :open command integration."""
 
 from qutebrowser.qt.core import QUrl
 
@@ -11,7 +11,6 @@ from qutebrowser.browser import filesystemcontent, workspace, workspaceterminal
 from qutebrowser.completion.models import urlmodel
 from qutebrowser.mainwindow import workspacehost
 from qutebrowser.misc import objects
-from qutebrowser.utils import objreg
 
 
 def _filesystem_path(value):
@@ -48,7 +47,7 @@ def _replace_with_workspace(tabbed_browser, content, count=None):
         related=False,
         idx=idx,
     )
-    tabbed_browser._remove_tab(old_tab)
+    tabbed_browser._remove_tab(old_tab, add_undo=False)
     return new_tab
 
 
@@ -69,13 +68,13 @@ def _open_workspace_content(
     tabbed_browser = dispatcher._tabbed_browser
     if window or private:
         private_mode = private or tabbed_browser.is_private
-        tabbed_browser = dispatcher._new_tabbed_browser(private_mode)
-        result = tabbed_browser.tabopen_workspace(
+        target_browser = dispatcher._new_tabbed_browser(private_mode)
+        result = target_browser.tabopen_workspace(
             content,
             background=False,
             related=related,
         )
-        tabbed_browser.window().show()
+        target_browser.window().show()
         return result
 
     if tab or bg:
@@ -100,7 +99,7 @@ def _open_browser_from_workspace(
     secure,
     private,
 ):
-    """Preserve normal :open behavior when the active tab is native content."""
+    """Preserve normal :open behavior when the selected tab is native content."""
     tabbed_browser = dispatcher._tabbed_browser
     if tab or bg or window or private:
         return dispatcher.openurl(
@@ -126,12 +125,12 @@ def _open_browser_from_workspace(
         return dispatcher.openurl(
             url=url,
             related=related,
-            bg=bg,
-            tab=tab,
-            window=window,
+            bg=False,
+            tab=False,
+            window=False,
             count=count,
             secure=secure,
-            private=private,
+            private=False,
         )
 
     dispatcher.openurl(
@@ -149,7 +148,7 @@ def _open_browser_from_workspace(
 
 
 def _terminal_cwd(dispatcher, value):
-    """Resolve terminal cwd, inheriting it from a filesystem tab when possible."""
+    """Resolve cwd, inheriting it from a filesystem tab when possible."""
     explicit = _filesystem_path(value)
     if explicit is not None:
         return explicit
@@ -164,17 +163,25 @@ def _terminal_cwd(dispatcher, value):
 
 
 def _register_workspace_open() -> None:
-    """Replace the stock :open command with a workspace-aware wrapper."""
+    """Replace stock :open with the workspace-aware dispatcher command."""
     if "open" not in objects.commands:
         return
 
     objects.commands.pop("open")
 
-    @cmdutils.register(name="open", maxsplit=0)
+    @cmdutils.register(
+        name="open",
+        maxsplit=0,
+        instance="command-dispatcher",
+        scope="window",
+    )
     @cmdutils.argument("url", completion=urlmodel.url)
     @cmdutils.argument("count", value=cmdutils.Value.count)
-    @cmdutils.argument("win_id", value=cmdutils.Value.win_id)
+    @cmdutils.argument("application_terminal", flag="at")
+    @cmdutils.argument("application_browser", flag="ab")
+    @cmdutils.argument("application_filesystem", flag="af")
     def workspace_open(
+        dispatcher,
         url=None,
         related=False,
         bg=False,
@@ -183,13 +190,15 @@ def _register_workspace_open() -> None:
         count=None,
         secure=False,
         private=False,
-        win_id=None,
+        application_terminal=False,
+        application_browser=False,
+        application_filesystem=False,
     ):
         """Open browser, terminal, or filesystem workspace content.
 
-        Existing :open flags keep their original meaning. Application selectors
-        choose the content type: -at for terminal, -ab for browser, and -af for
-        filesystem.
+        Existing :open destination flags keep their original meanings.
+        `-at`, `-ab`, and `-af` select terminal, browser, and filesystem
+        content respectively. Browser remains the default.
 
         Args:
             url: URL, filesystem path, or application-specific target.
@@ -200,16 +209,14 @@ def _register_workspace_open() -> None:
             count: The tab index to replace/open into, or None.
             secure: Force HTTPS for browser content.
             private: Open a new private window.
-            win_id: The current qutebrowser window ID.
+            application_terminal: Open native terminal content.
+            application_browser: Explicitly select browser content.
+            application_filesystem: Open native filesystem content.
         """
-        command = objects.commands["open"]
-        content_kind = workspace.selected_content_kind(command.namespace)
-
-        dispatcher = objreg.get(
-            "command-dispatcher",
-            scope="window",
-            window=win_id,
-            from_command=True,
+        content_kind = workspace.resolve_content_kind(
+            application_terminal=application_terminal,
+            application_browser=application_browser,
+            application_filesystem=application_filesystem,
         )
 
         if content_kind is workspace.ContentKind.BROWSER:
@@ -262,8 +269,6 @@ def _register_workspace_open() -> None:
             )
 
         raise cmdutils.CommandError("Unsupported workspace content type")
-
-    workspace.add_application_selector_arguments(objects.commands["open"].parser)
 
 
 _register_workspace_open()
