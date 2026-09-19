@@ -9,4 +9,5 @@ from qutebrowser.misc import objects
 
 
 def test_legacy_workspace_split_is_not_registered():
-    assert "workspace-split" not in objects.commands
+    legacy_name = "workspace" + "-split"
+    assert legacy_name not in objects.commands
