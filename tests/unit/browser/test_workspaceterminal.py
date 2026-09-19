@@ -4,6 +4,8 @@
 
 """Tests for the native workspace terminal."""
 
+from types import SimpleNamespace
+
 from qutebrowser.browser import conpty, terminalbackend, terminalcontent, workspaceterminal
 
 
@@ -67,7 +69,11 @@ def test_alternate_screen_restores_main_screen():
 
 
 def test_unix_backend_selection(monkeypatch, tmp_path):
-    monkeypatch.setattr(workspaceterminal.os, "name", "posix")
+    monkeypatch.setattr(
+        workspaceterminal,
+        "os",
+        SimpleNamespace(name="posix"),
+    )
 
     backend = workspaceterminal.create_backend(
         cwd=tmp_path,
@@ -78,7 +84,11 @@ def test_unix_backend_selection(monkeypatch, tmp_path):
 
 
 def test_windows_backend_selection(monkeypatch, tmp_path):
-    monkeypatch.setattr(workspaceterminal.os, "name", "nt")
+    monkeypatch.setattr(
+        workspaceterminal,
+        "os",
+        SimpleNamespace(name="nt"),
+    )
 
     backend = workspaceterminal.create_backend(
         cwd=tmp_path,
