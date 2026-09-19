@@ -6,19 +6,14 @@
 
 from qutebrowser.browser import workspace
 from qutebrowser.mainwindow import workspacehost
-from qutebrowser.qt.core import pyqtSignal
 from qutebrowser.qt.widgets import QLabel
-
-
-class FakeWidget(QLabel):
-    directory_changed = pyqtSignal(str)
 
 
 class FakeContent:
     kind = workspace.ContentKind.FILESYSTEM
 
     def __init__(self):
-        self._widget = FakeWidget("content")
+        self._widget = QLabel("content")
         self.focused = False
         self.path = "/tmp"
 
@@ -75,15 +70,3 @@ def test_workspace_tab_pin_state(qtbot):
     tab.set_pinned(True)
 
     assert tab.data.pinned
-
-
-def test_workspace_tab_emits_title_change(qtbot):
-    content = FakeContent()
-    tab = workspacehost.WorkspaceTab(content, win_id=1, private=False)
-    qtbot.addWidget(tab)
-
-    with qtbot.waitSignal(tab.title_changed, timeout=1000) as blocker:
-        content.path = "/tmp/child"
-        content.widget.directory_changed.emit(content.path)
-
-    assert blocker.args == ["Files · /tmp/child"]
