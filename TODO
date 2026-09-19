@@ -6,17 +6,18 @@ QUTEBROWSER WORKSPACE
 - [x] Add native cross-platform filesystem-manager tabs for Linux, Windows, and macOS
 - [x] Make all three tab types work with normal tab actions: focus, close, move, duplicate where applicable, and session restore where safe
 
-OPEN COMMAND
+COMMANDS
 
-- [x] Add application selectors to :open:
-      -at  terminal
-      -ab  browser
-      -af  filesystem
-- [x] Allow selectors to combine with existing :open flags
-      example: :open -t -at
-- [x] Preserve all existing qutebrowser :open flag meanings
-- [x] Use browser when no application selector is supplied
-- [x] Reject conflicting application selectors cleanly
+- [x] Keep stock :open unchanged for normal qutebrowser browser navigation
+- [x] Add independent :browser, :terminal, and :filesystem commands
+- [x] Support the same placement flags on all three commands:
+      -t  open a foreground tab
+      -b  open a background tab
+      -v  with -t, split side-by-side using a vertical divider
+      -h  with -t, split stacked using a horizontal divider
+- [x] Reject invalid combinations cleanly: -t/-b, -v/-h, and split flags without -t
+- [x] Replace the current tab when no placement flag is supplied
+- [x] Preserve filesystem-to-terminal cwd inheritance when :terminal has no explicit cwd
 
 SPLITS
 
@@ -26,12 +27,7 @@ SPLITS
 - [x] Keep panes integrated with existing qutebrowser focus and command handling
 - [x] Add pane focus, close, resize, and move commands
 - [x] Preserve pane layout in sessions where possible
-
-KEYBINDS
-
-- [x] hh opens the command line with a horizontal/side-by-side split selector for browser, filesystem, or terminal
-- [x] vv opens the command line with a vertical/stacked split selector for browser, filesystem, or terminal
-- [x] Shift+O keeps opening :open -t, now compatible with -at/-ab/-af
+- [x] Route :browser/:terminal/:filesystem split placement through PaneManager.split_active()
 
 TERMINAL
 
