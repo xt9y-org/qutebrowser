@@ -4,6 +4,8 @@
 
 """Test Backforward widget."""
 
+from types import SimpleNamespace
+
 import pytest
 
 from qutebrowser.mainwindow.statusbar import backforward
@@ -53,6 +55,16 @@ def test_state_changes_on_tab_change(backforward_widget, tabs, fake_web_tab):
 
     tabs.widget.tabs = [tab_without_history]
     backforward_widget.on_tab_cur_url_changed(tabs)
+    assert backforward_widget.text() == ''
+    assert not backforward_widget.isVisible()
+
+
+def test_native_tab_without_history(backforward_widget):
+    """Non-browser workspace tabs have no back/forward history."""
+    backforward_widget.enabled = True
+
+    backforward_widget.on_tab_changed(SimpleNamespace())
+
     assert backforward_widget.text() == ''
     assert not backforward_widget.isVisible()
 
