@@ -4,7 +4,11 @@
 
 """Tests for workspace-aware session persistence."""
 
+import pytest
+
 from qutebrowser.components import workspacesessions
+from qutebrowser.mainwindow import mainwindow as mainwindow_module
+from qutebrowser.misc import sessions
 
 
 class FakeQApplication:
@@ -52,6 +56,9 @@ class FakeSessionManager:
             "active": active,
             "history": with_history,
         }
+
+    def _load_tab(self, tab, data):
+        del tab, data
 
 
 def _install_window(monkeypatch, window):
@@ -118,3 +125,77 @@ def test_workspace_window_uses_extended_state(monkeypatch):
         },
         "active-pane": 0,
     }
+
+
+def test_load_workspace_window_restores_and_shows(monkeypatch):
+    restored = {}
+
+    class FakePaneManager:
+        active = type("Active", (), {"widget": object()})()
+
+        def restore_session(self, state, loader):
+            restored["state"] = state
+            restored["loader"] = loader
+
+    class RestoredWindow:
+        def __init__(self, geometry=None, private=None):
+            restored["geometry"] = geometry
+            restored["private"] = private
+            self._workspace_pane_manager = FakePaneManager()
+            self.shown = False
+            self.closed = False
+
+        def show(self):
+            self.shown = True
+            restored["shown"] = True
+
+        def close(self):
+            self.closed = True
+            restored["closed"] = True
+
+    monkeypatch.setattr(mainwindow_module, "MainWindow", RestoredWindow)
+    manager = FakeSessionManager()
+    workspace_state = {"layout": {"type": "split"}, "active-pane": 0}
+
+    window = workspacesessions._load_workspace_window(
+        manager,
+        {
+            "geometry": b"g",
+            "private": True,
+            "workspace": workspace_state,
+        },
+    )
+
+    assert restored["geometry"] == b"g"
+    assert restored["private"] is True
+    assert restored["state"] == workspace_state
+    assert restored["loader"] == manager._load_tab
+    assert restored["shown"]
+    assert window is not None
+
+
+def test_load_workspace_window_closes_on_restore_error(monkeypatch):
+    state = {}
+
+    class FailingPaneManager:
+        def restore_session(self, _state, _loader):
+            raise ValueError("bad layout")
+
+    class RestoredWindow:
+        def __init__(self, **_kwargs):
+            self._workspace_pane_manager = FailingPaneManager()
+            state["window"] = self
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    monkeypatch.setattr(mainwindow_module, "MainWindow", RestoredWindow)
+
+    with pytest.raises(sessions.SessionError, match="bad layout"):
+        workspacesessions._load_workspace_window(
+            FakeSessionManager(),
+            {"geometry": b"g", "workspace": {}},
+        )
+
+    assert state["window"].closed
