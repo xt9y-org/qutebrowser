@@ -10,6 +10,33 @@ from qutebrowser.browser import workspace
 from qutebrowser.components import workspacecommands
 
 
+def test_workspace_open_keeps_legacy_flags_with_application_selector(monkeypatch):
+    commands = {"open": object()}
+    monkeypatch.setattr(workspacecommands.objects, "commands", commands)
+
+    workspacecommands._register_workspace_open()
+
+    command = commands["open"]
+    namespace = command.parser.parse_args(
+        ["-t", "-at", "--secure", "--related", "example.org"]
+    )
+    assert namespace.tab
+    assert namespace.application_terminal
+    assert namespace.secure
+    assert namespace.related
+    assert namespace.url == "example.org"
+
+    for flag, attribute in [
+        ("-b", "bg"),
+        ("-w", "window"),
+        ("-p", "private"),
+        ("-s", "secure"),
+        ("-r", "related"),
+    ]:
+        parsed = command.parser.parse_args([flag])
+        assert getattr(parsed, attribute)
+
+
 def test_clone_filesystem_preserves_path(monkeypatch):
     seen = {}
 
