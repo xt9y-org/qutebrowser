@@ -27,10 +27,12 @@ class Backforward(textbase.TextBase):
     def on_tab_changed(self, tab):
         """Update the text based on the given tab."""
         text = ''
-        if tab.history.can_go_back():
-            text += '<'
-        if tab.history.can_go_forward():
-            text += '>'
+        history = getattr(tab, 'history', None)
+        if history is not None:
+            if history.can_go_back():
+                text += '<'
+            if history.can_go_forward():
+                text += '>'
         if text:
             text = '[' + text + ']'
         self.setText(text)
