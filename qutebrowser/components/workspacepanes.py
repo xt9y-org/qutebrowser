@@ -12,7 +12,7 @@ from qutebrowser.qt.core import Qt
 from qutebrowser.qt.widgets import QApplication, QWidget
 
 from qutebrowser.api import cmdutils
-from qutebrowser.browser import filesystemcontent, terminalcontent, workspace
+from qutebrowser.browser import filesystemcontent, workspace, workspaceterminal
 from qutebrowser.config import config
 from qutebrowser.keyinput import keyutils
 from qutebrowser.mainwindow import (
@@ -175,7 +175,7 @@ class PaneManager(workspacesplit.SplitLayout):
                 source_content = source_tab.content
                 if source_content.kind is workspace.ContentKind.FILESYSTEM:
                     cwd = str(source_content.path)
-            content = terminalcontent.TerminalContent(cwd=cwd)
+            content = workspaceterminal.TerminalContent(cwd=cwd)
             browser.tabopen_workspace(content, background=False, related=False)
             return
 
