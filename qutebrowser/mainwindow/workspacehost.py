@@ -22,7 +22,7 @@ from qutebrowser.browser import workspace
 from qutebrowser.config import config
 from qutebrowser.keyinput import modeman
 from qutebrowser.mainwindow import mainwindow, tabbedbrowser, tabwidget
-from qutebrowser.utils import log, usertypes
+from qutebrowser.utils import log, objreg, usertypes
 
 
 _workspace_tab_ids = itertools.count(start=-1, step=-1)
@@ -57,6 +57,19 @@ class WorkspaceTab(QWidget):
         self.tab_id = next(_workspace_tab_ids)
         self.data = WorkspaceTabData(input_mode=usertypes.KeyMode.passthrough)
         self.pending_removal = False
+
+        self.registry = objreg.ObjectRegistry()
+        objreg.register("tab", self, registry=self.registry)
+        try:
+            tab_registry = objreg.get(
+                "tab-registry",
+                scope="window",
+                window=win_id,
+            )
+        except objreg.RegistryUnavailableError:
+            pass
+        else:
+            tab_registry[self.tab_id] = self
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
