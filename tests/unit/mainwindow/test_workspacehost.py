@@ -7,6 +7,7 @@
 from qutebrowser.browser import workspace
 from qutebrowser.mainwindow import workspacehost
 from qutebrowser.qt.widgets import QLabel
+from qutebrowser.utils import usertypes
 
 
 class FakeContent:
@@ -32,6 +33,13 @@ class FakeContent:
         return workspace.ContentSession(self.kind, {"path": self.path})
 
 
+class FakeTerminalContent(FakeContent):
+    kind = workspace.ContentKind.TERMINAL
+
+    def title(self):
+        return "Terminal"
+
+
 def test_workspace_tab_wraps_native_content(qtbot):
     content = FakeContent()
     tab = workspacehost.WorkspaceTab(
@@ -49,6 +57,18 @@ def test_workspace_tab_wraps_native_content(qtbot):
     )
     assert not tab.pending_removal
     assert not tab.data.pinned
+    assert tab.data.input_mode is usertypes.KeyMode.normal
+
+
+def test_terminal_tab_uses_passthrough_input_mode(qtbot):
+    tab = workspacehost.WorkspaceTab(
+        FakeTerminalContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    assert tab.data.input_mode is usertypes.KeyMode.passthrough
 
 
 def test_workspace_tab_focus_delegates(qtbot):
