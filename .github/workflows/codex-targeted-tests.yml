@@ -27,15 +27,15 @@ jobs:
           diff --git a/qutebrowser/config/configdata.yml b/qutebrowser/config/configdata.yml
           --- a/qutebrowser/config/configdata.yml
           +++ b/qutebrowser/config/configdata.yml
-          @@ -3893,7 +3893,7 @@ bindings.default:
-               <Ctrl-Tab>: completion-item-focus next-category
-               <Ctrl-Shift-Tab>: completion-item-focus prev-category
-             passthrough:
-          -    <Shift-Escape>: mode-leave
-          +    <Escape>: mode-leave
-             prompt:
-               <Ctrl-X>: prompt-open-download
-               <Ctrl-P>: prompt-open-download --pdfjs
+          @@ -3888,7 +3888,7 @@ bindings.default:
+                 <Ctrl-B>: hint all tab-bg
+                 <Escape>: mode-leave
+               passthrough:
+          -      <Shift-Escape>: mode-leave
+          +      <Escape>: mode-leave
+               command:
+                 <Ctrl-P>: command-history-prev
+                 <Ctrl-N>: command-history-next
           PATCH
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
