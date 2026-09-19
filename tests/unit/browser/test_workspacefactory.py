@@ -14,10 +14,24 @@ class FakeContent:
         return workspace.ContentSession(self.kind, {"path": "/tmp"})
 
 
+class EmptyContent:
+    kind = workspace.ContentKind.FILESYSTEM
+
+    def session_state(self):
+        return workspace.ContentSession(self.kind, None)
+
+
 def test_serialize_content():
     assert workspacefactory.serialize_content(FakeContent()) == {
         "kind": "filesystem",
         "state": {"path": "/tmp"},
+    }
+
+
+def test_serialize_empty_content_state():
+    assert workspacefactory.serialize_content(EmptyContent()) == {
+        "kind": "filesystem",
+        "state": {},
     }
 
 
