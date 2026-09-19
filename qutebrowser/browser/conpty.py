@@ -234,67 +234,70 @@ class WindowsConPtyBackend(terminalcontent.TerminalBackend):
         pty_input_read = HANDLE()
         pty_output_write = HANDLE()
         try:
-            api.require_bool(
-                kernel32.CreatePipe(
-                    ctypes.byref(pty_input_read),
-                    ctypes.byref(self._input_write),
-                    None,
-                    0,
-                ),
-                "CreatePipe(ConPTY input)",
-            )
-            api.require_bool(
-                kernel32.CreatePipe(
-                    ctypes.byref(self._output_read),
-                    ctypes.byref(pty_output_write),
-                    None,
-                    0,
-                ),
-                "CreatePipe(ConPTY output)",
-            )
+            try:
+                api.require_bool(
+                    kernel32.CreatePipe(
+                        ctypes.byref(pty_input_read),
+                        ctypes.byref(self._input_write),
+                        None,
+                        0,
+                    ),
+                    "CreatePipe(ConPTY input)",
+                )
+                api.require_bool(
+                    kernel32.CreatePipe(
+                        ctypes.byref(self._output_read),
+                        ctypes.byref(pty_output_write),
+                        None,
+                        0,
+                    ),
+                    "CreatePipe(ConPTY output)",
+                )
 
-            api.require_bool(
-                kernel32.SetHandleInformation(
-                    self._input_write,
-                    HANDLE_FLAG_INHERIT,
-                    0,
-                ),
-                "SetHandleInformation(input)",
-            )
-            api.require_bool(
-                kernel32.SetHandleInformation(
-                    self._output_read,
-                    HANDLE_FLAG_INHERIT,
-                    0,
-                ),
-                "SetHandleInformation(output)",
-            )
+                api.require_bool(
+                    kernel32.SetHandleInformation(
+                        self._input_write,
+                        HANDLE_FLAG_INHERIT,
+                        0,
+                    ),
+                    "SetHandleInformation(input)",
+                )
+                api.require_bool(
+                    kernel32.SetHandleInformation(
+                        self._output_read,
+                        HANDLE_FLAG_INHERIT,
+                        0,
+                    ),
+                    "SetHandleInformation(output)",
+                )
 
-            api.require_hr(
-                kernel32.CreatePseudoConsole(
-                    _coord(rows=24, columns=80),
-                    pty_input_read,
-                    pty_output_write,
-                    0,
-                    ctypes.byref(self._hpc),
-                ),
-                "CreatePseudoConsole",
-            )
-        except Exception:
-            api.close_handle(self._input_write)
-            api.close_handle(self._output_read)
-            self._input_write = HANDLE()
-            self._output_read = HANDLE()
-            raise
+                api.require_hr(
+                    kernel32.CreatePseudoConsole(
+                        _coord(rows=24, columns=80),
+                        pty_input_read,
+                        pty_output_write,
+                        0,
+                        ctypes.byref(self._hpc),
+                    ),
+                    "CreatePseudoConsole",
+                )
+            except Exception:
+                api.close_handle(self._input_write)
+                api.close_handle(self._output_read)
+                self._input_write = HANDLE()
+                self._output_read = HANDLE()
+                raise
+
+            try:
+                self._start_process()
+            except Exception:
+                self.shutdown()
+                raise
         finally:
+            # Microsoft requires the pseudoconsole-side pipe handles to stay
+            # alive until CreateProcessW has attached the child to the HPCON.
             api.close_handle(pty_input_read)
             api.close_handle(pty_output_write)
-
-        try:
-            self._start_process()
-        except Exception:
-            self.shutdown()
-            raise
 
         self._reader = threading.Thread(
             target=self._reader_main,

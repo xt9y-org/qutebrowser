@@ -79,6 +79,28 @@ jobs:
       - name: Build release packages
         run: tox -e build-release -- --skip-docs --no-confirm --gh-token ${{ github.token }}
 
+      - name: Smoke test Windows workspace terminal
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem dist -Directory -Filter 'qutebrowser-*' |
+            ForEach-Object { Join-Path $_.FullName 'qutebrowser.exe' } |
+            Where-Object { Test-Path $_ } |
+            Select-Object -First 1
+          if (-not $exe) {
+            throw 'Packaged qutebrowser.exe not found'
+          }
+          & $exe `
+            --no-err-windows `
+            --nowindow `
+            --temp-basedir `
+            about:blank `
+            ':open -at .' `
+            ':cmd-later 1500 quit'
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
       - name: Upload packaged artifacts
         uses: actions/upload-artifact@v7
         with:
