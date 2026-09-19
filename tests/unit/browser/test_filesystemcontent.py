@@ -96,6 +96,25 @@ def test_filesystem_roots_are_deduplicated(monkeypatch):
     ]
 
 
+def test_path_is_within_root(tmp_path):
+    root = tmp_path / "volume"
+    child = root / "one" / "two"
+    other = tmp_path / "other"
+
+    assert filesystemcontent._path_is_within(root, child)
+    assert filesystemcontent._path_is_within(root, root)
+    assert not filesystemcontent._path_is_within(root, other)
+
+
+def test_path_is_within_handles_different_drives(monkeypatch):
+    def fail_commonpath(_paths):
+        raise ValueError("different drives")
+
+    monkeypatch.setattr(os.path, "commonpath", fail_commonpath)
+
+    assert not filesystemcontent._path_is_within(Path("a"), Path("b"))
+
+
 def test_parent_navigation(qtbot, tmp_path):
     child = tmp_path / "child"
     child.mkdir()
