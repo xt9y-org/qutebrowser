@@ -24,7 +24,7 @@ SPLITS
 - [x] Allow every pane to contain browser, terminal, or filesystem tabs
 - [x] Allow mixed layouts, e.g. browser + terminal or filesystem + browser
 - [x] Keep panes integrated with existing qutebrowser focus and command handling
-- [ ] Add pane focus, close, resize, and move commands
+- [x] Add pane focus, close, resize, and move commands
 - [ ] Preserve pane layout in sessions where possible
 
 KEYBINDS
