@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-"""Workspace pane integration and split commands."""
+"""Workspace pane integration."""
 
 from __future__ import annotations
 
@@ -21,7 +21,6 @@ from qutebrowser.browser import (
     workspaceterminal,
 )
 from qutebrowser.config import config
-from qutebrowser.keyinput import keyutils
 from qutebrowser.mainwindow import (
     mainwindow,
     tabbedbrowser,
@@ -31,11 +30,6 @@ from qutebrowser.mainwindow import (
 from qutebrowser.utils import objreg, urlutils
 
 
-_ORIENTATIONS = {
-    "horizontal": Qt.Orientation.Horizontal,
-    "vertical": Qt.Orientation.Vertical,
-}
-_APPLICATIONS = ["browser", "filesystem", "terminal"]
 _installed = False
 
 
@@ -351,32 +345,6 @@ def _pane_manager(window: mainwindow.MainWindow) -> PaneManager:
     return manager
 
 
-@cmdutils.register(instance="main-window", scope="window", maxsplit=2)
-@cmdutils.argument("orientation", choices=list(_ORIENTATIONS))
-@cmdutils.argument("application", choices=_APPLICATIONS)
-def workspace_split(self, orientation, application=None, target=None):
-    """Split the current pane and open browser/filesystem/terminal content.
-
-    Args:
-        orientation: horizontal for side-by-side, vertical for stacked panes.
-        application: browser, filesystem, or terminal.
-        target: Optional URL/path/cwd for the selected application.
-    """
-    if application is None:
-        raise cmdutils.CommandError(
-            "Choose an application: browser, filesystem, or terminal"
-        )
-    manager = _pane_manager(self)
-    try:
-        manager.split_active(
-            orientation=_ORIENTATIONS[orientation],
-            application=application,
-            target=target,
-        )
-    except (OSError, RuntimeError, ValueError) as error:
-        raise cmdutils.CommandError(str(error))
-
-
 @cmdutils.register(instance="main-window", scope="window")
 def workspace_pane_close(self):
     """Close the active split pane."""
@@ -442,28 +410,4 @@ def _install_layout() -> None:
     mainwindow.MainWindow._add_widgets = add_widgets
 
 
-def _install_default_bindings() -> None:
-    """Add split selectors without overriding explicit user bindings."""
-    if config.key_instance is None:
-        return
-
-    commands = config.val.bindings.commands.get("normal", {})
-    defaults = config.val.bindings.default["normal"]
-    bindings = {
-        "hh": "cmd-set-text -s :workspace-split horizontal ",
-        "vv": "cmd-set-text -s :workspace-split vertical ",
-    }
-    for key, command in bindings.items():
-        sequence = keyutils.KeySequence.parse(key)
-        if sequence in commands or sequence in defaults:
-            continue
-        config.key_instance.bind(
-            sequence,
-            command,
-            mode="normal",
-            save_yaml=False,
-        )
-
-
 _install_layout()
-_install_default_bindings()
