@@ -97,3 +97,38 @@ class SplitLayout(QWidget):
                 replaced.deleteLater()
 
         return True
+
+    def swap(self, first: QWidget, second: QWidget) -> None:
+        """Swap two pane leaves without changing the splitter tree."""
+        if first is second:
+            return
+
+        first_parent = first.parentWidget()
+        second_parent = second.parentWidget()
+        if not isinstance(first_parent, QSplitter):
+            raise ValueError("First pane is not attached to a splitter")
+        if not isinstance(second_parent, QSplitter):
+            raise ValueError("Second pane is not attached to a splitter")
+
+        first_index = first_parent.indexOf(first)
+        second_index = second_parent.indexOf(second)
+        if first_index < 0 or second_index < 0:
+            raise ValueError("Pane is not contained in its splitter")
+
+        first_placeholder = QWidget()
+        second_placeholder = QWidget()
+        replaced_first = first_parent.replaceWidget(
+            first_index,
+            first_placeholder,
+        )
+        replaced_second = second_parent.replaceWidget(
+            second_index,
+            second_placeholder,
+        )
+        if replaced_first is not first or replaced_second is not second:
+            raise RuntimeError("Could not detach panes for movement")
+
+        first_parent.replaceWidget(first_index, second)
+        second_parent.replaceWidget(second_index, first)
+        first_placeholder.deleteLater()
+        second_placeholder.deleteLater()
