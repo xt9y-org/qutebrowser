@@ -4,7 +4,7 @@
 
 """Tests for the native workspace terminal."""
 
-from qutebrowser.browser import terminalcontent, workspaceterminal
+from qutebrowser.browser import conpty, terminalbackend, terminalcontent, workspaceterminal
 
 
 def test_sgr_style_is_stored_per_cell():
@@ -64,6 +64,28 @@ def test_alternate_screen_restores_main_screen():
 
     screen.feed("\x1b[?1049l")
     assert screen.lines()[0].startswith("main")
+
+
+def test_unix_backend_selection(monkeypatch, tmp_path):
+    monkeypatch.setattr(workspaceterminal.os, "name", "posix")
+
+    backend = workspaceterminal.create_backend(
+        cwd=tmp_path,
+        shell="/bin/sh",
+    )
+
+    assert isinstance(backend, terminalbackend.UnixPtyBackend)
+
+
+def test_windows_backend_selection(monkeypatch, tmp_path):
+    monkeypatch.setattr(workspaceterminal.os, "name", "nt")
+
+    backend = workspaceterminal.create_backend(
+        cwd=tmp_path,
+        shell="cmd.exe",
+    )
+
+    assert isinstance(backend, conpty.WindowsConPtyBackend)
 
 
 def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch, qtbot):
