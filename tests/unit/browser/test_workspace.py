@@ -13,7 +13,7 @@ from qutebrowser.browser import workspace
 
 
 @pytest.mark.parametrize(
-    ("kwargs", "expected"),
+    "kwargs,expected",
     [
         ({}, workspace.ContentKind.BROWSER),
         ({"application_browser": True}, workspace.ContentKind.BROWSER),
