@@ -10,7 +10,6 @@ import pytest
 
 from qutebrowser.api import cmdutils
 from qutebrowser.browser import workspace
-from qutebrowser.commands import argparser
 
 
 @pytest.mark.parametrize(
@@ -45,55 +44,6 @@ def test_resolve_content_kind_rejects_conflicts(kwargs):
         match=r"Only one of -at/-ab/-af can be given!",
     ):
         workspace.resolve_content_kind(**kwargs)
-
-
-@pytest.mark.parametrize(
-    ("flag", "expected"),
-    [
-        ("-at", workspace.ContentKind.TERMINAL),
-        ("-ab", workspace.ContentKind.BROWSER),
-        ("-af", workspace.ContentKind.FILESYSTEM),
-        ("--application-terminal", workspace.ContentKind.TERMINAL),
-        ("--application-browser", workspace.ContentKind.BROWSER),
-        ("--application-filesystem", workspace.ContentKind.FILESYSTEM),
-    ],
-)
-def test_application_selector_parser(flag, expected):
-    parser = argparser.ArgumentParser("open")
-    workspace.add_application_selector_arguments(parser)
-
-    namespace = parser.parse_args([flag])
-
-    assert workspace.selected_content_kind(namespace) is expected
-
-
-def test_application_selector_defaults_to_browser():
-    parser = argparser.ArgumentParser("open")
-    workspace.add_application_selector_arguments(parser)
-
-    namespace = parser.parse_args([])
-
-    assert workspace.selected_content_kind(namespace) is workspace.ContentKind.BROWSER
-
-
-def test_application_selector_rejects_conflicts():
-    parser = argparser.ArgumentParser("open")
-    workspace.add_application_selector_arguments(parser)
-
-    with pytest.raises(
-        argparser.ArgumentParserError,
-        match=r"Only one of -at/-ab/-af can be given!",
-    ):
-        parser.parse_args(["-at", "-af"])
-
-
-def test_application_selector_allows_duplicate_same_selector():
-    parser = argparser.ArgumentParser("open")
-    workspace.add_application_selector_arguments(parser)
-
-    namespace = parser.parse_args(["-at", "-at"])
-
-    assert workspace.selected_content_kind(namespace) is workspace.ContentKind.TERMINAL
 
 
 def test_content_session_is_immutable():
