@@ -9,12 +9,22 @@ from __future__ import annotations
 import codecs
 import os
 from pathlib import Path
+from typing import Any
 
 from qutebrowser.qt.core import Qt
-from qutebrowser.qt.gui import QColor, QFontDatabase, QTextCharFormat, QTextCursor
+from qutebrowser.qt.gui import (
+    QColor,
+    QFontDatabase,
+    QKeyEvent,
+    QMouseEvent,
+    QResizeEvent,
+    QTextCharFormat,
+    QTextCursor,
+    QWheelEvent,
+)
 from qutebrowser.qt.widgets import QApplication, QPlainTextEdit, QWidget
 
-from qutebrowser.browser import workspace, workspacevt
+from qutebrowser.browser import terminalbackend, workspace, workspacevt
 
 Color = workspacevt.Color
 TerminalStyle = workspacevt.TerminalStyle
@@ -24,28 +34,31 @@ TerminalCell = workspacevt.TerminalCell
 class TerminalScreen(workspacevt.TerminalScreen):
     """VT screen plus input modes needed by the interactive Qt view."""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.application_cursor = False
 
-    def _set_private_modes(self, params, *, enabled: bool) -> None:
+    def _set_private_modes(self, params: list[int], *, enabled: bool) -> None:
         if 1 in params:
             self.application_cursor = enabled
         super()._set_private_modes(params, enabled=enabled)
 
 
 def default_shell() -> str:
+    """Return the native interactive shell for the current platform."""
     if os.name == "nt":
         return os.environ.get("COMSPEC", "cmd.exe")
     return os.environ.get("SHELL", "/bin/sh")
 
 
-def create_backend(*, cwd: Path, shell: str | None = None):
+def create_backend(
+    *, cwd: Path, shell: str | None = None
+) -> terminalbackend.TerminalBackend:
+    """Create the platform PTY backend for a terminal tab."""
     selected = shell or default_shell()
     if os.name == "nt":
         from qutebrowser.browser import conpty
         return conpty.WindowsConPtyBackend(cwd=cwd, shell=selected)
-    from qutebrowser.browser import terminalbackend
     return terminalbackend.UnixPtyBackend(cwd=cwd, shell=selected)
 
 
@@ -99,10 +112,16 @@ class TerminalView(QPlainTextEdit):
         Qt.Key.Key_End: b"\x1bOF",
     }
 
-    def __init__(self, backend, parent=None) -> None:
+    def __init__(
+        self,
+        backend: terminalbackend.TerminalBackend,
+        parent: QWidget | None = None,
+    ) -> None:
         super().__init__(parent)
         self.backend = backend
-        self.screen = TerminalScreen()
+        # QWidget already has a screen() method. Keep terminal state separate so
+        # Qt's API remains intact and static type checkers see the right object.
+        self.term_screen = TerminalScreen()
         self._decoder = codecs.getincrementaldecoder("utf-8")("replace")
         self.setReadOnly(True)
         self.setUndoRedoEnabled(False)
@@ -113,14 +132,14 @@ class TerminalView(QPlainTextEdit):
         self.backend.process_exited.connect(self._on_exit)
 
     def _on_data(self, data: bytes) -> None:
-        self.screen.feed(self._decoder.decode(data))
-        response = self.screen.take_responses()
+        self.term_screen.feed(self._decoder.decode(data))
+        response = self.term_screen.take_responses()
         if response:
             self.backend.write(response)
         self._render()
 
     def _on_exit(self, code: int) -> None:
-        self.screen.feed("\r\n[process exited: {}]".format(code))
+        self.term_screen.feed("\r\n[process exited: {}]".format(code))
         self._render()
 
     def _format(self, style: TerminalStyle) -> QTextCharFormat:
@@ -140,14 +159,20 @@ class TerminalView(QPlainTextEdit):
         return fmt
 
     def _render(self) -> None:
-        cursor = QTextCursor(self.document())
+        document = self.document()
+        if document is None:
+            return
+        cursor = QTextCursor(document)
         cursor.beginEditBlock()
         cursor.select(QTextCursor.SelectionType.Document)
         cursor.removeSelectedText()
-        for row in range(self.screen.rows):
+        for row in range(self.term_screen.rows):
             if row:
                 cursor.insertText("\n")
-            line = [self.screen.cell(row, col) for col in range(self.screen.columns)]
+            line = [
+                self.term_screen.cell(row, col)
+                for col in range(self.term_screen.columns)
+            ]
             start = 0
             while start < len(line):
                 style = line[start].style
@@ -160,15 +185,13 @@ class TerminalView(QPlainTextEdit):
                 )
                 start = end
         cursor.endEditBlock()
-        row, column = self.screen.cursor
-        pos = row * (self.screen.columns + 1) + column
-        visible = QTextCursor(self.document())
-        visible.setPosition(
-            min(pos, max(0, self.document().characterCount() - 1))
-        )
+        row, column = self.term_screen.cursor
+        pos = row * (self.term_screen.columns + 1) + column
+        visible = QTextCursor(document)
+        visible.setPosition(min(pos, max(0, document.characterCount() - 1)))
         self.setTextCursor(visible)
 
-    def keyPressEvent(self, event) -> None:  # noqa: N802
+    def keyPressEvent(self, event: QKeyEvent) -> None:  # noqa: N802
         modifiers = event.modifiers()
         control = bool(modifiers & Qt.KeyboardModifier.ControlModifier)
         shift = bool(modifiers & Qt.KeyboardModifier.ShiftModifier)
@@ -177,12 +200,15 @@ class TerminalView(QPlainTextEdit):
             self.copy()
             return
         if control and shift and event.key() == Qt.Key.Key_V:
-            data = QApplication.clipboard().text().encode("utf-8")
-            if self.screen.bracketed_paste:
+            clipboard = QApplication.clipboard()
+            if clipboard is None:
+                return
+            data = clipboard.text().encode("utf-8")
+            if self.term_screen.bracketed_paste:
                 data = b"\x1b[200~" + data + b"\x1b[201~"
             self.backend.write(data)
             return
-        if self.screen.application_cursor:
+        if self.term_screen.application_cursor:
             data = self._APPLICATION_CURSOR_KEYS.get(event.key())
         else:
             data = None
@@ -198,7 +224,7 @@ class TerminalView(QPlainTextEdit):
             data = b"\x1b" + data
         self.backend.write(data)
 
-    def _mouse_position(self, event) -> tuple[int, int]:
+    def _mouse_position(self, event: QMouseEvent | QWheelEvent) -> tuple[int, int]:
         pos = event.position() if hasattr(event, "position") else event.pos()
         metrics = self.fontMetrics()
         width = max(1, metrics.horizontalAdvance("M"))
@@ -206,7 +232,7 @@ class TerminalView(QPlainTextEdit):
         return int(pos.x()) // width + 1, int(pos.y()) // height + 1
 
     @staticmethod
-    def _mouse_button(button) -> int | None:
+    def _mouse_button(button: Qt.MouseButton) -> int | None:
         mapping = {
             Qt.MouseButton.LeftButton: 0,
             Qt.MouseButton.MiddleButton: 1,
@@ -222,9 +248,9 @@ class TerminalView(QPlainTextEdit):
         *,
         release: bool = False,
     ) -> bool:
-        if not self.screen.mouse_mode:
+        if not self.term_screen.mouse_mode:
             return False
-        if self.screen.sgr_mouse:
+        if self.term_screen.sgr_mouse:
             suffix = "m" if release else "M"
             data = "\x1b[<{};{};{}{}".format(code, x, y, suffix).encode()
         else:
@@ -234,7 +260,7 @@ class TerminalView(QPlainTextEdit):
         self.backend.write(data)
         return True
 
-    def mousePressEvent(self, event) -> None:  # noqa: N802
+    def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
         code = self._mouse_button(event.button())
         if code is not None:
             x, y = self._mouse_position(event)
@@ -242,7 +268,7 @@ class TerminalView(QPlainTextEdit):
                 return
         super().mousePressEvent(event)
 
-    def mouseReleaseEvent(self, event) -> None:  # noqa: N802
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:  # noqa: N802
         code = self._mouse_button(event.button())
         if code is not None:
             x, y = self._mouse_position(event)
@@ -250,8 +276,8 @@ class TerminalView(QPlainTextEdit):
                 return
         super().mouseReleaseEvent(event)
 
-    def mouseMoveEvent(self, event) -> None:  # noqa: N802
-        if self.screen.mouse_mode in {1002, 1003}:
+    def mouseMoveEvent(self, event: QMouseEvent) -> None:  # noqa: N802
+        if self.term_screen.mouse_mode in {1002, 1003}:
             buttons = event.buttons()
             if buttons & Qt.MouseButton.LeftButton:
                 code = 32
@@ -259,7 +285,7 @@ class TerminalView(QPlainTextEdit):
                 code = 33
             elif buttons & Qt.MouseButton.RightButton:
                 code = 34
-            elif self.screen.mouse_mode == 1003:
+            elif self.term_screen.mouse_mode == 1003:
                 code = 35
             else:
                 return super().mouseMoveEvent(event)
@@ -268,8 +294,8 @@ class TerminalView(QPlainTextEdit):
                 return
         super().mouseMoveEvent(event)
 
-    def wheelEvent(self, event) -> None:  # noqa: N802
-        if self.screen.mouse_mode:
+    def wheelEvent(self, event: QWheelEvent) -> None:  # noqa: N802
+        if self.term_screen.mouse_mode:
             delta = event.angleDelta().y()
             code = 64 if delta > 0 else 65
             x, y = self._mouse_position(event)
@@ -277,16 +303,19 @@ class TerminalView(QPlainTextEdit):
                 return
         super().wheelEvent(event)
 
-    def resizeEvent(self, event) -> None:  # noqa: N802
+    def resizeEvent(self, event: QResizeEvent) -> None:  # noqa: N802
         super().resizeEvent(event)
+        viewport = self.viewport()
+        if viewport is None:
+            return
         metrics = self.fontMetrics()
         columns = max(
             1,
-            self.viewport().width() // max(1, metrics.horizontalAdvance("M")),
+            viewport.width() // max(1, metrics.horizontalAdvance("M")),
         )
-        rows = max(1, self.viewport().height() // max(1, metrics.height()))
-        if rows != self.screen.rows or columns != self.screen.columns:
-            self.screen.resize(rows=rows, columns=columns)
+        rows = max(1, viewport.height() // max(1, metrics.height()))
+        if rows != self.term_screen.rows or columns != self.term_screen.columns:
+            self.term_screen.resize(rows=rows, columns=columns)
             self.backend.resize(rows, columns)
             self._render()
 
@@ -316,7 +345,7 @@ class TerminalContent:
         return self._widget
 
     def title(self) -> str:
-        title = self._widget.screen.title
+        title = self._widget.term_screen.title
         if title and title != "Terminal":
             return "{} · {}".format(title, self.cwd)
         return "Terminal · {}".format(self.cwd)
