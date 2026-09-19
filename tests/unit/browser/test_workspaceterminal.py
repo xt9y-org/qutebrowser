@@ -34,13 +34,15 @@ def test_truecolor_and_256_color_sgr():
 def test_private_terminal_modes():
     screen = workspaceterminal.TerminalScreen()
 
-    screen.feed("\x1b[?1002h\x1b[?1006h\x1b[?2004h")
+    screen.feed("\x1b[?1h\x1b[?1002h\x1b[?1006h\x1b[?2004h")
 
+    assert screen.application_cursor
     assert screen.mouse_mode == 1002
     assert screen.sgr_mouse
     assert screen.bracketed_paste
 
-    screen.feed("\x1b[?1002l\x1b[?1006l\x1b[?2004l")
+    screen.feed("\x1b[?1l\x1b[?1002l\x1b[?1006l\x1b[?2004l")
+    assert not screen.application_cursor
     assert screen.mouse_mode == 0
     assert not screen.sgr_mouse
     assert not screen.bracketed_paste
