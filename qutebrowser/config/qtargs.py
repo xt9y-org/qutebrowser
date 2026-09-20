@@ -102,6 +102,19 @@ def _qtwebengine_features(  # noqa: C901
         else:
             raise utils.Unreachable(flag)
 
+    webgpu = config.val.content.webgpu
+    if webgpu != 'auto':
+        # The qutebrowser setting is authoritative when explicitly set, even
+        # when the user also supplied a raw Chromium feature flag via qt.args.
+        enabled_features = [f for f in enabled_features if f != 'WebGPU']
+        disabled_features = [f for f in disabled_features if f != 'WebGPU']
+        if webgpu == 'always':
+            enabled_features.append('WebGPU')
+        elif webgpu == 'never':
+            disabled_features.append('WebGPU')
+        else:
+            raise utils.Unreachable(webgpu)
+
     if utils.is_linux:
         # Enable WebRTC PipeWire for screen capturing on Wayland.
         #
