@@ -78,9 +78,8 @@ INFO_PLIST_UPDATES = {
             "UTTypeDescription": "Ogg Video",
             "UTTypeIconFile": "document.icns",
             "UTTypeIdentifier": "org.xiph.ogv",
-            "UTTypeReferenceURL": "https://xiph.org/ogv/",
+            "UTTypeReferenceURL": "https://xiph.org/ogg/",
             "UTTypeTagSpecification": {
-                "com.apple.ostype": "OGGV",
                 "public.filename-extension": ["ogm", "ogv"],
                 "public.mime-type": ["video/ogg"],
             },
