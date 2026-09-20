@@ -7,8 +7,11 @@
 from __future__ import annotations
 
 import dataclasses
+import json
 import re
 from collections.abc import Sequence
+
+from qutebrowser.utils import resources
 
 
 _FORK_TAG_RE = re.compile(
@@ -50,6 +53,15 @@ class PlatformTarget:
     install_kind: str
 
 
+@dataclasses.dataclass(frozen=True)
+class BuildInfo:
+    """Identity embedded in a packaged xt9y qutebrowser build."""
+
+    release: ForkRelease
+    commit: str
+    target: PlatformTarget
+
+
 def parse_fork_tag(tag: str) -> ForkRelease:
     """Parse a release tag such as ``v3.7.0-xt9y.7``."""
 
@@ -66,6 +78,36 @@ def parse_fork_tag(tag: str) -> ForkRelease:
         revision=int(match.group("revision")),
         tag=tag,
     )
+
+
+def current() -> BuildInfo | None:
+    """Return packaged fork build metadata, or ``None`` for source installs."""
+
+    try:
+        raw = resources.read_file("release-info.json")
+    except (FileNotFoundError, OSError, ImportError):
+        return None
+
+    try:
+        payload = json.loads(raw)
+    except ValueError as exc:
+        raise ValueError(f"Invalid packaged release metadata: {exc}") from exc
+
+    if not isinstance(payload, dict):
+        raise ValueError("Packaged release metadata must be a JSON object")
+
+    required = ("release", "commit", "platform", "arch", "package")
+    values = {name: payload.get(name) for name in required}
+    if not all(isinstance(value, str) and value for value in values.values()):
+        raise ValueError("Packaged release metadata is missing required string fields")
+
+    release = parse_fork_tag(values["release"])
+    target = PlatformTarget(
+        os=values["platform"],
+        arch=values["arch"],
+        install_kind=values["package"],
+    )
+    return BuildInfo(release=release, commit=values["commit"], target=target)
 
 
 def _asset_suffix(target: PlatformTarget) -> str:
