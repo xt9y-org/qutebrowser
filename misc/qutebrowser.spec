@@ -78,8 +78,9 @@ INFO_PLIST_UPDATES = {
             "UTTypeDescription": "Ogg Video",
             "UTTypeIconFile": "document.icns",
             "UTTypeIdentifier": "org.xiph.ogv",
-            "UTTypeReferenceURL": "https://xiph.org/ogg/",
+            "UTTypeReferenceURL": "https://xiph.org/ogv/",
             "UTTypeTagSpecification": {
+                "com.apple.ostype": "OGGV",
                 "public.filename-extension": ["ogm", "ogv"],
                 "public.mime-type": ["video/ogg"],
             },
@@ -114,6 +115,10 @@ def get_data_files():
         ('../qutebrowser/git-commit-id', 'qutebrowser/git-commit-id'),
         ('../qutebrowser/config/configdata.yml', 'qutebrowser/config'),
     ]
+
+    release_info = os.path.join('qutebrowser', 'release-info.json')
+    if os.path.exists(release_info):
+        data_files.append(('../qutebrowser/release-info.json', 'qutebrowser'))
 
     if os.path.exists(os.path.join('qutebrowser', '3rdparty', 'pdfjs')):
         data_files.append(('../qutebrowser/3rdparty/pdfjs', 'qutebrowser/3rdparty/pdfjs'))
