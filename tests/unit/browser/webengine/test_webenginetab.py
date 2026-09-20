@@ -244,3 +244,26 @@ class TestWebEnginePermissions:
             pytest.skip("enum member not available")
         assert clipboard in permissions_cls._options
         assert clipboard in permissions_cls._messages
+
+
+class TestWebAuthIntegration:
+
+    def test_handler_owned_by_tab(self, webengine_tab):
+        from qutebrowser.browser.webengine import webauth
+
+        assert isinstance(webengine_tab._webauth, webauth.WebAuthHandler)
+
+    def test_abort_questions_cancels_active_webauth(self, webengine_tab, mocker):
+        request = mocker.Mock()
+        webengine_tab._webauth._request = request
+
+        webengine_tab.abort_questions.emit()
+
+        request.cancel.assert_called_once_with()
+        assert webengine_tab._webauth._request is None
+
+    def test_page_webauth_signal_is_connected(self, webengine_tab):
+        page = webengine_tab._widget.page()
+        signal = page.webAuthUxRequested
+
+        assert page.receivers(signal) >= 1

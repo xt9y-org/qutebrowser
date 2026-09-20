@@ -227,6 +227,7 @@ class PromptMode(enum.Enum):
     user_pwd = enum.auto()
     alert = enum.auto()
     download = enum.auto()
+    password = enum.auto()
 
 
 class ClickTarget(enum.Enum):
@@ -358,6 +359,7 @@ class Question(QObject):
         mode: A PromptMode enum member.
               yesno: A question which can be answered with yes/no.
               text: A question which requires a free text answer.
+              password: A masked question which requires a single secret.
               user_pwd: A question for a username and password.
         default: The default value.
                  For yesno, None (no default), True or False.

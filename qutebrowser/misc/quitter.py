@@ -27,7 +27,7 @@ except ImportError:
 import qutebrowser
 from qutebrowser.api import cmdutils
 from qutebrowser.utils import log, qtlog
-from qutebrowser.misc import sessions, ipc, objects
+from qutebrowser.misc import autoupdate, sessions, ipc, objects
 from qutebrowser.mainwindow import prompt
 from qutebrowser.completion.models import miscmodels
 
@@ -201,6 +201,28 @@ class Quitter(QObject):
                 message=f"subprocess {proc.pid} is still running",
             )
             return True
+
+    def update_and_restart(self, staged: autoupdate.StagedUpdate) -> bool:
+        """Hand a verified update to an external helper, then prepare to exit.
+
+        The helper is started before IPC is shut down. It waits for this process
+        to exit, replaces the packaged installation and launches qutebrowser from
+        the same installation path with the normal restart session.
+        """
+        self._compile_modules()
+        assert sessions.session_manager is not None
+        sessions.session_manager.save('_restart', with_private=True)
+        args = self._get_restart_args(session='_restart')
+
+        try:
+            autoupdate.launch_update_handoff(staged, args)
+        except (OSError, ValueError):
+            log.destroy.exception("Failed to start post-exit updater")
+            return False
+
+        assert ipc.server is not None
+        ipc.server.shutdown()
+        return True
 
     def shutdown(self, status: int = 0,
                  session: sessions.ArgType | None = None,

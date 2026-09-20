@@ -115,6 +115,10 @@ def get_data_files():
         ('../qutebrowser/config/configdata.yml', 'qutebrowser/config'),
     ]
 
+    release_info = os.path.join('build', 'release-info.json')
+    if os.path.exists(release_info):
+        data_files.append(('../build/release-info.json', 'qutebrowser'))
+
     if os.path.exists(os.path.join('qutebrowser', '3rdparty', 'pdfjs')):
         data_files.append(('../qutebrowser/3rdparty/pdfjs', 'qutebrowser/3rdparty/pdfjs'))
     else:

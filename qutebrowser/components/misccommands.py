@@ -26,9 +26,77 @@ from qutebrowser.api import cmdutils, apitypes, message, config
 # FIXME should be part of qutebrowser.api?
 from qutebrowser.completion.models import miscmodels
 from qutebrowser.utils import utils
+from qutebrowser.misc import autoupdate, quitter
 
 
 _LOGGER = logging.getLogger('misc')
+_update_client: autoupdate.ForkUpdateClient | None = None
+
+
+def _finish_update_client(client: autoupdate.ForkUpdateClient) -> None:
+    """Release command ownership of a completed update client."""
+    global _update_client  # pylint: disable=global-statement
+    if _update_client is client:
+        _update_client = None
+
+
+@cmdutils.register()
+def update(check: bool = False) -> None:
+    """Check for and install a newer packaged xt9y release.
+
+    Self-updating is intentionally limited to tagged packaged builds. Source,
+    pip, Flatpak and distribution installs remain owned by their normal update
+    mechanism.
+
+    Args:
+        check: Only check whether a newer release exists.
+    """
+    global _update_client  # pylint: disable=global-statement
+    if _update_client is not None:
+        message.warning("An update check is already running.")
+        return
+
+    client = autoupdate.ForkUpdateClient()
+    _update_client = client
+
+    def available(tag: str) -> None:
+        if check:
+            message.info(f"Update available: {tag}.")
+            _finish_update_client(client)
+        else:
+            message.info(f"Update available: {tag}; downloading and verifying it.")
+
+    def up_to_date(tag: str) -> None:
+        message.info(f"qutebrowser is up to date ({tag}).")
+        _finish_update_client(client)
+
+    def staged(tag: str, path: str) -> None:
+        del path
+        staged_update = client.staged_update
+        if staged_update is None:
+            message.error("Verified update is missing its staged payload.")
+            _finish_update_client(client)
+            return
+
+        message.info(f"Verified update {tag}; installing and restarting.")
+        if not quitter.instance.update_and_restart(staged_update):
+            message.error(
+                "Could not start the post-exit updater; qutebrowser was not closed.")
+            _finish_update_client(client)
+            return
+
+        _finish_update_client(client)
+        quitter.instance.shutdown(is_restart=True)
+
+    def failed(error: str) -> None:
+        message.error(error)
+        _finish_update_client(client)
+
+    client.update_available.connect(available)
+    client.up_to_date.connect(up_to_date)
+    client.staged.connect(staged)
+    client.error.connect(failed)
+    client.start(check_only=check)
 
 
 @cmdutils.register(name='reload')

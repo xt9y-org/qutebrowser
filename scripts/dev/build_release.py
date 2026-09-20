@@ -41,7 +41,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import qutebrowser
 from scripts import utils
-from scripts.dev import update_3rdparty, misc_checks
+from scripts.dev import update_3rdparty, misc_checks, release_metadata
 
 
 IS_MACOS = sys.platform == 'darwin'
@@ -330,6 +330,12 @@ def build_mac(
     update_3rdparty.run(ace=False, pdfjs=True, modern_pdfjs=False, fancy_dmg=False,
                         gh_token=gh_token)
 
+    release_metadata.write_release_info(
+        platform_name='macos',
+        arch=platform.machine(),
+        package='macos-app',
+    )
+
     utils.print_title("Building .app via pyinstaller")
     call_tox('pyinstaller', '-r', debug=debug)
     utils.print_title("Verifying .app")
@@ -350,7 +356,8 @@ def build_mac(
     arch = platform.machine()
     suffix = "-debug" if debug else ""
     suffix += f"-{arch}"
-    dmg_path = dist_path / f'qutebrowser-{qutebrowser.__version__}{suffix}.dmg'
+    version = release_metadata.artifact_version()
+    dmg_path = dist_path / f'qutebrowser-{version}{suffix}.dmg'
     pathlib.Path('qutebrowser.dmg').rename(dmg_path)
 
     utils.print_title("Running smoke test")
@@ -444,6 +451,12 @@ def build_windows(
 
     utils.print_title("Building Windows binaries")
 
+    release_metadata.write_release_info(
+        platform_name='windows',
+        arch=platform.machine(),
+        package='windows-bundle',
+    )
+
     from scripts.dev import gen_versioninfo
     utils.print_title("Updating VersionInfo file")
     gen_versioninfo.main()
@@ -469,18 +482,25 @@ def _package_windows_single(
                     f'/DVERSION={qutebrowser.__version__}',
                     'misc/nsis/qutebrowser.nsi'], check=True)
 
+    artifact_version = release_metadata.artifact_version()
+    installer_source = (
+        dist_path / f'qutebrowser-{qutebrowser.__version__}-amd64.exe')
+
     name_parts = [
         'qutebrowser',
-        str(qutebrowser.__version__),
+        artifact_version,
     ]
     if debug:
         name_parts.append('debug')
 
     name_parts.append('amd64')  # FIXME:qt6 temporary until new installer
     name = '-'.join(name_parts) + '.exe'
+    installer_path = dist_path / name
+    if installer_source != installer_path:
+        installer_source.replace(installer_path)
 
     artifacts.append(Artifact(
-        path=dist_path / name,
+        path=installer_path,
         mimetype='application/vnd.microsoft.portable-executable',
         description='Windows installer',
     ))
@@ -488,7 +508,7 @@ def _package_windows_single(
     utils.print_subtitle("Zipping standalone...")
     zip_name_parts = [
         'qutebrowser',
-        str(qutebrowser.__version__),
+        artifact_version,
         'windows',
         'standalone',
     ]

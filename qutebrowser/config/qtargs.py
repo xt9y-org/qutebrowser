@@ -102,6 +102,16 @@ def _qtwebengine_features(  # noqa: C901
         else:
             raise utils.Unreachable(flag)
 
+    webgpu = config.val.content.webgpu
+    if webgpu == 'never':
+        enabled_features = [feature for feature in enabled_features
+                            if feature != 'WebGPUService']
+        if 'WebGPUService' not in disabled_features:
+            disabled_features.append('WebGPUService')
+    elif webgpu == 'always':
+        disabled_features = [feature for feature in disabled_features
+                             if feature != 'WebGPUService']
+
     if utils.is_linux:
         # Enable WebRTC PipeWire for screen capturing on Wayland.
         #
@@ -299,6 +309,11 @@ _WEBENGINE_SETTINGS: dict[str, dict[Any, _SettingValueType | None]] = {
         True: None,
         # might be overridden in webenginesettings.py
         False: '--disable-reading-from-canvas',
+    },
+    'content.webgpu': {
+        'auto': None,
+        'always': '--enable-unsafe-webgpu',
+        'never': None,
     },
     'content.webrtc_ip_handling_policy': {
         'all-interfaces': None,

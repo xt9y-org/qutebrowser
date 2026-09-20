@@ -156,6 +156,13 @@ jobs:
       - name: Prepare packaged resources
         run: mkdir -p qutebrowser/html/doc
 
+      - name: Embed packaged release identity
+        run: >-
+          python scripts/dev/release_metadata.py
+          --platform linux
+          --arch x86_64
+          --package linux-standalone
+
       - name: Build standalone bundle
         run: tox -e pyinstaller
 
@@ -175,7 +182,7 @@ jobs:
       - name: Package standalone bundle
         shell: bash
         run: |
-          version="$(python -c 'import qutebrowser; print(qutebrowser.__version__)')"
+          version="$(python -c 'from scripts.dev import release_metadata; print(release_metadata.artifact_version())')"
           tar -C dist -czf "dist/qutebrowser-${version}-linux-x86_64.tar.gz" qutebrowser
 
       - name: Upload Linux artifact
@@ -185,3 +192,32 @@ jobs:
           path: dist/qutebrowser-*-linux-x86_64.tar.gz
           if-no-files-found: error
           retention-days: 30
+
+  release:
+    name: Publish tagged xt9y release artifacts
+    if: startsWith(github.ref, 'refs/tags/v') && contains(github.ref_name, '-xt9y.')
+    needs: [packaged, linux]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download packaged artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: qutebrowser-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Generate SHA256SUMS
+        shell: bash
+        run: |
+          cd release-assets
+          sha256sum qutebrowser-* > SHA256SUMS
+
+      - name: Publish release assets
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: release-assets/*
+          fail_on_unmatched_files: true

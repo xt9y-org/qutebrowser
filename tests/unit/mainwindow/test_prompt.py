@@ -6,9 +6,23 @@ import os
 
 import pytest
 from qutebrowser.qt.core import Qt
+from qutebrowser.qt.widgets import QLineEdit
 
 from qutebrowser.mainwindow import prompt as promptmod
-from qutebrowser.utils import usertypes
+from qutebrowser.utils import qtlog, usertypes
+
+
+def test_password_prompt_masks_input(qtbot, config_stub, key_config_stub):
+    config_stub.val.bindings.default = {}
+    question = usertypes.Question()
+    question.title = 'Passkey PIN'
+    question.mode = usertypes.PromptMode.password
+
+    with qtlog.disable_qt_msghandler():
+        prompt = promptmod.PasswordPrompt(question)
+    qtbot.add_widget(prompt)
+
+    assert prompt._lineedit.echoMode() == QLineEdit.EchoMode.Password
 
 
 class TestFileCompletion:

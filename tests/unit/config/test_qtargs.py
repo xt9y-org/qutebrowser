@@ -51,6 +51,7 @@ def reduce_args(config_stub, version_patcher, monkeypatch):
     config_stub.val.content.headers.referer = 'always'
     config_stub.val.scrolling.bar = 'never'
     config_stub.val.qt.chromium.experimental_web_platform_features = 'never'
+    config_stub.val.content.webgpu = 'auto'
     config_stub.val.qt.workarounds.disable_accelerated_2d_canvas = 'never'
     config_stub.val.qt.workarounds.disable_accessibility = 'never'
     monkeypatch.setattr(qtargs.utils, 'is_mac', False)
@@ -744,3 +745,23 @@ class TestEnvVars:
             assert len(caplog.messages) == 1
             msg = caplog.messages[0]
             assert msg.startswith(f'You have QTWEBENGINE_CHROMIUM_FLAGS={expected} set')
+
+
+@pytest.mark.usefixtures('reduce_args')
+@pytest.mark.parametrize('webgpu, unsafe, disabled', [
+    ('auto', False, False),
+    ('always', True, False),
+    ('never', False, True),
+])
+def test_webgpu_switches(config_stub, parser, webgpu, unsafe, disabled):
+    config_stub.val.content.webgpu = webgpu
+    args = qtargs.qt_args(parser.parse_args([]))
+
+    assert ('--enable-unsafe-webgpu' in args) == unsafe
+    feature_args = [arg for arg in args if arg.startswith('--disable-features=')]
+    disabled_features = [
+        feature
+        for arg in feature_args
+        for feature in arg.split('=', 1)[1].split(',')
+    ]
+    assert ('WebGPUService' in disabled_features) == disabled

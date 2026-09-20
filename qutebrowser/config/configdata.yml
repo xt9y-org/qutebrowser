@@ -1294,6 +1294,21 @@ content.webgl:
   supports_pattern: true
   desc: Enable WebGL.
 
+content.webgpu:
+  type:
+    name: String
+    valid_values:
+      - auto: Use WebGPU when the bundled QtWebEngine/Chromium supports it.
+      - always: Request WebGPU even on Chromium configurations considered unsupported.
+      - never: Disable WebGPU.
+  default: auto
+  backend: QtWebEngine
+  restart: true
+  desc: >-
+    Control WebGPU in QtWebEngine. `always` passes Chromium's unsafe WebGPU
+    opt-in flag, while `never` disables the WebGPU feature. This cannot add
+    WebGPU support to a QtWebEngine build compiled without Dawn/WebGPU.
+
 content.webrtc_ip_handling_policy:
   type:
     name: String

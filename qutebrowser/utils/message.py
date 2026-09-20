@@ -157,7 +157,7 @@ def ask(*args: Any, **kwargs: Any) -> Any:
 def ask_async(title: str,
               mode: usertypes.PromptMode,
               handler: Callable[[Any], None],
-              **kwargs: Any) -> None:
+              **kwargs: Any) -> usertypes.Question:
     """Ask an async question in the statusbar.
 
     Args:
@@ -171,6 +171,7 @@ def ask_async(title: str,
     question.answered.connect(handler)
     question.completed.connect(question.deleteLater)
     global_bridge.ask(question, blocking=False)
+    return question
 
 
 _ActionType: TypeAlias = Callable[[], Any]

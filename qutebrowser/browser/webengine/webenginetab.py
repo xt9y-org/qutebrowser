@@ -21,7 +21,7 @@ from qutebrowser.config import config
 from qutebrowser.browser import browsertab, eventfilter, shared, webelem, greasemonkey
 from qutebrowser.browser.webengine import (webview, webengineelem, tabhistory,
                                            webenginesettings, certificateerror,
-                                           webengineinspector)
+                                           webengineinspector, webauth)
 
 from qutebrowser.utils import (usertypes, qtutils, log, javascript, utils,
                                resources, message, jinja, debug, version, urlutils)
@@ -1308,6 +1308,7 @@ class WebEngineTab(browsertab.AbstractTab):
                                                tab=self)
         self._permissions = _WebEnginePermissions(tab=self, parent=self)
         self._scripts = _WebEngineScripts(tab=self, parent=self)
+        self._webauth = webauth.WebAuthHandler()
         # We're assigning settings in _set_widget
         self.settings = webenginesettings.WebEngineSettings(settings=None)
         self._set_widget(widget)
@@ -1741,6 +1742,8 @@ class WebEngineTab(browsertab.AbstractTab):
         page.navigation_request.connect(self._on_navigation_request)
         page.printRequested.connect(self._on_print_requested)
         page.selectClientCertificate.connect(self._on_select_client_certificate)
+        if hasattr(page, 'webAuthUxRequested'):
+            page.webAuthUxRequested.connect(self._webauth.handle)
 
         view.titleChanged.connect(self.title_changed)
         view.urlChanged.connect(self._on_url_changed)
@@ -1755,6 +1758,7 @@ class WebEngineTab(browsertab.AbstractTab):
 
         self.shutting_down.connect(self.abort_questions)
         self.load_started.connect(self.abort_questions)
+        self.abort_questions.connect(self._webauth.cancel)
 
         # pylint: disable=protected-access
         self.audio._connect_signals()
