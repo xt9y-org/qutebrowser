@@ -6,7 +6,7 @@ on:
       - codex/fix-terminal-escape-colon-crash
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   targeted:
@@ -15,41 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: "3.14"
-      - name: Apply terminal Escape binding
-        if: github.actor != 'github-actions[bot]'
-        shell: bash
-        run: |
-          git apply <<'PATCH'
-          diff --git a/qutebrowser/config/configdata.yml b/qutebrowser/config/configdata.yml
-          --- a/qutebrowser/config/configdata.yml
-          +++ b/qutebrowser/config/configdata.yml
-          @@ -3888,7 +3888,7 @@ bindings.default:
-                 <Ctrl-B>: hint all tab-bg
-                 <Escape>: mode-leave
-               passthrough:
-          -      <Shift-Escape>: mode-leave
-          +      <Escape>: mode-leave
-               command:
-                 <Ctrl-P>: command-history-prev
-                 <Ctrl-N>: command-history-next
-          @@ -3988,7 +3988,7 @@ bindings.commands:
-
-             * passthrough: Similar to insert mode, but passes through all keypresses
-          -    except `<Shift+Escape>` to leave the mode. Note that single keys can't be
-          +    except `<Escape>` to leave the mode. Note that single keys can't be
-               bound in this mode.
-
-             * command: Entered when pressing the `:` key in order to enter a command.
-          PATCH
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add qutebrowser/config/configdata.yml
-          git commit -m "Use Escape to leave terminal passthrough"
-          git push
       - name: Install test dependencies
         run: |
           python -m pip install -U pip
@@ -57,5 +26,5 @@ jobs:
       - name: Run regressions
         run: |
           tox -e py314-pyqt611 -- \
-            tests/unit/config/test_workspace_keybindings.py \
+            tests/unit/browser/test_workspaceterminal.py \
             tests/unit/mainwindow/test_workspacehost.py
