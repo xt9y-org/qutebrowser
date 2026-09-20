@@ -45,7 +45,11 @@ def _release_success(
     from qutebrowser.misc import selfupdate
     try:
         selfupdate.start_update(
-            build=build, release=newest.version, asset=asset)
+            build=build,
+            release=newest.version,
+            asset=asset,
+            assets=newest.assets,
+        )
     except selfupdate.UpdateError as exc:
         message.error(f"Could not start update: {exc}")
 
