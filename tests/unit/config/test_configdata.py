@@ -57,6 +57,13 @@ def test_passthrough_escape_leaves_mode(config_stub):
     assert bindings['<Shift-Escape>'] == 'fake-key <Escape>'
 
 
+def test_normal_jk_cycle_workspace_panes(config_stub):
+    bindings = configdata.DATA['bindings.default'].default['normal']
+
+    assert bindings['J'] == 'workspace-pane-next'
+    assert bindings['K'] == 'workspace-pane-prev'
+
+
 def test_init_benchmark(benchmark):
     benchmark(configdata.init)
 

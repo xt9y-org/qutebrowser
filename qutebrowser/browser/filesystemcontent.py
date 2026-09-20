@@ -164,6 +164,12 @@ class FilesystemContent:
     def _sync_path(self, path: str) -> None:
         self._path = Path(path).expanduser().absolute()
 
+    def activate_current(self) -> None:
+        """Activate the currently selected filesystem entry."""
+        index = self.tree.currentIndex()
+        if index.isValid():
+            self._widget._on_activated(index)
+
     def go_parent(self) -> None:
         parent = self._path.parent
         if parent != self._path:

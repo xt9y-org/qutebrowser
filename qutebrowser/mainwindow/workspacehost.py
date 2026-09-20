@@ -19,6 +19,7 @@ from qutebrowser.qt.gui import QIcon
 from qutebrowser.qt.widgets import QApplication, QVBoxLayout, QWidget
 
 from qutebrowser.browser import workspace
+from qutebrowser.commands import cmdexc
 from qutebrowser.config import config
 from qutebrowser.keyinput import modeman
 from qutebrowser.mainwindow import mainwindow, tabbedbrowser, tabwidget
@@ -29,6 +30,23 @@ _workspace_tab_ids = itertools.count(start=-1, step=-1)
 _installed = False
 
 
+class WorkspaceUnsupportedAttributeError(AttributeError, cmdexc.Error):
+    """Missing web-tab API on native workspace content.
+
+    Keeping AttributeError semantics makes getattr/hasattr behave normally,
+    while cmdexc.Error lets qutebrowser's command dispatcher report the
+    unsupported operation without disabling the global key event filter.
+    """
+
+
+def _unsupported_attribute(owner: object, name: str) -> None:
+    raise WorkspaceUnsupportedAttributeError(
+        "{} has no workspace-compatible attribute {!r}".format(
+            type(owner).__name__, name
+        )
+    )
+
+
 @dataclasses.dataclass
 class WorkspaceTabData:
     """Tab-manager state shared with qutebrowser's existing tab UI."""
@@ -36,6 +54,25 @@ class WorkspaceTabData:
     pinned: bool = False
     fullscreen: bool = False
     input_mode: usertypes.KeyMode = usertypes.KeyMode.normal
+
+    def __getattr__(self, name: str):
+        _unsupported_attribute(self, name)
+
+
+class _WorkspaceCaret:
+    """Minimal caret-command compatibility for native workspace tabs."""
+
+    def __init__(self, content: workspace.WorkspaceContent) -> None:
+        self._content = content
+
+    def follow_selected(self, *, tab: bool = False) -> None:
+        del tab
+        activate = getattr(self._content, "activate_current", None)
+        if activate is not None:
+            activate()
+
+    def __getattr__(self, name: str):
+        _unsupported_attribute(self, name)
 
 
 class WorkspaceTab(QWidget):
@@ -56,6 +93,7 @@ class WorkspaceTab(QWidget):
         self.is_private = private
         self.tab_id = next(_workspace_tab_ids)
         self.data = WorkspaceTabData()
+        self.caret = _WorkspaceCaret(content)
         self.pending_removal = False
         _register_workspace_tab(self)
 
@@ -65,6 +103,14 @@ class WorkspaceTab(QWidget):
 
     def title(self) -> str:
         return self.content.title()
+
+    def __getattr__(self, name: str):
+        _unsupported_attribute(self, name)
+
+    def url(self, *, requested: bool = False) -> QUrl:
+        """Return an empty URL for native content at web-tab boundaries."""
+        del requested
+        return QUrl()
 
     def session_state(self) -> workspace.ContentSession | None:
         return self.content.session_state()

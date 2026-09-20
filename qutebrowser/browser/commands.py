@@ -19,7 +19,7 @@ from qutebrowser.commands import userscripts, runners
 from qutebrowser.api import cmdutils
 from qutebrowser.config import config, configdata
 from qutebrowser.browser import (urlmarks, browsertab, navigate, webelem,
-                                 downloads)
+                                 downloads, workspace)
 from qutebrowser.keyinput import modeman, keyutils
 from qutebrowser.utils import (message, usertypes, log, qtutils, urlutils,
                                objreg, utils, standarddir, debug)
@@ -505,6 +505,32 @@ class CommandDispatcher:
                                            add_undo=False,
                                            transfer=True)
 
+    def _workspace_back_forward(
+        self,
+        current,
+        *,
+        forward: bool,
+        count: int | None,
+        quiet: bool,
+    ) -> None:
+        """Handle history navigation for a native workspace tab."""
+        if (not forward and
+                getattr(current, 'kind', None) is
+                workspace.ContentKind.FILESYSTEM):
+            steps = 1 if count is None else count
+            try:
+                for _ in range(steps):
+                    current.content.go_parent()
+            except OSError as e:
+                raise cmdutils.CommandError(str(e))
+            return
+
+        text = "At end of history." if forward else "At beginning of history."
+        if quiet:
+            log.webview.debug(text)
+            return
+        raise cmdutils.CommandError(text)
+
     def _back_forward(
         self, *,
         tab: bool,
@@ -516,7 +542,17 @@ class CommandDispatcher:
         index: int | None,
     ) -> None:
         """Helper function for :back/:forward."""
-        history = self._current_widget().history
+        current = self._current_widget()
+        history = getattr(current, 'history', None)
+        if history is None:
+            self._workspace_back_forward(
+                current,
+                forward=forward,
+                count=count,
+                quiet=quiet,
+            )
+            return
+
         # Catch common cases before e.g. cloning tab, and handle --quiet
         if not forward and not history.can_go_back():
             text = "At beginning of history."
@@ -534,7 +570,7 @@ class CommandDispatcher:
         if tab or bg or window:
             widget = self.tab_clone(bg, window)
         else:
-            widget = self._current_widget()
+            widget = current
 
         if count is None:
             if index is None:

@@ -3702,9 +3702,9 @@ bindings.default:
       gm: tab-move
       gK: tab-move -
       gJ: tab-move +
-      J: tab-next
+      J: workspace-pane-next
       <Ctrl-PgDown>: tab-next
-      K: tab-prev
+      K: workspace-pane-prev
       <Ctrl-PgUp>: tab-prev
       gC: tab-clone
       r: reload

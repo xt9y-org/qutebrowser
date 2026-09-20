@@ -7,9 +7,14 @@
 from pathlib import Path
 from types import SimpleNamespace
 
-from qutebrowser.browser import workspace
+import pytest
+
+from qutebrowser.api import cmdutils
+from qutebrowser.browser import commands as browsercommands
+from qutebrowser.browser import filesystemcontent, workspace
+from qutebrowser.commands import cmdexc
 from qutebrowser.mainwindow import tabbedbrowser, workspacehost
-from qutebrowser.qt.core import QUrl
+from qutebrowser.qt.core import Qt, QUrl
 from qutebrowser.qt.widgets import QLabel
 from qutebrowser.utils import objreg, usertypes
 
@@ -91,6 +96,88 @@ def test_workspace_tab_wraps_native_content(qtbot):
     assert not tab.pending_removal
     assert not tab.data.pinned
     assert tab.data.input_mode is usertypes.KeyMode.normal
+    assert tab.url().isEmpty()
+
+
+def test_workspace_selection_follow_activates_filesystem(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    tab = workspacehost.WorkspaceTab(content, win_id=1, private=False)
+    qtbot.addWidget(tab)
+    index = content._widget.model.index(str(child))
+    assert index.isValid()
+    content.tree.setCurrentIndex(index)
+
+    tab.caret.follow_selected()
+
+    assert content.path == child.absolute()
+
+
+def test_workspace_scroll_command_fails_as_command_error(qtbot):
+    from qutebrowser.components import scrollcommands
+
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    with pytest.raises(cmdexc.Error, match="scroller"):
+        scrollcommands.scroll(tab, "down")
+
+
+def test_workspace_zoom_command_fails_as_command_error(qtbot):
+    from qutebrowser.components import zoomcommands
+
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    with pytest.raises(cmdexc.Error, match="zoom"):
+        zoomcommands.zoom_in(tab)
+
+
+def test_workspace_caret_motion_fails_as_command_error(qtbot):
+    from qutebrowser.components import caretcommands
+
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    with pytest.raises(cmdexc.Error, match="move_to_next_line"):
+        caretcommands.move_to_next_line(tab)
+
+
+def test_workspace_missing_attributes_keep_attribute_semantics(qtbot):
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    assert getattr(tab, "history", None) is None
+    assert not hasattr(tab, "history")
+
+
+def test_workspace_missing_tab_data_fails_as_command_error(qtbot):
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    with pytest.raises(cmdexc.Error, match="viewing_source"):
+        _ = tab.data.viewing_source
 
 
 def test_workspace_tab_can_be_resolved_as_current_tab(qtbot, tab_registry):
@@ -134,6 +221,77 @@ def test_terminal_tab_starts_in_normal_mode(qtbot):
     qtbot.addWidget(tab)
 
     assert tab.data.input_mode is usertypes.KeyMode.normal
+
+
+def test_filesystem_back_command_navigates_to_parent(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(child)
+    tab = workspacehost.WorkspaceTab(content, win_id=1, private=False)
+    qtbot.addWidget(tab)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    dispatcher = browsercommands.CommandDispatcher(1, browser)
+
+    dispatcher.back()
+
+    assert content.path == tmp_path.absolute()
+
+
+def test_filesystem_back_command_converts_navigation_error(qtbot, tmp_path, monkeypatch):
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    tab = workspacehost.WorkspaceTab(content, win_id=1, private=False)
+    qtbot.addWidget(tab)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    dispatcher = browsercommands.CommandDispatcher(1, browser)
+
+    def fail_parent():
+        raise PermissionError("blocked")
+
+    monkeypatch.setattr(content, "go_parent", fail_parent)
+
+    with pytest.raises(cmdutils.CommandError, match="blocked"):
+        dispatcher.back()
+
+
+def test_filesystem_enter_on_file_uses_browser_open_path(qtbot, tmp_path):
+    file_path = tmp_path / "notes.txt"
+    file_path.write_text("hello", encoding="utf-8")
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    tab = workspacehost.WorkspaceTab(content, win_id=1, private=False)
+    qtbot.addWidget(tab)
+    browser = FakeBrowser()
+    workspacehost._connect_content_signals(browser, tab)
+    index = content._widget.model.index(str(file_path))
+    assert index.isValid()
+    content.tree.setCurrentIndex(index)
+
+    qtbot.keyPress(content.tree, Qt.Key.Key_Return)
+
+    assert browser.opened == (
+        QUrl.fromLocalFile(str(file_path.absolute())),
+        False,
+        True,
+    )
+
+
+def test_terminal_back_command_is_safe(qtbot):
+    tab = workspacehost.WorkspaceTab(
+        FakeTerminalContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    dispatcher = browsercommands.CommandDispatcher(1, browser)
+
+    with pytest.raises(cmdutils.CommandError, match="At beginning of history"):
+        dispatcher.back()
 
 
 def test_workspace_escape_leaves_passthrough(monkeypatch):

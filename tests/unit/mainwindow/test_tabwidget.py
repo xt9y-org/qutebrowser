@@ -11,6 +11,7 @@ import pytest
 from unittest.mock import Mock
 
 from qutebrowser.qt.gui import QIcon, QPixmap
+from qutebrowser.qt.widgets import QStyle, QStyleOptionTab
 from qutebrowser.mainwindow import tabwidget
 from qutebrowser.utils import usertypes
 
@@ -88,6 +89,22 @@ class TestTabWidget:
 
         style_opt = paint_spy.return_value.drawControl.call_args_list[0][0][1]
         assert style_opt.text.endswith(widget.tabBar().tabText(0))
+
+    def test_inactive_workspace_pane_does_not_style_current_tab_as_selected(
+        self, widget, fake_web_tab
+    ):
+        widget.addTab(fake_web_tab(), "one")
+        bar = widget.tab_bar()
+
+        active_option = QStyleOptionTab()
+        bar.initStyleOption(active_option, 0)
+        assert active_option.state & QStyle.StateFlag.State_Selected
+
+        bar.set_workspace_pane_active(False)
+        inactive_option = QStyleOptionTab()
+        bar.initStyleOption(inactive_option, 0)
+
+        assert not inactive_option.state & QStyle.StateFlag.State_Selected
 
     @pytest.mark.parametrize("shrink_pinned", [True, False])
     @pytest.mark.parametrize("vertical", [True, False])

@@ -394,6 +394,7 @@ class TabBar(QTabBar):
     def __init__(self, win_id, parent=None):
         super().__init__(parent)
         self._win_id = win_id
+        self._workspace_pane_active = True
         self._our_style = TabBarStyle()
         self.setStyle(self._our_style)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
@@ -693,6 +694,8 @@ class TabBar(QTabBar):
         Used to calculate styling clues from a widget for the GUI layer.
         """
         super().initStyleOption(opt, idx)
+        if not self._workspace_pane_active:
+            opt.state &= ~QStyle.StateFlag.State_Selected
 
         # Re-do the text elision that the base QTabBar does, but using a text
         # rectangle computed by out TabBarStyle. With Qt6 the base class ends
@@ -710,10 +713,17 @@ class TabBar(QTabBar):
             Qt.TextFlag.TextShowMnemonic,
         )
 
+    def set_workspace_pane_active(self, active: bool) -> None:
+        """Control whether this pane may render a selected tab."""
+        if self._workspace_pane_active == active:
+            return
+        self._workspace_pane_active = active
+        self.update()
+
     def paintEvent(self, event):
         """Override paintEvent to draw the tabs like we want to."""
         p = QStylePainter(self)
-        selected = self.currentIndex()
+        selected = self.currentIndex() if self._workspace_pane_active else -1
         for idx in range(self.count()):
             if not event.region().intersects(self.tabRect(idx)):
                 # Don't repaint if we are outside the requested region

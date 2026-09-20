@@ -88,12 +88,12 @@ def test_terminal_view_tracks_terminal_cursor(qtbot):
     backend = FakeBackend()
     view = terminalcontent.TerminalView(backend)
     qtbot.addWidget(view)
-    view.screen.resize(rows=3, columns=8)
+    view.term_screen.resize(rows=3, columns=8)
 
     view._on_data(b"abc\x1b[2;4HZ")
 
-    row, column = view.screen.cursor
-    expected = row * (view.screen.columns + 1) + column
+    row, column = view.term_screen.cursor
+    expected = row * (view.term_screen.columns + 1) + column
     assert view.textCursor().position() == expected
 
 

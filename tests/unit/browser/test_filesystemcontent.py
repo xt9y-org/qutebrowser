@@ -142,6 +142,34 @@ def test_shift_h_navigates_to_parent(qtbot, tmp_path):
     assert content.path == tmp_path.absolute()
 
 
+def test_enter_navigates_into_selected_directory(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    qtbot.addWidget(content.widget)
+    index = content._widget.model.index(str(child))
+    assert index.isValid()
+    content.tree.setCurrentIndex(index)
+
+    qtbot.keyPress(content.tree, Qt.Key.Key_Return)
+
+    assert content.path == child.absolute()
+
+
+def test_activate_current_navigates_into_selected_directory(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    qtbot.addWidget(content.widget)
+    index = content._widget.model.index(str(child))
+    assert index.isValid()
+    content.tree.setCurrentIndex(index)
+
+    content.activate_current()
+
+    assert content.path == child.absolute()
+
+
 def test_directory_activation_does_not_propagate_navigation_error(
     qtbot, tmp_path, monkeypatch
 ):

@@ -68,6 +68,10 @@ class PaneManager(workspacesplit.SplitLayout):
 
     def activate(self, browser: tabbedbrowser.TabbedBrowser) -> None:
         """Make ``browser`` the command/status target for this window."""
+        for pane_browser in self._browsers.values():
+            pane_browser.widget.tab_bar().set_workspace_pane_active(
+                pane_browser is browser
+            )
         self.active = browser
         self.window._command_dispatcher._tabbed_browser = browser
         objreg.register(
@@ -112,6 +116,7 @@ class PaneManager(workspacesplit.SplitLayout):
             private=self.window.is_private,
             parent=self.window,
         )
+        browser.widget.tab_bar().set_workspace_pane_active(False)
         self._browsers[browser.widget] = browser
         self._connect_secondary_status(browser)
         browser.close_window.connect(
@@ -356,13 +361,21 @@ def workspace_pane_close(self):
 @cmdutils.register(instance="main-window", scope="window")
 def workspace_pane_next(self):
     """Focus the next split pane."""
-    _pane_manager(self).focus_relative(1)
+    manager = _pane_manager(self)
+    if len(manager.pane_widgets()) > 1:
+        manager.focus_relative(1)
+    else:
+        self._command_dispatcher.tab_next()
 
 
 @cmdutils.register(instance="main-window", scope="window")
 def workspace_pane_prev(self):
     """Focus the previous split pane."""
-    _pane_manager(self).focus_relative(-1)
+    manager = _pane_manager(self)
+    if len(manager.pane_widgets()) > 1:
+        manager.focus_relative(-1)
+    else:
+        self._command_dispatcher.tab_prev()
 
 
 def _install_layout() -> None:
