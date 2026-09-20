@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from qutebrowser.browser import filesystemcontent, workspace
+from qutebrowser.qt.core import Qt
 
 
 def test_filesystem_content_defaults_to_home(qtbot, monkeypatch, tmp_path):
@@ -122,6 +123,41 @@ def test_parent_navigation(qtbot, tmp_path):
     qtbot.addWidget(content.widget)
 
     content.go_parent()
+
+    assert content.path == tmp_path.absolute()
+
+
+def test_shift_h_navigates_to_parent(qtbot, tmp_path):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(child)
+    qtbot.addWidget(content.widget)
+
+    qtbot.keyPress(
+        content.tree,
+        Qt.Key.Key_H,
+        modifier=Qt.KeyboardModifier.ShiftModifier,
+    )
+
+    assert content.path == tmp_path.absolute()
+
+
+def test_directory_activation_does_not_propagate_navigation_error(
+    qtbot, tmp_path, monkeypatch
+):
+    child = tmp_path / "child"
+    child.mkdir()
+    content = filesystemcontent.FilesystemContent(tmp_path)
+    qtbot.addWidget(content.widget)
+    index = content._widget.model.index(str(child))
+    assert index.isValid()
+
+    def fail_set_path(_path):
+        raise PermissionError("blocked")
+
+    monkeypatch.setattr(content._widget, "set_path", fail_set_path)
+
+    content._widget._on_activated(index)
 
     assert content.path == tmp_path.absolute()
 

@@ -8,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from qutebrowser.browser import workspace
-from qutebrowser.mainwindow import workspacehost
+from qutebrowser.mainwindow import tabbedbrowser, workspacehost
 from qutebrowser.qt.core import QUrl
 from qutebrowser.qt.widgets import QLabel
 from qutebrowser.utils import objreg, usertypes
@@ -90,10 +90,42 @@ def test_workspace_tab_wraps_native_content(qtbot):
     )
     assert not tab.pending_removal
     assert not tab.data.pinned
-    assert tab.data.input_mode is usertypes.KeyMode.passthrough
+    assert tab.data.input_mode is usertypes.KeyMode.normal
 
 
-def test_terminal_tab_uses_passthrough_input_mode(qtbot):
+def test_workspace_tab_can_be_resolved_as_current_tab(qtbot, tab_registry):
+    tab = workspacehost.WorkspaceTab(
+        FakeTerminalContent(),
+        win_id=0,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    objreg.register('tabbed-browser', browser, scope='window', window=0)
+    try:
+        assert objreg.get(
+            'tab', scope='tab', window=0, tab='current'
+        ) is tab
+        assert tab_registry[tab.tab_id] is tab
+    finally:
+        objreg.delete('tabbed-browser', scope='window', window=0)
+
+
+def test_filesystem_tab_starts_in_normal_mode(qtbot):
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+
+    assert tab.data.input_mode is usertypes.KeyMode.normal
+
+
+def test_terminal_tab_starts_in_normal_mode(qtbot):
     tab = workspacehost.WorkspaceTab(
         FakeTerminalContent(),
         win_id=1,
@@ -101,27 +133,7 @@ def test_terminal_tab_uses_passthrough_input_mode(qtbot):
     )
     qtbot.addWidget(tab)
 
-    assert tab.data.input_mode is usertypes.KeyMode.passthrough
-
-
-def test_workspace_tab_registers_for_tab_scoped_lookups(qtbot, win_registry):
-    win_registry.add_window(1)
-    tab_registry = objreg.ObjectRegistry()
-    objreg.register("tab-registry", tab_registry, scope="window", window=1)
-
-    tab = workspacehost.WorkspaceTab(FakeContent(), win_id=1, private=False)
-    qtbot.addWidget(tab)
-
-    try:
-        assert tab_registry[tab.tab_id] is tab
-        assert objreg.get(
-            "tab",
-            scope="tab",
-            window=1,
-            tab=tab.tab_id,
-        ) is tab
-    finally:
-        objreg.delete("tab-registry", scope="window", window=1)
+    assert tab.data.input_mode is usertypes.KeyMode.normal
 
 
 def test_workspace_escape_leaves_passthrough(monkeypatch):
@@ -140,6 +152,175 @@ def test_workspace_escape_leaves_passthrough(monkeypatch):
             {"maybe": True},
         )
     ]
+
+
+def test_workspace_tab_change_keeps_terminal_in_normal_mode(
+    qtbot, config_stub, monkeypatch,
+):
+    config_stub.val.tabs.mode_on_change = "normal"
+    tab = workspacehost.WorkspaceTab(
+        FakeTerminalContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+    entered = []
+
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "instance",
+        lambda _win_id: SimpleNamespace(mode=usertypes.KeyMode.normal),
+    )
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "enter",
+        lambda *args: entered.append(args),
+    )
+    monkeypatch.setattr(workspacehost.modeman, "leave", lambda *args, **kwargs: None)
+    monkeypatch.setattr(workspacehost.QTimer, "singleShot", lambda *_args: None)
+
+    signal = SimpleNamespace(emit=lambda *_args: None)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(
+            widget=lambda _idx: tab,
+            currentIndex=lambda: 0,
+        ),
+        is_shutting_down=False,
+        _win_id=1,
+        _now_focused=None,
+        tab_deque=SimpleNamespace(on_switch=lambda _tab: None),
+        cur_url_changed=signal,
+        cur_progress=signal,
+        cur_load_status_changed=signal,
+        _update_window_title=lambda: None,
+        _tab_insert_idx_left=0,
+        _tab_insert_idx_right=0,
+    )
+
+    tabbedbrowser.TabbedBrowser._on_current_changed(browser, 0)
+
+    assert entered == []
+
+
+def test_workspace_tab_change_keeps_filesystem_in_normal_mode(
+    qtbot, config_stub, monkeypatch,
+):
+    config_stub.val.tabs.mode_on_change = "normal"
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+    entered = []
+
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "instance",
+        lambda _win_id: SimpleNamespace(mode=usertypes.KeyMode.normal),
+    )
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "enter",
+        lambda *args: entered.append(args),
+    )
+    monkeypatch.setattr(workspacehost.modeman, "leave", lambda *args, **kwargs: None)
+    monkeypatch.setattr(workspacehost.QTimer, "singleShot", lambda *_args: None)
+
+    signal = SimpleNamespace(emit=lambda *_args: None)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(
+            widget=lambda _idx: tab,
+            currentIndex=lambda: 0,
+        ),
+        is_shutting_down=False,
+        _win_id=1,
+        _now_focused=None,
+        tab_deque=SimpleNamespace(on_switch=lambda _tab: None),
+        cur_url_changed=signal,
+        cur_progress=signal,
+        cur_load_status_changed=signal,
+        _update_window_title=lambda: None,
+        _tab_insert_idx_left=0,
+        _tab_insert_idx_right=0,
+    )
+
+    tabbedbrowser.TabbedBrowser._on_current_changed(browser, 0)
+
+    assert entered == []
+
+
+def test_workspace_tab_change_does_not_restore_workspace_input_mode(
+    qtbot, config_stub, monkeypatch,
+):
+    config_stub.val.tabs.mode_on_change = "restore"
+    tab = workspacehost.WorkspaceTab(
+        FakeContent(),
+        win_id=1,
+        private=False,
+    )
+    tab.data.input_mode = usertypes.KeyMode.passthrough
+    qtbot.addWidget(tab)
+    entered = []
+
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "instance",
+        lambda _win_id: SimpleNamespace(mode=usertypes.KeyMode.normal),
+    )
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "enter",
+        lambda *args: entered.append(args),
+    )
+    monkeypatch.setattr(workspacehost.modeman, "leave", lambda *args, **kwargs: None)
+    monkeypatch.setattr(workspacehost.QTimer, "singleShot", lambda *_args: None)
+
+    signal = SimpleNamespace(emit=lambda *_args: None)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(
+            widget=lambda _idx: tab,
+            currentIndex=lambda: 0,
+        ),
+        is_shutting_down=False,
+        _win_id=1,
+        _now_focused=None,
+        tab_deque=SimpleNamespace(on_switch=lambda _tab: None),
+        cur_url_changed=signal,
+        cur_progress=signal,
+        cur_load_status_changed=signal,
+        _update_window_title=lambda: None,
+        _tab_insert_idx_left=0,
+        _tab_insert_idx_right=0,
+    )
+
+    tabbedbrowser.TabbedBrowser._on_current_changed(browser, 0)
+
+    assert entered == []
+
+
+def test_workspace_tab_mode_restore_survives_tab_switch(
+    qtbot, config_stub,
+):
+    config_stub.val.tabs.mode_on_change = "restore"
+    tab = workspacehost.WorkspaceTab(
+        FakeTerminalContent(),
+        win_id=1,
+        private=False,
+    )
+    qtbot.addWidget(tab)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+
+    tabbedbrowser.TabbedBrowser.on_mode_entered(
+        browser,
+        usertypes.KeyMode.passthrough,
+    )
+    assert tab.data.input_mode is usertypes.KeyMode.passthrough
+
+    tabbedbrowser.TabbedBrowser.on_mode_left(browser)
+    assert tab.data.input_mode is usertypes.KeyMode.normal
 
 
 def test_workspace_tab_focus_delegates(qtbot):

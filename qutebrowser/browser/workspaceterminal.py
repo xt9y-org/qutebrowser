@@ -337,7 +337,11 @@ class TerminalContent:
         shell: str | None = None,
         parent: QWidget | None = None,
     ) -> None:
-        self.cwd = Path(cwd or os.getcwd()).expanduser().resolve()
+        self.cwd = (
+            Path.home().resolve()
+            if cwd is None
+            else Path(cwd).expanduser().resolve()
+        )
         if not self.cwd.is_dir():
             raise NotADirectoryError(str(self.cwd))
         self.shell = shell or default_shell()

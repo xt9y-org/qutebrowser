@@ -4,10 +4,25 @@
 
 """Tests for the native workspace terminal."""
 
+from pathlib import Path
 from types import SimpleNamespace
 
 from qutebrowser.browser import conpty, terminalbackend, terminalcontent, workspaceterminal
 from qutebrowser.qt.core import Qt
+
+
+class FakeBackend(terminalcontent.TerminalBackend):
+    def start(self):
+        pass
+
+    def shutdown(self):
+        pass
+
+    def write(self, _data):
+        pass
+
+    def resize(self, _rows, _columns):
+        pass
 
 
 def test_sgr_style_is_stored_per_cell():
@@ -70,7 +85,7 @@ def test_alternate_screen_restores_main_screen():
 
 
 def test_plain_escape_requests_workspace_leave(qtbot):
-    class FakeBackend(terminalcontent.TerminalBackend):
+    class EscapeBackend(terminalcontent.TerminalBackend):
         def __init__(self):
             super().__init__()
             self.writes = []
@@ -87,7 +102,7 @@ def test_plain_escape_requests_workspace_leave(qtbot):
         def resize(self, _rows, _columns):
             pass
 
-    backend = FakeBackend()
+    backend = EscapeBackend()
     view = workspaceterminal.TerminalView(backend)
     qtbot.addWidget(view)
 
@@ -128,19 +143,6 @@ def test_windows_backend_selection(monkeypatch, tmp_path):
 
 
 def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch, qtbot):
-    class FakeBackend(terminalcontent.TerminalBackend):
-        def start(self):
-            pass
-
-        def shutdown(self):
-            pass
-
-        def write(self, _data):
-            pass
-
-        def resize(self, _rows, _columns):
-            pass
-
     monkeypatch.setattr(
         workspaceterminal,
         "create_backend",
@@ -153,3 +155,17 @@ def test_terminal_session_state_keeps_cwd_and_shell(tmp_path, monkeypatch, qtbot
 
     assert state.kind is workspaceterminal.workspace.ContentKind.TERMINAL
     assert state.state == {"cwd": str(tmp_path.resolve()), "shell": "test-shell"}
+
+
+def test_terminal_defaults_to_home(tmp_path, monkeypatch, qtbot):
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
+    monkeypatch.setattr(
+        workspaceterminal,
+        "create_backend",
+        lambda **_kwargs: FakeBackend(),
+    )
+
+    content = workspaceterminal.TerminalContent(shell="test-shell")
+    qtbot.addWidget(content.widget)
+
+    assert content.cwd == tmp_path.resolve()

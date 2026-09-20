@@ -55,21 +55,9 @@ class WorkspaceTab(QWidget):
         self.win_id = win_id
         self.is_private = private
         self.tab_id = next(_workspace_tab_ids)
-        self.data = WorkspaceTabData(input_mode=usertypes.KeyMode.passthrough)
+        self.data = WorkspaceTabData()
         self.pending_removal = False
-
-        self.registry = objreg.ObjectRegistry()
-        objreg.register("tab", self, registry=self.registry)
-        try:
-            tab_registry = objreg.get(
-                "tab-registry",
-                scope="window",
-                window=win_id,
-            )
-        except objreg.RegistryUnavailableError:
-            pass
-        else:
-            tab_registry[self.tab_id] = self
+        _register_workspace_tab(self)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -102,6 +90,19 @@ class WorkspaceTab(QWidget):
 
 def is_workspace_tab(tab: object) -> bool:
     return isinstance(tab, WorkspaceTab)
+
+
+def _register_workspace_tab(tab: WorkspaceTab) -> None:
+    """Register a native tab like a regular browser tab."""
+    tab.registry = objreg.ObjectRegistry()
+    objreg.register('tab', tab, registry=tab.registry)
+    try:
+        tab_registry = objreg.get(
+            'tab-registry', scope='window', window=tab.win_id
+        )
+    except objreg.RegistryUnavailableError:
+        return
+    tab_registry[tab.tab_id] = tab
 
 
 def _workspace_fields(
@@ -243,6 +244,8 @@ def install() -> None:
     original_tb_remove_tab = tabbedbrowser.TabbedBrowser._remove_tab
     original_tb_tabopen = tabbedbrowser.TabbedBrowser.tabopen
     original_tb_load_url = tabbedbrowser.TabbedBrowser.load_url
+    original_tb_on_mode_entered = tabbedbrowser.TabbedBrowser.on_mode_entered
+    original_tb_on_mode_left = tabbedbrowser.TabbedBrowser.on_mode_left
 
     def tb_tab_by_idx(self, idx):
         tab = self.widget.widget(idx)
@@ -265,19 +268,13 @@ def install() -> None:
         log.modes.debug("Current workspace tab changed, focusing {!r}".format(tab))
         tab.setFocus()
 
-        modes_to_leave = [usertypes.KeyMode.hint, usertypes.KeyMode.caret]
-        if config.val.tabs.mode_on_change == "normal":
-            modes_to_leave += modeman.INPUT_MODES
+        modes_to_leave = [
+            usertypes.KeyMode.hint,
+            usertypes.KeyMode.caret,
+            *modeman.INPUT_MODES,
+        ]
         for mode in modes_to_leave:
             modeman.leave(self._win_id, mode, "workspace tab changed", maybe=True)
-
-        mm = modeman.instance(self._win_id)
-        if mm.mode not in modeman.PROMPT_MODES:
-            modeman.enter(
-                self._win_id,
-                usertypes.KeyMode.passthrough,
-                "native workspace tab",
-            )
 
         if self._now_focused is not None:
             self.tab_deque.on_switch(self._now_focused)
@@ -353,6 +350,25 @@ def install() -> None:
             return
         return original_tb_load_url(self, url, newtab)
 
+    def tb_on_mode_entered(self, mode):
+        tab = self.widget.currentWidget()
+        if isinstance(tab, WorkspaceTab):
+            if (
+                config.val.tabs.mode_on_change == "restore"
+                and mode in modeman.INPUT_MODES
+            ):
+                tab.data.input_mode = mode
+            return
+        return original_tb_on_mode_entered(self, mode)
+
+    def tb_on_mode_left(self):
+        tab = self.widget.currentWidget()
+        if isinstance(tab, WorkspaceTab):
+            if config.val.tabs.mode_on_change == "restore":
+                tab.data.input_mode = usertypes.KeyMode.normal
+            return
+        return original_tb_on_mode_left(self)
+
     def tabopen_workspace(
         self,
         content,
@@ -417,6 +433,8 @@ def install() -> None:
     tabbedbrowser.TabbedBrowser._remove_tab = tb_remove_tab
     tabbedbrowser.TabbedBrowser.tabopen = tb_tabopen
     tabbedbrowser.TabbedBrowser.load_url = tb_load_url
+    tabbedbrowser.TabbedBrowser.on_mode_entered = tb_on_mode_entered
+    tabbedbrowser.TabbedBrowser.on_mode_left = tb_on_mode_left
     tabbedbrowser.TabbedBrowser.tabopen_workspace = tabopen_workspace
 
 

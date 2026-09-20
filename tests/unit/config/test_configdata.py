@@ -50,6 +50,13 @@ def test_data(config_stub):
         assert '.  ' not in option.description, option
 
 
+def test_passthrough_escape_leaves_mode(config_stub):
+    bindings = configdata.DATA['bindings.default'].default['passthrough']
+
+    assert bindings['<Escape>'] == 'mode-leave'
+    assert bindings['<Shift-Escape>'] == 'fake-key <Escape>'
+
+
 def test_init_benchmark(benchmark):
     benchmark(configdata.init)
 

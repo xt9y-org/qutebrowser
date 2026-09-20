@@ -70,6 +70,12 @@ class _FilesystemTree(QTreeView):
         if event.key() == Qt.Key.Key_Backspace:
             self.parent_requested.emit()
             return
+        if (
+            event.key() == Qt.Key.Key_H
+            and event.modifiers() & Qt.KeyboardModifier.ShiftModifier
+        ):
+            self.parent_requested.emit()
+            return
         if event.key() == Qt.Key.Key_Home and (
             event.modifiers() & Qt.KeyboardModifier.ControlModifier
         ):
@@ -112,7 +118,10 @@ class _FilesystemWidget(QWidget):
     def _on_activated(self, index: QModelIndex) -> None:
         path = Path(self.model.filePath(index)).expanduser().absolute()
         if path.is_dir():
-            self.set_path(path)
+            try:
+                self.set_path(path)
+            except OSError:
+                return
         else:
             self.file_activated.emit(str(path))
 
