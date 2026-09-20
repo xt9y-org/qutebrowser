@@ -35,6 +35,20 @@ def _qt_value(obj: Any, name: str) -> Any:
     return value() if callable(value) else value
 
 
+def _once(callback: Callable[[], None]) -> Callable[[], None]:
+    """Return a callback which invokes *callback* at most once."""
+    called = False
+
+    def wrapper() -> None:
+        nonlocal called
+        if called:
+            return
+        called = True
+        callback()
+
+    return wrapper
+
+
 class QtWebAuthUi:
     """Non-blocking Qt widgets used by :class:`WebAuthHandler`."""
 
@@ -111,8 +125,9 @@ class QtWebAuthUi:
             "(for example, touch the security key or use platform biometrics)."
         )
         dialog.setStandardButtons(QMessageBox.StandardButton.Cancel)
-        dialog.rejected.connect(on_cancel)
-        dialog.buttonClicked.connect(lambda _button: on_cancel())
+        cancel_once = _once(on_cancel)
+        dialog.rejected.connect(cancel_once)
+        dialog.buttonClicked.connect(lambda _button: cancel_once())
         self._replace_dialog(dialog)
 
     def request_failed(
@@ -125,16 +140,17 @@ class QtWebAuthUi:
         dialog.setText(f"Passkey request for {relying_party} failed: {reason}.")
         dialog.setStandardButtons(
             QMessageBox.StandardButton.Retry | QMessageBox.StandardButton.Cancel)
+        retry_once = _once(on_retry)
+        cancel_once = _once(on_cancel)
 
         def clicked(button) -> None:
-            role = dialog.buttonRole(button)
-            if role == QMessageBox.ButtonRole.AcceptRole:
-                on_retry()
+            if dialog.standardButton(button) == QMessageBox.StandardButton.Retry:
+                retry_once()
             else:
-                on_cancel()
+                cancel_once()
 
         dialog.buttonClicked.connect(clicked)
-        dialog.rejected.connect(on_cancel)
+        dialog.rejected.connect(cancel_once)
         self._replace_dialog(dialog)
 
 
