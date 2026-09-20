@@ -145,6 +145,16 @@ def _open_file(browser, path: str) -> None:
     )
 
 
+def _leave_workspace_input(browser) -> None:
+    """Leave native workspace passthrough mode without forwarding Escape."""
+    modeman.leave(
+        browser._win_id,
+        usertypes.KeyMode.passthrough,
+        "workspace escape",
+        maybe=True,
+    )
+
+
 def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
     """Route optional native-content signals into qutebrowser behavior."""
     widget = tab.content.widget
@@ -158,6 +168,12 @@ def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
     if file_activated is not None:
         file_activated.connect(
             lambda path, browser=browser: _open_file(browser, path)
+        )
+
+    escape_requested = getattr(widget, "escape_requested", None)
+    if escape_requested is not None:
+        escape_requested.connect(
+            lambda browser=browser: _leave_workspace_input(browser)
         )
 
 
