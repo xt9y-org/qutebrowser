@@ -21,6 +21,7 @@ on:
       - "qutebrowser/**"
       - "misc/qutebrowser.spec"
       - "scripts/dev/build_release.py"
+      - "scripts/dev/release_artifacts.py"
       - "scripts/dev/update_3rdparty.py"
       - "tox.ini"
       - "requirements.txt"
@@ -60,6 +61,9 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Embed fork release identity
+        run: python scripts/dev/release_artifacts.py metadata
 
       - name: Install NSIS
         if: runner.os == 'Windows'
@@ -101,14 +105,20 @@ jobs:
             exit $LASTEXITCODE
           }
 
+      - name: Generate SHA-256 checksums
+        run: python scripts/dev/release_artifacts.py checksums dist
+
       - name: Upload packaged artifacts
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
           path: |
             dist/qutebrowser-*.dmg
+            dist/qutebrowser-*.dmg.sha256
             dist/qutebrowser-*-windows-standalone*.zip
+            dist/qutebrowser-*-windows-standalone*.zip.sha256
             dist/qutebrowser-*-amd64.exe
+            dist/qutebrowser-*-amd64.exe.sha256
           if-no-files-found: error
           retention-days: 30
 
@@ -126,6 +136,9 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Embed fork release identity
+        run: python scripts/dev/release_artifacts.py metadata
 
       - name: Install system dependencies
         run: |
@@ -178,10 +191,46 @@ jobs:
           version="$(python -c 'import qutebrowser; print(qutebrowser.__version__)')"
           tar -C dist -czf "dist/qutebrowser-${version}-linux-x86_64.tar.gz" qutebrowser
 
+      - name: Generate SHA-256 checksums
+        run: python scripts/dev/release_artifacts.py checksums dist
+
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v7
         with:
           name: qutebrowser-linux-x86_64
-          path: dist/qutebrowser-*-linux-x86_64.tar.gz
+          path: |
+            dist/qutebrowser-*-linux-x86_64.tar.gz
+            dist/qutebrowser-*-linux-x86_64.tar.gz.sha256
           if-no-files-found: error
           retention-days: 30
+
+  publish:
+    name: Publish GitHub release assets
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - packaged
+      - linux
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download packaged artifacts
+        uses: actions/download-artifact@v7
+        with:
+          path: release-assets
+
+      - name: Publish binaries and checksums
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            release-assets/**/*.dmg
+            release-assets/**/*.dmg.sha256
+            release-assets/**/*.exe
+            release-assets/**/*.exe.sha256
+            release-assets/**/*.zip
+            release-assets/**/*.zip.sha256
+            release-assets/**/*.tar.gz
+            release-assets/**/*.tar.gz.sha256
+          fail_on_unmatched_files: true
