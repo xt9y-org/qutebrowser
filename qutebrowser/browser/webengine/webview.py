@@ -17,7 +17,7 @@ from qutebrowser.qt.webenginecore import (
 )
 
 from qutebrowser.browser import shared
-from qutebrowser.browser.webengine import webenginesettings, certificateerror
+from qutebrowser.browser.webengine import webenginesettings, certificateerror, webauth
 from qutebrowser.config import config
 from qutebrowser.utils import log, debug, usertypes, qtutils
 
@@ -239,6 +239,14 @@ class WebEnginePage(QWebEnginePage):
         if machinery.IS_QT6:
             self.certificateError.connect(self._handle_certificate_error)
             # Qt 5: Overridden method instead of signal
+
+        self._webauth = None
+        if hasattr(self, 'webAuthUxRequested'):
+            self._webauth = webauth.WebAuthHandler(
+                ui=webauth.QtWebAuthUi(parent=parent))
+            self.webAuthUxRequested.connect(self._webauth.handle_request)
+            self.loadStarted.connect(self._webauth.abort)
+            self.shutting_down.connect(self._webauth.abort)
 
     @config.change_filter('colors.webpage.bg')
     def _set_bg_color(self):
