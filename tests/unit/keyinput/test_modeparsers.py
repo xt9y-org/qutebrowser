@@ -4,10 +4,12 @@
 
 """Tests for mode parsers."""
 
-from qutebrowser.qt.core import Qt
-from qutebrowser.qt.gui import QKeySequence
+from types import SimpleNamespace
 
 import pytest
+
+from qutebrowser.qt.core import Qt
+from qutebrowser.qt.gui import QKeySequence
 
 from qutebrowser.keyinput import modeparsers, keyutils
 from qutebrowser.config import configexc
@@ -16,6 +18,63 @@ from qutebrowser.config import configexc
 @pytest.fixture
 def commandrunner(stubs):
     return stubs.FakeCommandRunner()
+
+
+class ExplodingCommandRunner:
+
+    def run(self, _cmdstr, _count):
+        raise ValueError("boom")
+
+
+def test_command_error_is_contained_for_native_workspace(
+    monkeypatch, key_config_stub
+):
+    tab = SimpleNamespace(is_native_workspace_tab=True)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    errors = []
+    monkeypatch.setattr(
+        modeparsers.objreg,
+        "get",
+        lambda *_args, **_kwargs: browser,
+    )
+    monkeypatch.setattr(
+        modeparsers.message,
+        "error",
+        lambda text, **_kwargs: errors.append(text),
+    )
+    parser = modeparsers.CommandKeyParser(
+        mode=modeparsers.usertypes.KeyMode.normal,
+        win_id=1,
+        commandrunner=ExplodingCommandRunner(),
+    )
+
+    parser.execute("hint")
+
+    assert errors == ["Command 'hint' is not available in this workspace."]
+
+
+def test_command_error_still_propagates_for_web_tab(
+    monkeypatch, key_config_stub
+):
+    tab = SimpleNamespace(is_native_workspace_tab=False)
+    browser = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    monkeypatch.setattr(
+        modeparsers.objreg,
+        "get",
+        lambda *_args, **_kwargs: browser,
+    )
+    parser = modeparsers.CommandKeyParser(
+        mode=modeparsers.usertypes.KeyMode.normal,
+        win_id=1,
+        commandrunner=ExplodingCommandRunner(),
+    )
+
+    with pytest.raises(ValueError, match="boom"):
+        parser.execute("hint")
 
 
 class TestsNormalKeyParser:

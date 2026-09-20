@@ -78,6 +78,8 @@ class _WorkspaceCaret:
 class WorkspaceTab(QWidget):
     """A qutebrowser tab shell containing non-web workspace content."""
 
+    is_native_workspace_tab = True
+
     def __init__(
         self,
         content: workspace.WorkspaceContent,

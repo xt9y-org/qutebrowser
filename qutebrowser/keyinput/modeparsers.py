@@ -28,6 +28,22 @@ if TYPE_CHECKING:
 STARTCHARS = ":/?"
 
 
+def _native_workspace_active(win_id: int) -> bool:
+    """Return whether the active tab is native workspace content."""
+    try:
+        browser = objreg.get(
+            'tabbed-browser', scope='window', window=win_id
+        )
+    except (KeyError, objreg.RegistryUnavailableError):
+        return False
+
+    tab = browser.widget.currentWidget()
+    return bool(
+        tab is not None and
+        getattr(tab, 'is_native_workspace_tab', False)
+    )
+
+
 class LastPress(enum.Enum):
 
     """Whether the last keypress filtered a text or was part of a keystring."""
@@ -62,6 +78,15 @@ class CommandKeyParser(basekeyparser.BaseKeyParser):
             self._commandrunner.run(cmdstr, count)
         except cmdexc.Error as e:
             message.error(str(e), stack=traceback.format_exc())
+        except Exception:
+            if not _native_workspace_active(self._win_id):
+                raise
+            message.error(
+                "Command {!r} is not available in this workspace.".format(
+                    cmdstr
+                ),
+                stack=traceback.format_exc(),
+            )
 
 
 class NormalKeyParser(CommandKeyParser):
