@@ -247,6 +247,27 @@ def _read_yaml(
     return parsed, migrations
 
 
+def _add_xt9y_options(data: Mapping[str, Option]) -> Mapping[str, Option]:
+    """Add fork-specific options without rewriting upstream configdata.yml."""
+    extended = dict(data)
+    extended['content.webgpu'] = Option(
+        name='content.webgpu',
+        typ=configtypes.String(valid_values=configtypes.ValidValues(
+            'auto', 'always', 'never')),
+        default='auto',
+        backends=[usertypes.Backend.QtWebEngine],
+        raw_backends=None,
+        description=(
+            "Control WebGPU support in QtWebEngine. 'auto' keeps Chromium's "
+            "default, 'always' enables the WebGPU feature, and 'never' "
+            "disables it. Availability still depends on the bundled "
+            "QtWebEngine/Chromium build and graphics backend."
+        ),
+        restart=True,
+    )
+    return extended
+
+
 @debugcachestats.register()
 @functools.lru_cache(maxsize=256)
 def is_valid_prefix(prefix: str) -> bool:
@@ -257,4 +278,5 @@ def is_valid_prefix(prefix: str) -> bool:
 def init() -> None:
     """Initialize configdata from the YAML file."""
     global DATA, MIGRATIONS
-    DATA, MIGRATIONS = _read_yaml(resources.read_file('config/configdata.yml'))
+    data, MIGRATIONS = _read_yaml(resources.read_file('config/configdata.yml'))
+    DATA = _add_xt9y_options(data)
