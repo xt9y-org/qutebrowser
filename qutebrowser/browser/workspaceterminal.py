@@ -25,6 +25,7 @@ from qutebrowser.qt.gui import (
 from qutebrowser.qt.widgets import QApplication, QPlainTextEdit, QWidget
 
 from qutebrowser.browser import terminalbackend, workspace, workspacevt
+from qutebrowser.utils import log
 
 Color = workspacevt.Color
 TerminalStyle = workspacevt.TerminalStyle
@@ -133,11 +134,25 @@ class TerminalView(QPlainTextEdit):
         self.backend.data_received.connect(self._on_data)
         self.backend.process_exited.connect(self._on_exit)
 
+    def _write_backend(self, data: bytes) -> None:
+        """Write terminal input without leaking transport errors into Qt."""
+        try:
+            self.backend.write(data)
+        except (OSError, RuntimeError) as error:
+            log.misc.error("Terminal input transport failed: %s", error)
+
+    def _resize_backend(self, rows: int, columns: int) -> None:
+        """Resize the terminal without leaking transport errors into Qt."""
+        try:
+            self.backend.resize(rows, columns)
+        except (OSError, RuntimeError) as error:
+            log.misc.error("Terminal resize transport failed: %s", error)
+
     def _on_data(self, data: bytes) -> None:
         self.term_screen.feed(self._decoder.decode(data))
         response = self.term_screen.take_responses()
         if response:
-            self.backend.write(response)
+            self._write_backend(response)
         self._render()
 
     def _on_exit(self, code: int) -> None:
@@ -211,7 +226,7 @@ class TerminalView(QPlainTextEdit):
             data = clipboard.text().encode("utf-8")
             if self.term_screen.bracketed_paste:
                 data = b"\x1b[200~" + data + b"\x1b[201~"
-            self.backend.write(data)
+            self._write_backend(data)
             return
         if self.term_screen.application_cursor:
             data = self._APPLICATION_CURSOR_KEYS.get(event.key())
@@ -227,7 +242,7 @@ class TerminalView(QPlainTextEdit):
             return
         if alt and not data.startswith(b"\x1b"):
             data = b"\x1b" + data
-        self.backend.write(data)
+        self._write_backend(data)
 
     def _mouse_position(self, event: QMouseEvent | QWheelEvent) -> tuple[int, int]:
         pos = event.position() if hasattr(event, "position") else event.pos()
@@ -262,7 +277,7 @@ class TerminalView(QPlainTextEdit):
             data = b"\x1b[M" + bytes(
                 (32 + code, min(255, 32 + x), min(255, 32 + y))
             )
-        self.backend.write(data)
+        self._write_backend(data)
         return True
 
     def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
@@ -321,7 +336,7 @@ class TerminalView(QPlainTextEdit):
         rows = max(1, viewport.height() // max(1, metrics.height()))
         if rows != self.term_screen.rows or columns != self.term_screen.columns:
             self.term_screen.resize(rows=rows, columns=columns)
-            self.backend.resize(rows, columns)
+            self._resize_backend(rows, columns)
             self._render()
 
 

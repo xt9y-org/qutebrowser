@@ -33,6 +33,17 @@ from qutebrowser.utils import objreg, urlutils
 _installed = False
 
 
+def _release_focus_target(
+    browser: tabbedbrowser.TabbedBrowser,
+    window: mainwindow.MainWindow,
+) -> tabbedbrowser.TabbedBrowser:
+    """Return the pane which should receive focus after an overlay closes."""
+    manager = getattr(window, "_workspace_pane_manager", None)
+    if manager is not None and browser is manager.primary:
+        return manager.active
+    return browser
+
+
 class PaneManager(workspacesplit.SplitLayout):
     """Own all TabbedBrowser instances belonging to one qutebrowser window."""
 
@@ -384,6 +395,12 @@ def _install_layout() -> None:
         return
     _installed = True
 
+    original_release_focus = tabbedbrowser.TabbedBrowser.on_release_focus
+
+    def release_focus(browser: tabbedbrowser.TabbedBrowser) -> None:
+        target = _release_focus_target(browser, browser.window())
+        original_release_focus(target)
+
     def add_widgets(window: mainwindow.MainWindow) -> None:
         manager = getattr(window, "_workspace_pane_manager", None)
         if manager is None:
@@ -420,6 +437,7 @@ def _install_layout() -> None:
         for widget in widgets:
             window._vbox.addWidget(widget)
 
+    tabbedbrowser.TabbedBrowser.on_release_focus = release_focus
     mainwindow.MainWindow._add_widgets = add_widgets
 
 

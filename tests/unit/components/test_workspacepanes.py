@@ -119,3 +119,37 @@ def test_activate_marks_only_target_pane_active(monkeypatch):
     assert second.widget.bar.states == [True]
     assert manager.active is second
     assert second.widget.focused
+
+
+def test_release_focus_target_uses_active_secondary_pane():
+    primary = SimpleNamespace()
+    secondary = SimpleNamespace()
+    manager = SimpleNamespace(primary=primary, active=secondary)
+    window = SimpleNamespace(_workspace_pane_manager=manager)
+
+    assert workspacepanes._release_focus_target(primary, window) is secondary
+
+
+def test_release_focus_target_keeps_browser_without_workspace_manager():
+    browser = SimpleNamespace()
+    window = SimpleNamespace()
+
+    assert workspacepanes._release_focus_target(browser, window) is browser
+
+
+def test_primary_release_focus_routes_to_active_secondary_pane():
+    focused = []
+    tab = SimpleNamespace(setFocus=lambda: focused.append(True))
+    secondary = SimpleNamespace(
+        widget=SimpleNamespace(currentWidget=lambda: tab),
+    )
+    window = SimpleNamespace()
+    primary = SimpleNamespace(window=lambda: window)
+    window._workspace_pane_manager = SimpleNamespace(
+        primary=primary,
+        active=secondary,
+    )
+
+    workspacepanes.tabbedbrowser.TabbedBrowser.on_release_focus(primary)
+
+    assert focused == [True]

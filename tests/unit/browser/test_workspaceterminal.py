@@ -4,11 +4,13 @@
 
 """Tests for the native workspace terminal."""
 
+import logging
 from pathlib import Path
 from types import SimpleNamespace
 
 from qutebrowser.browser import conpty, terminalbackend, terminalcontent, workspaceterminal
-from qutebrowser.qt.core import Qt
+from qutebrowser.qt.core import QEvent, Qt
+from qutebrowser.qt.gui import QKeyEvent
 
 
 class FakeBackend(terminalcontent.TerminalBackend):
@@ -110,6 +112,39 @@ def test_plain_escape_requests_workspace_leave(qtbot):
         qtbot.keyClick(view, Qt.Key.Key_Escape)
 
     assert backend.writes == []
+
+
+def test_terminal_input_transport_failure_does_not_escape_qt_event(qtbot, caplog):
+    class FailingBackend(FakeBackend):
+        def write(self, _data):
+            raise OSError("ConPTY input failed")
+
+    view = workspaceterminal.TerminalView(FailingBackend())
+    qtbot.addWidget(view)
+    event = QKeyEvent(
+        QEvent.Type.KeyPress,
+        Qt.Key.Key_A,
+        Qt.KeyboardModifier.NoModifier,
+        "a",
+    )
+
+    with caplog.at_level(logging.ERROR, logger="misc"):
+        view.keyPressEvent(event)
+
+
+def test_terminal_resize_transport_failure_does_not_escape_qt_event(qtbot, caplog):
+    class FailingBackend(FakeBackend):
+        def resize(self, _rows, _columns):
+            raise OSError("ConPTY resize failed")
+
+    view = workspaceterminal.TerminalView(FailingBackend())
+    qtbot.addWidget(view)
+    view.term_screen.resize(rows=1, columns=1)
+
+    with caplog.at_level(logging.ERROR, logger="misc"):
+        view.resize(640, 480)
+        view.show()
+        qtbot.wait(1)
 
 
 def test_unix_backend_selection(monkeypatch, tmp_path):
