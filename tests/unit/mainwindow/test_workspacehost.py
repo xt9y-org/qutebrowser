@@ -5,6 +5,7 @@
 """Tests for workspace tab hosting."""
 
 from pathlib import Path
+from types import SimpleNamespace
 
 from qutebrowser.browser import workspace
 from qutebrowser.mainwindow import workspacehost
@@ -121,6 +122,24 @@ def test_workspace_tab_registers_for_tab_scoped_lookups(qtbot, win_registry):
         ) is tab
     finally:
         objreg.delete("tab-registry", scope="window", window=1)
+
+
+def test_workspace_escape_leaves_passthrough(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        workspacehost.modeman,
+        "leave",
+        lambda *args, **kwargs: calls.append((args, kwargs)),
+    )
+
+    workspacehost._leave_workspace_input(SimpleNamespace(_win_id=7))
+
+    assert calls == [
+        (
+            (7, usertypes.KeyMode.passthrough, "workspace escape"),
+            {"maybe": True},
+        )
+    ]
 
 
 def test_workspace_tab_focus_delegates(qtbot):
