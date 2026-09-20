@@ -141,3 +141,37 @@ def test_newest_release_returns_none_when_current_is_latest():
     assert autoupdate.newest_release(
         releases, current_tag="v3.7.0-xt9y.7"
     ) is None
+
+
+def test_github_client_requests_fork_releases(qtbot):
+    payload = json.dumps([_github_release("v3.7.0-xt9y.8")])
+    http_stub = HTTPGetStub(json=payload)
+    client = autoupdate.GitHubReleaseClient(client=http_stub)
+
+    with qtbot.wait_signal(client.success) as blocker:
+        client.get_releases()
+
+    assert http_stub.url == QUrl(client.API_URL)
+    assert blocker.args[0][0].version.tag == "v3.7.0-xt9y.8"
+
+
+def test_github_client_reports_invalid_json(qtbot):
+    http_stub = HTTPGetStub(json="not json")
+    client = autoupdate.GitHubReleaseClient(client=http_stub)
+
+    with qtbot.assert_not_emitted(client.success):
+        with qtbot.wait_signal(client.error) as blocker:
+            client.get_releases()
+
+    assert "Invalid GitHub release JSON" in blocker.args[0]
+
+
+def test_github_client_forwards_network_error(qtbot):
+    http_stub = HTTPGetStub(success=False)
+    client = autoupdate.GitHubReleaseClient(client=http_stub)
+
+    with qtbot.assert_not_emitted(client.success):
+        with qtbot.wait_signal(client.error) as blocker:
+            client.get_releases()
+
+    assert blocker.args == ["error"]
