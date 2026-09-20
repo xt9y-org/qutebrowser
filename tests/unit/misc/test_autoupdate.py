@@ -1,9 +1,12 @@
 # SPDX-FileCopyrightText: Alexander Cogneau (acogneau) <alexander.cogneau@gmail.com>:
 # SPDX-FileCopyrightText: Freya Bruhin (The Compiler) <mail@qutebrowser.org>
+# SPDX-FileCopyrightText: 2026 Felix Jaschul <felix@xt9y.de>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 """Tests for qutebrowser.misc.autoupdate."""
+
+import json
 
 import pytest
 from qutebrowser.qt.core import QUrl
@@ -76,3 +79,65 @@ def test_invalid_json(qtbot, json):
     with qtbot.assert_not_emitted(client.success):
         with qtbot.wait_signal(client.error):
             client.get_version('test')
+
+
+def _github_release(tag, *, draft=False, prerelease=False, assets=()):
+    return {
+        "tag_name": tag,
+        "draft": draft,
+        "prerelease": prerelease,
+        "assets": [
+            {"name": name, "browser_download_url": url}
+            for name, url in assets
+        ],
+    }
+
+
+def test_parse_github_releases_filters_unusable_entries():
+    payload = json.dumps([
+        _github_release("v3.7.0-xt9y.8", assets=(("qutebrowser-3.7.0-arm64.dmg", "https://example/8"),)),
+        _github_release("v3.7.0-xt9y.9", draft=True),
+        _github_release("v3.7.0-xt9y.10", prerelease=True),
+        _github_release("v3.7.0"),
+    ])
+
+    releases = autoupdate.parse_github_releases(payload)
+
+    assert [release.version.tag for release in releases] == ["v3.7.0-xt9y.8"]
+    assert releases[0].assets[0].url == "https://example/8"
+
+
+def test_parse_github_releases_can_include_prereleases():
+    payload = json.dumps([
+        _github_release("v3.7.0-xt9y.8", prerelease=True),
+    ])
+
+    releases = autoupdate.parse_github_releases(payload, include_prerelease=True)
+
+    assert [release.version.tag for release in releases] == ["v3.7.0-xt9y.8"]
+
+
+def test_newest_release_uses_numeric_revision():
+    payload = json.dumps([
+        _github_release("v3.7.0-xt9y.9"),
+        _github_release("v3.7.0-xt9y.10"),
+        _github_release("v3.8.0-xt9y.1"),
+    ])
+    releases = autoupdate.parse_github_releases(payload)
+
+    newest = autoupdate.newest_release(releases, current_tag="v3.7.0-xt9y.7")
+
+    assert newest is not None
+    assert newest.version.tag == "v3.8.0-xt9y.1"
+
+
+def test_newest_release_returns_none_when_current_is_latest():
+    payload = json.dumps([
+        _github_release("v3.7.0-xt9y.7"),
+        _github_release("v3.7.0-xt9y.6"),
+    ])
+    releases = autoupdate.parse_github_releases(payload)
+
+    assert autoupdate.newest_release(
+        releases, current_tag="v3.7.0-xt9y.7"
+    ) is None
