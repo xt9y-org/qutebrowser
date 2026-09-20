@@ -22,7 +22,7 @@ from qutebrowser.browser import workspace
 from qutebrowser.config import config
 from qutebrowser.keyinput import modeman
 from qutebrowser.mainwindow import mainwindow, tabbedbrowser, tabwidget
-from qutebrowser.utils import log, usertypes
+from qutebrowser.utils import log, objreg, usertypes
 
 
 _workspace_tab_ids = itertools.count(start=-1, step=-1)
@@ -57,6 +57,19 @@ class WorkspaceTab(QWidget):
         self.tab_id = next(_workspace_tab_ids)
         self.data = WorkspaceTabData(input_mode=usertypes.KeyMode.passthrough)
         self.pending_removal = False
+
+        self.registry = objreg.ObjectRegistry()
+        objreg.register("tab", self, registry=self.registry)
+        try:
+            tab_registry = objreg.get(
+                "tab-registry",
+                scope="window",
+                window=win_id,
+            )
+        except objreg.RegistryUnavailableError:
+            pass
+        else:
+            tab_registry[self.tab_id] = self
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -132,6 +145,16 @@ def _open_file(browser, path: str) -> None:
     )
 
 
+def _leave_workspace_input(browser) -> None:
+    """Leave native workspace passthrough mode without forwarding Escape."""
+    modeman.leave(
+        browser._win_id,
+        usertypes.KeyMode.passthrough,
+        "workspace escape",
+        maybe=True,
+    )
+
+
 def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
     """Route optional native-content signals into qutebrowser behavior."""
     widget = tab.content.widget
@@ -145,6 +168,12 @@ def _connect_content_signals(browser, tab: WorkspaceTab) -> None:
     if file_activated is not None:
         file_activated.connect(
             lambda path, browser=browser: _open_file(browser, path)
+        )
+
+    escape_requested = getattr(widget, "escape_requested", None)
+    if escape_requested is not None:
+        escape_requested.connect(
+            lambda browser=browser: _leave_workspace_input(browser)
         )
 
 

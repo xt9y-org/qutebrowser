@@ -7,6 +7,7 @@
 from types import SimpleNamespace
 
 from qutebrowser.browser import conpty, terminalbackend, terminalcontent, workspaceterminal
+from qutebrowser.qt.core import Qt
 
 
 def test_sgr_style_is_stored_per_cell():
@@ -66,6 +67,34 @@ def test_alternate_screen_restores_main_screen():
 
     screen.feed("\x1b[?1049l")
     assert screen.lines()[0].startswith("main")
+
+
+def test_plain_escape_requests_workspace_leave(qtbot):
+    class FakeBackend(terminalcontent.TerminalBackend):
+        def __init__(self):
+            super().__init__()
+            self.writes = []
+
+        def start(self):
+            pass
+
+        def shutdown(self):
+            pass
+
+        def write(self, data):
+            self.writes.append(data)
+
+        def resize(self, _rows, _columns):
+            pass
+
+    backend = FakeBackend()
+    view = workspaceterminal.TerminalView(backend)
+    qtbot.addWidget(view)
+
+    with qtbot.waitSignal(view.escape_requested):
+        qtbot.keyClick(view, Qt.Key.Key_Escape)
+
+    assert backend.writes == []
 
 
 def test_unix_backend_selection(monkeypatch, tmp_path):
