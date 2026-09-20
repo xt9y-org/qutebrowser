@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import pathlib
 import re
+import sys
 from collections.abc import Sequence
 
 from qutebrowser.utils import resources
@@ -80,6 +82,26 @@ def parse_fork_tag(tag: str) -> ForkRelease:
     )
 
 
+def resolve_target(
+        platform_name: str, arch: str, package: str, *,
+        executable: pathlib.Path | None = None) -> PlatformTarget:
+    """Resolve build metadata into the exact installed package kind."""
+    if package != "auto":
+        return PlatformTarget(platform_name, arch, package)
+
+    if platform_name != "windows":
+        raise ValueError(
+            f"Automatic package-kind detection is unsupported on {platform_name}")
+
+    if executable is None:
+        executable = pathlib.Path(sys.executable)
+    install_kind = (
+        "installer" if (executable.parent / "uninst.exe").exists()
+        else "standalone"
+    )
+    return PlatformTarget(platform_name, arch, install_kind)
+
+
 def current() -> BuildInfo | None:
     """Return packaged fork build metadata, or ``None`` for source installs."""
 
@@ -102,11 +124,8 @@ def current() -> BuildInfo | None:
         raise ValueError("Packaged release metadata is missing required string fields")
 
     release = parse_fork_tag(values["release"])
-    target = PlatformTarget(
-        os=values["platform"],
-        arch=values["arch"],
-        install_kind=values["package"],
-    )
+    target = resolve_target(
+        values["platform"], values["arch"], values["package"])
     return BuildInfo(release=release, commit=values["commit"], target=target)
 
 
