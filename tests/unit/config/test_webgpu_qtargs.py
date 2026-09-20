@@ -10,6 +10,9 @@ from qutebrowser.config import qtargs
 from qutebrowser.utils import utils, version
 
 
+WEBGPU_FEATURE = "WebGPUService"
+
+
 @pytest.fixture
 def versions():
     return version.WebEngineVersions(
@@ -39,31 +42,31 @@ def test_webgpu_setting_controls_feature(
 
     enabled_features, disabled_features = qtargs._qtwebengine_features(versions, [])
 
-    assert ("WebGPU" in enabled_features) is enabled
-    assert ("WebGPU" in disabled_features) is disabled
+    assert (WEBGPU_FEATURE in enabled_features) is enabled
+    assert (WEBGPU_FEATURE in disabled_features) is disabled
 
 
 def test_webgpu_deduplicates_existing_enable(config_stub, versions):
     config_stub.val.content.webgpu = "always"
 
     enabled, disabled = qtargs._qtwebengine_features(
-        versions, ["--enable-features=WebGPU,OtherFeature"]
+        versions, [f"--enable-features={WEBGPU_FEATURE},OtherFeature"]
     )
 
-    assert enabled.count("WebGPU") == 1
+    assert enabled.count(WEBGPU_FEATURE) == 1
     assert "OtherFeature" in enabled
-    assert "WebGPU" not in disabled
+    assert WEBGPU_FEATURE not in disabled
 
 
 def test_webgpu_always_overrides_existing_disable(config_stub, versions):
     config_stub.val.content.webgpu = "always"
 
     enabled, disabled = qtargs._qtwebengine_features(
-        versions, ["--disable-features=WebGPU,OtherDisabled"]
+        versions, [f"--disable-features={WEBGPU_FEATURE},OtherDisabled"]
     )
 
-    assert "WebGPU" in enabled
-    assert "WebGPU" not in disabled
+    assert WEBGPU_FEATURE in enabled
+    assert WEBGPU_FEATURE not in disabled
     assert "OtherDisabled" in disabled
 
 
@@ -71,9 +74,9 @@ def test_webgpu_never_overrides_existing_enable(config_stub, versions):
     config_stub.val.content.webgpu = "never"
 
     enabled, disabled = qtargs._qtwebengine_features(
-        versions, ["--enable-features=WebGPU,OtherFeature"]
+        versions, [f"--enable-features={WEBGPU_FEATURE},OtherFeature"]
     )
 
-    assert "WebGPU" not in enabled
-    assert "WebGPU" in disabled
+    assert WEBGPU_FEATURE not in enabled
+    assert WEBGPU_FEATURE in disabled
     assert "OtherFeature" in enabled
