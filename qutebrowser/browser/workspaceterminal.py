@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from qutebrowser.qt.core import Qt
+from qutebrowser.qt.core import Qt, pyqtSignal
 from qutebrowser.qt.gui import (
     QColor,
     QFontDatabase,
@@ -86,6 +86,8 @@ def _ansi_color(value: Color) -> QColor | None:
 
 class TerminalView(QPlainTextEdit):
     """Styled interactive terminal surface backed by a real pseudoterminal."""
+
+    escape_requested = pyqtSignal()
 
     _KEYS = {
         Qt.Key.Key_Up: b"\x1b[A", Qt.Key.Key_Down: b"\x1b[B",
@@ -196,6 +198,9 @@ class TerminalView(QPlainTextEdit):
         control = bool(modifiers & Qt.KeyboardModifier.ControlModifier)
         shift = bool(modifiers & Qt.KeyboardModifier.ShiftModifier)
         alt = bool(modifiers & Qt.KeyboardModifier.AltModifier)
+        if event.key() == Qt.Key.Key_Escape and not (control or shift or alt):
+            self.escape_requested.emit()
+            return
         if control and shift and event.key() == Qt.Key.Key_C:
             self.copy()
             return
