@@ -134,3 +134,24 @@ def test_current_rejects_malformed_packaged_metadata(monkeypatch):
 
     with pytest.raises(ValueError):
         releaseinfo.current()
+
+
+def test_resolve_windows_auto_package_installer(tmp_path):
+    executable = tmp_path / "qutebrowser.exe"
+    executable.touch()
+    (tmp_path / "uninst.exe").touch()
+
+    target = releaseinfo.resolve_target(
+        "windows", "x86_64", "auto", executable=executable)
+
+    assert target.install_kind == "installer"
+
+
+def test_resolve_windows_auto_package_standalone(tmp_path):
+    executable = tmp_path / "qutebrowser.exe"
+    executable.touch()
+
+    target = releaseinfo.resolve_target(
+        "windows", "x86_64", "auto", executable=executable)
+
+    assert target.install_kind == "standalone"
