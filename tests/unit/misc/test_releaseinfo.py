@@ -4,6 +4,8 @@
 
 """Tests for xt9y fork release identity and asset matching."""
 
+import json
+
 import pytest
 
 from qutebrowser.misc import releaseinfo
@@ -92,3 +94,43 @@ def test_select_asset_rejects_missing_exact_asset():
 
     with pytest.raises(releaseinfo.NoMatchingAssetError):
         releaseinfo.select_release_asset(assets, target)
+
+
+def test_current_loads_packaged_release_metadata(monkeypatch):
+    payload = {
+        "release": "v3.7.0-xt9y.8",
+        "commit": "abc123",
+        "platform": "macos",
+        "arch": "arm64",
+        "package": "app",
+    }
+    monkeypatch.setattr(
+        releaseinfo.resources, "read_file",
+        lambda name: json.dumps(payload),
+    )
+
+    current = releaseinfo.current()
+
+    assert current is not None
+    assert current.release.tag == "v3.7.0-xt9y.8"
+    assert current.commit == "abc123"
+    assert current.target == releaseinfo.PlatformTarget("macos", "arm64", "app")
+
+
+def test_current_returns_none_without_packaged_metadata(monkeypatch):
+    def missing(_name):
+        raise FileNotFoundError
+
+    monkeypatch.setattr(releaseinfo.resources, "read_file", missing)
+
+    assert releaseinfo.current() is None
+
+
+def test_current_rejects_malformed_packaged_metadata(monkeypatch):
+    monkeypatch.setattr(
+        releaseinfo.resources, "read_file",
+        lambda name: '{"release": "v3.7.0"}',
+    )
+
+    with pytest.raises(ValueError):
+        releaseinfo.current()
