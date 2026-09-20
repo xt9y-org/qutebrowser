@@ -22,6 +22,7 @@ from qutebrowser.utils import usertypes, qtutils, utils, log, version
 _ENABLE_FEATURES = '--enable-features='
 _DISABLE_FEATURES = '--disable-features='
 _BLINK_SETTINGS = '--blink-settings='
+_WEBGPU_FEATURE = 'WebGPUService'
 
 
 def qt_args(namespace: argparse.Namespace) -> list[str]:
@@ -104,14 +105,15 @@ def _qtwebengine_features(  # noqa: C901
 
     webgpu = config.val.content.webgpu
     if webgpu != 'auto':
-        # The qutebrowser setting is authoritative when explicitly set, even
-        # when the user also supplied a raw Chromium feature flag via qt.args.
-        enabled_features = [f for f in enabled_features if f != 'WebGPU']
-        disabled_features = [f for f in disabled_features if f != 'WebGPU']
+        # Chromium 140's WebGPU command buffer is controlled by
+        # gpu::features::kWebGPUService. This only has an effect when the
+        # QtWebEngine runtime was built with Dawn enabled.
+        enabled_features = [f for f in enabled_features if f != _WEBGPU_FEATURE]
+        disabled_features = [f for f in disabled_features if f != _WEBGPU_FEATURE]
         if webgpu == 'always':
-            enabled_features.append('WebGPU')
+            enabled_features.append(_WEBGPU_FEATURE)
         elif webgpu == 'never':
-            disabled_features.append('WebGPU')
+            disabled_features.append(_WEBGPU_FEATURE)
         else:
             raise utils.Unreachable(webgpu)
 
