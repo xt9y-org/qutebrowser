@@ -79,6 +79,40 @@ def newest_release(
     return max(newer, key=lambda release: release.version)
 
 
+class GitHubReleaseClient(QObject):
+    """Fetch usable xt9y qutebrowser releases from GitHub."""
+
+    API_URL = (
+        "https://api.github.com/repos/xt9y-org/qutebrowser/releases?per_page=20"
+    )
+
+    success = pyqtSignal(object)
+    error = pyqtSignal(str)
+
+    def __init__(self, parent=None, client=None):
+        super().__init__(parent)
+        self._client = httpclient.HTTPClient(self) if client is None else client
+        self._client.error.connect(self.error)
+        self._client.success.connect(self._on_client_success)
+        self._include_prerelease = False
+
+    def get_releases(self, *, include_prerelease: bool = False) -> None:
+        """Fetch fork releases, emitting ``success`` with parsed releases."""
+
+        self._include_prerelease = include_prerelease
+        self._client.get(QUrl(self.API_URL))
+
+    @pyqtSlot(str)
+    def _on_client_success(self, data: str) -> None:
+        try:
+            releases = parse_github_releases(
+                data, include_prerelease=self._include_prerelease)
+        except ValueError as exc:
+            self.error.emit(str(exc))
+            return
+        self.success.emit(releases)
+
+
 class PyPIVersionClient(QObject):
 
     """A client for the PyPI API using HTTPClient.
