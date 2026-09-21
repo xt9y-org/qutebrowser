@@ -1,0 +1,17 @@
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qmake
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/generators
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/generators/mac
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/generators/unix
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/generators/win32
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/library
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/qmake/library
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers

@@ -1,0 +1,5 @@
+list(APPEND known_libs CUPS)
+set(QMAKE_LIBS_CUPS_RELEASE "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libcups.tbd")
+set(QMAKE_LIBDIR_CUPS_RELEASE "")
+set(QMAKE_INCDIR_CUPS_RELEASE "")
+set(QMAKE_DEFINES_CUPS_RELEASE "")

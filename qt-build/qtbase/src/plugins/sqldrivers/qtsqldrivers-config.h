@@ -1,0 +1,5 @@
+#ifndef QT_FEATURES_NO_MODULE_qtbase_src_plugins_sqldrivers_qtsqldrivers_config_h_H
+#define QT_FEATURES_NO_MODULE_qtbase_src_plugins_sqldrivers_qtsqldrivers_config_h_H
+
+
+#endif // QT_FEATURES_NO_MODULE_qtbase_src_plugins_sqldrivers_qtsqldrivers_config_h_H

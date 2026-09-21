@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/config.tests/cxa_thread_atexit/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

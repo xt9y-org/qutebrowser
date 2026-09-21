@@ -1,0 +1,14 @@
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtConcurrent
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtConcurrent.framework/Headers
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore

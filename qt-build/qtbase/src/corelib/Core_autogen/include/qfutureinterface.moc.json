@@ -1,0 +1,27 @@
+{
+    "classes": [
+        {
+            "className": "QObjectContinuationWrapper",
+            "lineNumber": 63,
+            "object": true,
+            "qualifiedClassName": "QObjectContinuationWrapper",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 73,
+                    "name": "run",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qfutureinterface.cpp",
+    "outputRevision": 69
+}

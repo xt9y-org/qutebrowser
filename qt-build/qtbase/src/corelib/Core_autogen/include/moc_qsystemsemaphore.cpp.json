@@ -1,0 +1,24 @@
+{
+    "classes": [
+        {
+            "className": "QSystemSemaphore",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 26,
+                    "name": "AccessMode",
+                    "values": [
+                        "Open",
+                        "Create"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 21,
+            "qualifiedClassName": "QSystemSemaphore"
+        }
+    ],
+    "inputFile": "qsystemsemaphore.h",
+    "outputRevision": 69
+}

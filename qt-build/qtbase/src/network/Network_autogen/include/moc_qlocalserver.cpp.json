@@ -1,0 +1,87 @@
+{
+    "classes": [
+        {
+            "className": "QLocalServer",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 31,
+                    "name": "SocketOption",
+                    "values": [
+                        "NoOptions",
+                        "UserAccessOption",
+                        "GroupAccessOption",
+                        "OtherAccessOption",
+                        "WorldAccessOption",
+                        "AbstractNamespaceOption"
+                    ]
+                },
+                {
+                    "alias": "SocketOption",
+                    "isClass": false,
+                    "isFlag": true,
+                    "lineNumber": 31,
+                    "name": "SocketOptions",
+                    "values": [
+                        "NoOptions",
+                        "UserAccessOption",
+                        "GroupAccessOption",
+                        "OtherAccessOption",
+                        "WorldAccessOption",
+                        "AbstractNamespaceOption"
+                    ]
+                }
+            ],
+            "lineNumber": 20,
+            "object": true,
+            "properties": [
+                {
+                    "bindable": "bindableSocketOptions",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 24,
+                    "name": "socketOptions",
+                    "override": false,
+                    "read": "socketOptions",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "SocketOptions",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setSocketOptions"
+                }
+            ],
+            "qualifiedClassName": "QLocalServer",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 28,
+                    "name": "newConnection",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "private",
+                    "index": 1,
+                    "lineNumber": 76,
+                    "name": "_q_onNewConnection",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qlocalserver.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,1 @@
+FINAL_PRL_FILE_PATH = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlMeta.framework/Versions/A/Resources/QtQmlMeta.prl

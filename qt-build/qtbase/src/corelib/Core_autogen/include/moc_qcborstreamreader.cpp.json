@@ -1,0 +1,49 @@
+{
+    "classes": [
+        {
+            "className": "QCborStreamReader",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 37,
+                    "name": "Type",
+                    "type": "quint8",
+                    "values": [
+                        "UnsignedInteger",
+                        "NegativeInteger",
+                        "ByteString",
+                        "ByteArray",
+                        "TextString",
+                        "String",
+                        "Array",
+                        "Map",
+                        "Tag",
+                        "SimpleType",
+                        "HalfFloat",
+                        "Float16",
+                        "Float",
+                        "Double",
+                        "Invalid"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 57,
+                    "name": "StringResultCode",
+                    "values": [
+                        "EndOfString",
+                        "Ok",
+                        "Error"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 33,
+            "qualifiedClassName": "QCborStreamReader"
+        }
+    ],
+    "inputFile": "qcborstreamreader.h",
+    "outputRevision": 69
+}

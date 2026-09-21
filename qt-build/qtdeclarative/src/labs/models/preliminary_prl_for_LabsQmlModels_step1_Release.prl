@@ -1,0 +1,6 @@
+RCC_OBJECTS = 
+QMAKE_PRL_TARGET = QtLabsQmlModels
+QMAKE_PRL_TARGET_PATH_FOR_CMAKE = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtLabsQmlModels.framework/QtLabsQmlModels
+QMAKE_PRL_CONFIG = shared lib_bundle
+QMAKE_PRL_VERSION = 6.11.2
+

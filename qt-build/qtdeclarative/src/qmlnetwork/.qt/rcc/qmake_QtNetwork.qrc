@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QtNetwork">
+    <file alias="qmldir">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtNetwork/qmldir</file>
+  </qresource>
+</RCC>
+

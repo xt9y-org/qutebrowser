@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/qt-project.org/imports/QtQml/WorkerScript">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtQml/WorkerScript</file>
+
+  </qresource>
+</RCC>

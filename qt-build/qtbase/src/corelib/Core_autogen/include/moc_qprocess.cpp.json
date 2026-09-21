@@ -1,0 +1,184 @@
+{
+    "classes": [
+        {
+            "className": "QProcess",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 86,
+                    "name": "ProcessError",
+                    "values": [
+                        "FailedToStart",
+                        "Crashed",
+                        "Timedout",
+                        "ReadError",
+                        "WriteError",
+                        "UnknownError"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 96,
+                    "name": "ProcessState",
+                    "values": [
+                        "NotRunning",
+                        "Starting",
+                        "Running"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 103,
+                    "name": "ProcessChannel",
+                    "values": [
+                        "StandardOutput",
+                        "StandardError"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 109,
+                    "name": "ProcessChannelMode",
+                    "values": [
+                        "SeparateChannels",
+                        "MergedChannels",
+                        "ForwardedChannels",
+                        "ForwardedOutputChannel",
+                        "ForwardedErrorChannel"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 118,
+                    "name": "InputChannelMode",
+                    "values": [
+                        "ManagedInputChannel",
+                        "ForwardedInputChannel"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 124,
+                    "name": "ExitStatus",
+                    "values": [
+                        "NormalExit",
+                        "CrashExit"
+                    ]
+                }
+            ],
+            "lineNumber": 82,
+            "object": true,
+            "qualifiedClassName": "QProcess",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 254,
+                    "name": "started",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "exitCode",
+                            "type": "int"
+                        },
+                        {
+                            "name": "exitStatus",
+                            "type": "QProcess::ExitStatus"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 255,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "exitCode",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 2,
+                    "isCloned": true,
+                    "lineNumber": 255,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "error",
+                            "type": "QProcess::ProcessError"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 256,
+                    "name": "errorOccurred",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "state",
+                            "type": "QProcess::ProcessState"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 257,
+                    "name": "stateChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 5,
+                    "lineNumber": 259,
+                    "name": "readyReadStandardOutput",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 6,
+                    "lineNumber": 260,
+                    "name": "readyReadStandardError",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 7,
+                    "lineNumber": 250,
+                    "name": "terminate",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 8,
+                    "lineNumber": 251,
+                    "name": "kill",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QIODevice"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qprocess.h",
+    "outputRevision": 69
+}

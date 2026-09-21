@@ -1,0 +1,67 @@
+{
+    "classes": [
+        {
+            "className": "QEventLoop",
+            "enums": [
+                {
+                    "alias": "ProcessEventsFlag",
+                    "isClass": false,
+                    "isFlag": true,
+                    "lineNumber": 26,
+                    "name": "ProcessEventsFlags",
+                    "values": [
+                        "AllEvents",
+                        "ExcludeUserInputEvents",
+                        "ExcludeSocketNotifiers",
+                        "WaitForMoreEvents",
+                        "X11ExcludeTimers",
+                        "EventLoopExec",
+                        "DialogExec",
+                        "ApplicationExec"
+                    ]
+                }
+            ],
+            "lineNumber": 16,
+            "object": true,
+            "qualifiedClassName": "QEventLoop",
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "returnCode",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 51,
+                    "name": "exit",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "isCloned": true,
+                    "lineNumber": 51,
+                    "name": "exit",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 52,
+                    "name": "quit",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qeventloop.h",
+    "outputRevision": 69
+}

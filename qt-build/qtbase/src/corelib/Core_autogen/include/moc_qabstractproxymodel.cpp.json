@@ -1,0 +1,223 @@
+{
+    "classes": [
+        {
+            "className": "QAbstractProxyModel",
+            "lineNumber": 17,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "proxyIndex",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 8,
+                    "isConst": true,
+                    "lineNumber": 31,
+                    "name": "mapToSource",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceIndex",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 9,
+                    "isConst": true,
+                    "lineNumber": 32,
+                    "name": "mapFromSource",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "selection",
+                            "type": "QItemSelection"
+                        }
+                    ],
+                    "index": 10,
+                    "isConst": true,
+                    "lineNumber": 34,
+                    "name": "mapSelectionToSource",
+                    "returnType": "QItemSelection"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "selection",
+                            "type": "QItemSelection"
+                        }
+                    ],
+                    "index": 11,
+                    "isConst": true,
+                    "lineNumber": 35,
+                    "name": "mapSelectionFromSource",
+                    "returnType": "QItemSelection"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "bindable": "bindableSourceModel",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 20,
+                    "name": "sourceModel",
+                    "notify": "sourceModelChanged",
+                    "override": false,
+                    "read": "sourceModel",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QAbstractItemModel*",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setSourceModel"
+                }
+            ],
+            "qualifiedClassName": "QAbstractProxyModel",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 69,
+                    "name": "sourceModelChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "private",
+                    "index": 1,
+                    "lineNumber": 78,
+                    "name": "_q_sourceModelDestroyed",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 79,
+                    "name": "_q_sourceModelRowsAboutToBeInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 80,
+                    "name": "_q_sourceModelRowsInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 81,
+                    "name": "_q_sourceModelRowsRemoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 5,
+                    "lineNumber": 82,
+                    "name": "_q_sourceModelColumnsAboutToBeInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 6,
+                    "lineNumber": 83,
+                    "name": "_q_sourceModelColumnsInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "type": "int"
+                        },
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 7,
+                    "lineNumber": 84,
+                    "name": "_q_sourceModelColumnsRemoved",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractItemModel"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qabstractproxymodel.h",
+    "outputRevision": 69
+}

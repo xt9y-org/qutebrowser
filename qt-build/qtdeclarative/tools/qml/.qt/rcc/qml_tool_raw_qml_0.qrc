@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QmlRuntime/Config/">
+    <file alias="default.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/tools/qml/default.qml</file>
+    <file alias="resizeToItem.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/tools/qml/resizeToItem.qml</file>
+    <file alias="ResizeItemToWindow.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/tools/qml/ResizeItemToWindow.qml</file>
+    <file alias="ResizeWindowToItem.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/tools/qml/ResizeWindowToItem.qml</file>
+  </qresource>
+</RCC>
+

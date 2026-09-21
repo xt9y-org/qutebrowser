@@ -1,0 +1,298 @@
+{
+    "classes": [
+        {
+            "className": "QAbstractAnimation",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 34,
+                    "name": "Direction",
+                    "values": [
+                        "Forward",
+                        "Backward"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 40,
+                    "name": "State",
+                    "values": [
+                        "Stopped",
+                        "Paused",
+                        "Running"
+                    ]
+                }
+            ],
+            "lineNumber": 20,
+            "object": true,
+            "properties": [
+                {
+                    "bindable": "bindableState",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 24,
+                    "name": "state",
+                    "notify": "stateChanged",
+                    "override": false,
+                    "read": "state",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "State",
+                    "user": false,
+                    "virtual": false
+                },
+                {
+                    "bindable": "bindableLoopCount",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 25,
+                    "name": "loopCount",
+                    "override": false,
+                    "read": "loopCount",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setLoopCount"
+                },
+                {
+                    "bindable": "bindableCurrentTime",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "lineNumber": 26,
+                    "name": "currentTime",
+                    "override": false,
+                    "read": "currentTime",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setCurrentTime"
+                },
+                {
+                    "bindable": "bindableCurrentLoop",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 3,
+                    "lineNumber": 27,
+                    "name": "currentLoop",
+                    "notify": "currentLoopChanged",
+                    "override": false,
+                    "read": "currentLoop",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false,
+                    "virtual": false
+                },
+                {
+                    "bindable": "bindableDirection",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 4,
+                    "lineNumber": 29,
+                    "name": "direction",
+                    "notify": "directionChanged",
+                    "override": false,
+                    "read": "direction",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "Direction",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setDirection"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 5,
+                    "lineNumber": 31,
+                    "name": "duration",
+                    "override": false,
+                    "read": "duration",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "int",
+                    "user": false,
+                    "virtual": false
+                }
+            ],
+            "qualifiedClassName": "QAbstractAnimation",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 80,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "newState",
+                            "type": "QAbstractAnimation::State"
+                        },
+                        {
+                            "name": "oldState",
+                            "type": "QAbstractAnimation::State"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 81,
+                    "name": "stateChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "currentLoop",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 82,
+                    "name": "currentLoopChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "type": "QAbstractAnimation::Direction"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 83,
+                    "name": "directionChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "policy",
+                            "type": "QAbstractAnimation::DeletionPolicy"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 86,
+                    "name": "start",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 5,
+                    "isCloned": true,
+                    "lineNumber": 86,
+                    "name": "start",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 6,
+                    "lineNumber": 87,
+                    "name": "pause",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 7,
+                    "lineNumber": 88,
+                    "name": "resume",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 8,
+                    "lineNumber": 89,
+                    "name": "setPaused",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 9,
+                    "lineNumber": 90,
+                    "name": "stop",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "msecs",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 10,
+                    "lineNumber": 91,
+                    "name": "setCurrentTime",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        },
+        {
+            "className": "QAnimationDriver",
+            "lineNumber": 107,
+            "object": true,
+            "qualifiedClassName": "QAnimationDriver",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 126,
+                    "name": "started",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 127,
+                    "name": "stopped",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qabstractanimation.h",
+    "outputRevision": 69
+}

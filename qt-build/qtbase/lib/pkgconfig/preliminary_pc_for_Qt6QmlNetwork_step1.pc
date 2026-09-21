@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 QmlNetwork
+Description: Qt QmlNetwork module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtQmlNetwork $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtQmlNetwork.framework/Headers;${libdir}/QtQmlNetwork.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtQmlNetwork.framework/Headers;${libdir}/QtQmlNetwork.framework>, -I>> $<$<BOOL:QT_QMLNETWORK_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_QMLNETWORK_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:Qt6Core;Qt6Network;Qt6Qml>, >

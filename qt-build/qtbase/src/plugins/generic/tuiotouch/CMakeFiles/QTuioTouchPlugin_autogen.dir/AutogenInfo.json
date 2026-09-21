@@ -1,0 +1,169 @@
+{
+	"BUILD_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/QTuioTouchPlugin_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/CMakeLists.txt",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtPluginConfig.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/QTuioTouchPlugin_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "QTuioTouchPlugin_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qoscbundle_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qoscbundle_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qoscmessage_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qoscmessage_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qtuiocursor_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtuiocursor_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qtuiohandler_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtuiohandler_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qtuiotoken_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtuiotoken_p.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/QTuioTouchPlugin_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/QTuioTouchPlugin_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"GL_SILENCE_DEPRECATION",
+		"QT_CORE_LIB",
+		"QT_DEPRECATED_WARNINGS",
+		"QT_EXPLICIT_QFILE_CONSTRUCTION_FROM_PATH",
+		"QT_GUI_LIB",
+		"QT_LEAN_HEADERS=1",
+		"QT_NETWORK_LIB",
+		"QT_NO_DEBUG",
+		"QT_NO_EXCEPTIONS",
+		"QT_NO_FOREACH",
+		"QT_NO_JAVA_STYLE_ITERATORS",
+		"QT_NO_NARROWING_CONVERSIONS_IN_CONNECT",
+		"QT_NO_QASCONST",
+		"QT_NO_QEXCHANGE",
+		"QT_NO_QSNPRINTF",
+		"QT_NO_SINGLE_ARGUMENT_QHASH_OVERLOAD=1",
+		"QT_NO_STD_FORMAT_SUPPORT",
+		"QT_PLUGIN",
+		"QT_USE_QSTRINGBUILDER",
+		"QTuioTouchPlugin_EXPORTS",
+		"_LARGEFILE64_SOURCE",
+		"_LARGEFILE_SOURCE",
+		"_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtGui.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/gui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui/6.11.2/QtGui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtNetwork",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtNetwork.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtGui.framework",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtNetwork.framework",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/21/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+		"/Library/Developer/CommandLineTools/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_ENUM_NS",
+		"Q_GADGET_EXPORT"
+	],
+	"MOC_OPTIONS" : [ "--output-json" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++17",
+		"-w",
+		"-dM",
+		"-E",
+		"/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/QTuioTouchPlugin_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/CMakeFiles/QTuioTouchPlugin_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 11,
+	"SETTINGS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/plugins/generic/tuiotouch/CMakeFiles/QTuioTouchPlugin_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/main.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qoscbundle.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qoscmessage.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/generic/tuiotouch/qtuiohandler.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,18 @@
+{
+    "classes": [
+        {
+            "className": "QEventDispatcherCoreFoundation",
+            "lineNumber": 137,
+            "object": true,
+            "qualifiedClassName": "QEventDispatcherCoreFoundation",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractEventDispatcherV2"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qeventdispatcher_cf_p.h",
+    "outputRevision": 69
+}

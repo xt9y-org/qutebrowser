@@ -1,0 +1,366 @@
+{
+    "classes": [
+        {
+            "classInfos": [
+                {
+                    "name": "RegisterEnumClassesUnscoped",
+                    "value": "false"
+                }
+            ],
+            "className": "QDnsTlsAssociationRecord",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 150,
+                    "name": "CertificateUsage",
+                    "type": "quint8",
+                    "values": [
+                        "CertificateAuthorityConstrait",
+                        "ServiceCertificateConstraint",
+                        "TrustAnchorAssertion",
+                        "DomainIssuedCertificate",
+                        "PrivateUse",
+                        "PKIX_TA",
+                        "PKIX_EE",
+                        "DANE_TA",
+                        "DANE_EE",
+                        "PrivCert"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 168,
+                    "name": "Selector",
+                    "type": "quint8",
+                    "values": [
+                        "FullCertificate",
+                        "SubjectPublicKeyInfo",
+                        "PrivateUse",
+                        "Cert",
+                        "SPKI",
+                        "PrivSel"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 182,
+                    "name": "MatchingType",
+                    "type": "quint8",
+                    "values": [
+                        "Exact",
+                        "Sha256",
+                        "Sha512",
+                        "PrivateUse",
+                        "PrivMatch"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 145,
+            "qualifiedClassName": "QDnsTlsAssociationRecord"
+        },
+        {
+            "className": "QDnsLookup",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 232,
+                    "name": "Error",
+                    "values": [
+                        "NoError",
+                        "ResolverError",
+                        "OperationCancelledError",
+                        "InvalidRequestError",
+                        "InvalidReplyError",
+                        "ServerFailureError",
+                        "ServerRefusedError",
+                        "NotFoundError",
+                        "TimeoutError"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 246,
+                    "name": "Type",
+                    "values": [
+                        "A",
+                        "AAAA",
+                        "ANY",
+                        "CNAME",
+                        "MX",
+                        "NS",
+                        "PTR",
+                        "SRV",
+                        "TLSA",
+                        "TXT"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 261,
+                    "name": "Protocol",
+                    "type": "quint8",
+                    "values": [
+                        "Standard",
+                        "DnsOverTls"
+                    ]
+                }
+            ],
+            "lineNumber": 216,
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 219,
+                    "name": "error",
+                    "notify": "finished",
+                    "override": false,
+                    "read": "error",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "Error",
+                    "user": false,
+                    "virtual": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 220,
+                    "name": "authenticData",
+                    "notify": "finished",
+                    "override": false,
+                    "read": "isAuthenticData",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false,
+                    "virtual": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "lineNumber": 221,
+                    "name": "errorString",
+                    "notify": "finished",
+                    "override": false,
+                    "read": "errorString",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false
+                },
+                {
+                    "bindable": "bindableName",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 3,
+                    "lineNumber": 222,
+                    "name": "name",
+                    "notify": "nameChanged",
+                    "override": false,
+                    "read": "name",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setName"
+                },
+                {
+                    "bindable": "bindableType",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 4,
+                    "lineNumber": 223,
+                    "name": "type",
+                    "notify": "typeChanged",
+                    "override": false,
+                    "read": "type",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "Type",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setType"
+                },
+                {
+                    "bindable": "bindableNameserver",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 5,
+                    "lineNumber": 224,
+                    "name": "nameserver",
+                    "notify": "nameserverChanged",
+                    "override": false,
+                    "read": "nameserver",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QHostAddress",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setNameserver"
+                },
+                {
+                    "bindable": "bindableNameserverPort",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 6,
+                    "lineNumber": 226,
+                    "name": "nameserverPort",
+                    "notify": "nameserverPortChanged",
+                    "override": false,
+                    "read": "nameserverPort",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "quint16",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setNameserverPort"
+                },
+                {
+                    "bindable": "bindableNameserverProtocol",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 7,
+                    "lineNumber": 228,
+                    "name": "nameserverProtocol",
+                    "notify": "nameserverProtocolChanged",
+                    "override": false,
+                    "read": "nameserverProtocol",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "Protocol",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setNameserverProtocol"
+                }
+            ],
+            "qualifiedClassName": "QDnsLookup",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 324,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "name",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 325,
+                    "name": "nameChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "type",
+                            "type": "QDnsLookup::Type"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 326,
+                    "name": "typeChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "nameserver",
+                            "type": "QHostAddress"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 327,
+                    "name": "nameserverChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "port",
+                            "type": "quint16"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 328,
+                    "name": "nameserverPortChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "protocol",
+                            "type": "QDnsLookup::Protocol"
+                        }
+                    ],
+                    "index": 5,
+                    "lineNumber": 329,
+                    "name": "nameserverProtocolChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 6,
+                    "lineNumber": 320,
+                    "name": "abort",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 7,
+                    "lineNumber": 321,
+                    "name": "lookup",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qdnslookup.h",
+    "outputRevision": 69
+}

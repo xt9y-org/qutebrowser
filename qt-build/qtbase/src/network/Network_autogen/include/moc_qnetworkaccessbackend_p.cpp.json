@@ -1,0 +1,147 @@
+{
+    "classes": [
+        {
+            "className": "QNetworkAccessBackend",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 43,
+                    "name": "TargetType",
+                    "values": [
+                        "Networked",
+                        "Local"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 50,
+                    "name": "SecurityFeature",
+                    "values": [
+                        "None",
+                        "TLS"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 57,
+                    "name": "IOFeature",
+                    "values": [
+                        "None",
+                        "ZeroCopy",
+                        "NeedResetableUpload",
+                        "SupportsSynchronousMode"
+                    ]
+                }
+            ],
+            "lineNumber": 37,
+            "object": true,
+            "qualifiedClassName": "QNetworkAccessBackend",
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 122,
+                    "name": "readyRead",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "index": 1,
+                    "lineNumber": 124,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "arguments": [
+                        {
+                            "name": "code",
+                            "type": "QNetworkReply::NetworkError"
+                        },
+                        {
+                            "name": "errorString",
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 125,
+                    "name": "error",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "arguments": [
+                        {
+                            "name": "proxy",
+                            "type": "QNetworkProxy"
+                        },
+                        {
+                            "name": "auth",
+                            "type": "QAuthenticator*"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 127,
+                    "name": "proxyAuthenticationRequired",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "arguments": [
+                        {
+                            "name": "auth",
+                            "type": "QAuthenticator*"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 129,
+                    "name": "authenticationRequired",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "index": 5,
+                    "lineNumber": 130,
+                    "name": "metaDataChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "arguments": [
+                        {
+                            "name": "destination",
+                            "type": "QUrl"
+                        }
+                    ],
+                    "index": 6,
+                    "lineNumber": 131,
+                    "name": "redirectionRequested",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        },
+        {
+            "className": "QNetworkAccessBackendFactory",
+            "lineNumber": 144,
+            "object": true,
+            "qualifiedClassName": "QNetworkAccessBackendFactory",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qnetworkaccessbackend_p.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,176 @@
+{
+    "classes": [
+        {
+            "className": "QCoreApplication",
+            "lineNumber": 41,
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 48,
+                    "name": "applicationName",
+                    "notify": "applicationNameChanged",
+                    "override": false,
+                    "read": "applicationName",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setApplicationName"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 50,
+                    "name": "applicationVersion",
+                    "notify": "applicationVersionChanged",
+                    "override": false,
+                    "read": "applicationVersion",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setApplicationVersion"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 2,
+                    "lineNumber": 52,
+                    "name": "organizationName",
+                    "notify": "organizationNameChanged",
+                    "override": false,
+                    "read": "organizationName",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setOrganizationName"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 3,
+                    "lineNumber": 54,
+                    "name": "organizationDomain",
+                    "notify": "organizationDomainChanged",
+                    "override": false,
+                    "read": "organizationDomain",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QString",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setOrganizationDomain"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 4,
+                    "lineNumber": 56,
+                    "name": "quitLockEnabled",
+                    "override": false,
+                    "read": "isQuitLockEnabled",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "bool",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setQuitLockEnabled"
+                }
+            ],
+            "qualifiedClassName": "QCoreApplication",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 209,
+                    "name": "aboutToQuit",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 211,
+                    "name": "organizationNameChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 212,
+                    "name": "organizationDomainChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 3,
+                    "lineNumber": 213,
+                    "name": "applicationNameChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 4,
+                    "lineNumber": 214,
+                    "name": "applicationVersionChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 5,
+                    "lineNumber": 205,
+                    "name": "quit",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "retcode",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 6,
+                    "lineNumber": 206,
+                    "name": "exit",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 7,
+                    "isCloned": true,
+                    "lineNumber": 206,
+                    "name": "exit",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qcoreapplication.h",
+    "outputRevision": 69
+}

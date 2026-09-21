@@ -1,0 +1,254 @@
+{
+	"BUILD_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/CMakeLists.txt",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/modulecppexports.h.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtModuleConfig.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessAliasTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/ModuleDescription.json.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/PkgConfigLibrary.pc.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/pkgconfig/preliminary_pc_for_Qt6Concurrent_step1.pc"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "Concurrent_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtConcurrent/qtconcurrentexports.h",
+			"Mu",
+			"4Z3DGTW27X/moc_qtconcurrentexports.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtaskbuilder.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtaskbuilder.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrent_global.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrent_global.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentcompilertest.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentcompilertest.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentfilter.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentfilter.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentfilterkernel.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentfilterkernel.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentfunctionwrappers.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentfunctionwrappers.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentiteratekernel.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentiteratekernel.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentmap.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentmap.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentmapkernel.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentmapkernel.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentmedian.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentmedian.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentreducekernel.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentreducekernel.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentrun.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentrun.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentrunbase.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentrunbase.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentstoredfunctioncall.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentstoredfunctioncall.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrenttask.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrenttask.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentthreadengine.h",
+			"Mu",
+			"EWIEGA46WW/moc_qtconcurrentthreadengine.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"Concurrent_EXPORTS",
+		"GL_SILENCE_DEPRECATION",
+		"QT_ASCII_CAST_WARNINGS",
+		"QT_BUILDING_QT",
+		"QT_BUILD_CONCURRENT_LIB",
+		"QT_CORE_LIB",
+		"QT_DEPRECATED_WARNINGS",
+		"QT_EXPLICIT_QFILE_CONSTRUCTION_FROM_PATH",
+		"QT_LEAN_HEADERS=1",
+		"QT_MOC_COMPAT",
+		"QT_NO_CAST_TO_ASCII",
+		"QT_NO_CONTEXTLESS_CONNECT",
+		"QT_NO_DEBUG",
+		"QT_NO_FOREACH",
+		"QT_NO_JAVA_STYLE_ITERATORS",
+		"QT_NO_NARROWING_CONVERSIONS_IN_CONNECT",
+		"QT_NO_QASCONST",
+		"QT_NO_QEXCHANGE",
+		"QT_NO_QSNPRINTF",
+		"QT_NO_SINGLE_ARGUMENT_QHASH_OVERLOAD=1",
+		"QT_NO_STD_FORMAT_SUPPORT",
+		"QT_NO_URL_CAST_FROM_STRING",
+		"QT_NO_USING_NAMESPACE",
+		"QT_USE_NODISCARD_FILE_OPEN",
+		"QT_USE_QSTRINGBUILDER",
+		"_LARGEFILE64_SOURCE",
+		"_LARGEFILE_SOURCE",
+		"_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtConcurrent",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtConcurrent.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/21/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+		"/Library/Developer/CommandLineTools/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_ENUM_NS",
+		"Q_GADGET_EXPORT"
+	],
+	"MOC_OPTIONS" : [ "--output-json" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++17",
+		"-w",
+		"-dM",
+		"-E",
+		"/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/Concurrent_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/qtconcurrent-config.h",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/qtconcurrent-config_p.h"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/CMakeFiles/Concurrent_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 11,
+	"SETTINGS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/concurrent/CMakeFiles/Concurrent_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentfilter.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentiteratekernel.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentmap.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentrun.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/concurrent/qtconcurrentthreadengine.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

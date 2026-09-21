@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 Test
+Description: Qt Test module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtTest $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtTest.framework/Headers;${libdir}/QtTest.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtTest.framework/Headers;${libdir}/QtTest.framework>, -I>> $<$<BOOL:QT_TESTLIB_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_TESTLIB_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:Qt6Core>, >

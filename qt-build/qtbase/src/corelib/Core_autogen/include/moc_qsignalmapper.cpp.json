@@ -1,0 +1,78 @@
+{
+    "classes": [
+        {
+            "className": "QSignalMapper",
+            "lineNumber": 14,
+            "object": true,
+            "qualifiedClassName": "QSignalMapper",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "type": "int"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 32,
+                    "name": "mappedInt",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "type": "QString"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 33,
+                    "name": "mappedString",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "type": "QObject*"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 34,
+                    "name": "mappedObject",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 3,
+                    "lineNumber": 37,
+                    "name": "map",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sender",
+                            "type": "QObject*"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 38,
+                    "name": "map",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qsignalmapper.h",
+    "outputRevision": 69
+}

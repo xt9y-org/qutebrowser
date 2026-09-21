@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/qt-project.org/imports/Qt/labs/folderlistmodel">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/Qt/labs/folderlistmodel</file>
+
+  </qresource>
+</RCC>

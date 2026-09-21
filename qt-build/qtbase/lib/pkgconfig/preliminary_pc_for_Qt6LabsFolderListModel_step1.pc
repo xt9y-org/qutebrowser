@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 LabsFolderListModel
+Description: Qt LabsFolderListModel module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtLabsFolderListModel $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtLabsFolderListModel.framework/Headers;${libdir}/QtLabsFolderListModel.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtLabsFolderListModel.framework/Headers;${libdir}/QtLabsFolderListModel.framework>, -I>> $<$<BOOL:QT_LABSFOLDERLISTMODEL_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_LABSFOLDERLISTMODEL_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:>, >

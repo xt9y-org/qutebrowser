@@ -1,0 +1,277 @@
+{
+	"BUILD_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/uic_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/CMakeLists.txt"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/uic_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "uic_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwritedeclaration.h",
+			"Mu",
+			"SVODSI3R2M/moc_cppwritedeclaration.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwriteincludes.h",
+			"Mu",
+			"SVODSI3R2M/moc_cppwriteincludes.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwriteinitialization.h",
+			"Mu",
+			"SVODSI3R2M/moc_cppwriteinitialization.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/customwidgetsinfo.h",
+			"Mu",
+			"EWIEGA46WW/moc_customwidgetsinfo.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/databaseinfo.h",
+			"Mu",
+			"EWIEGA46WW/moc_databaseinfo.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/driver.h",
+			"Mu",
+			"EWIEGA46WW/moc_driver.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/option.h",
+			"Mu",
+			"EWIEGA46WW/moc_option.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/python/pythonwritedeclaration.h",
+			"Mu",
+			"K3GKKSBDS6/moc_pythonwritedeclaration.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/python/pythonwriteimports.h",
+			"Mu",
+			"K3GKKSBDS6/moc_pythonwriteimports.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/shared/language.h",
+			"Mu",
+			"MTKJWXDCAS/moc_language.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/shared/writeincludesbase.h",
+			"Mu",
+			"MTKJWXDCAS/moc_writeincludesbase.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/treewalker.h",
+			"Mu",
+			"EWIEGA46WW/moc_treewalker.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/ui4.h",
+			"Mu",
+			"EWIEGA46WW/moc_ui4.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/uic.h",
+			"Mu",
+			"EWIEGA46WW/moc_uic.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/utils.h",
+			"Mu",
+			"EWIEGA46WW/moc_utils.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/validator.h",
+			"Mu",
+			"EWIEGA46WW/moc_validator.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/uic_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/uic_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"GL_SILENCE_DEPRECATION",
+		"QT_CORE_LIB",
+		"QT_EXPLICIT_QFILE_CONSTRUCTION_FROM_PATH",
+		"QT_LEAN_HEADERS=1",
+		"QT_NO_CAST_FROM_ASCII",
+		"QT_NO_DEBUG",
+		"QT_NO_EXCEPTIONS",
+		"QT_NO_FOREACH",
+		"QT_NO_JAVA_STYLE_ITERATORS",
+		"QT_NO_NARROWING_CONVERSIONS_IN_CONNECT",
+		"QT_NO_QASCONST",
+		"QT_NO_QEXCHANGE",
+		"QT_NO_QSNPRINTF",
+		"QT_NO_SINGLE_ARGUMENT_QHASH_OVERLOAD=1",
+		"QT_NO_STD_FORMAT_SUPPORT",
+		"QT_NO_URL_CAST_FROM_STRING",
+		"QT_UIC",
+		"QT_USE_NODISCARD_FILE_OPEN",
+		"QT_USE_QSTRINGBUILDER",
+		"_LARGEFILE64_SOURCE",
+		"_LARGEFILE_SOURCE",
+		"_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/python",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/shared",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/21/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+		"/Library/Developer/CommandLineTools/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_ENUM_NS",
+		"Q_GADGET_EXPORT"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++17",
+		"-w",
+		"-dM",
+		"-E",
+		"/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/uic_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/CMakeFiles/uic_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 11,
+	"SETTINGS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/tools/uic/CMakeFiles/uic_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwritedeclaration.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwriteincludes.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/cpp/cppwriteinitialization.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/customwidgetsinfo.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/databaseinfo.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/driver.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/main.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/python/pythonwritedeclaration.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/python/pythonwriteimports.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/shared/language.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/shared/writeincludesbase.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/treewalker.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/ui4.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/uic.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/uic/validator.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

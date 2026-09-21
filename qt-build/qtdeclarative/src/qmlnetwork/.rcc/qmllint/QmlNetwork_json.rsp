@@ -1,0 +1,15 @@
+--bare
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtNetwork
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlnetwork/.qt/rcc/qmake_QtNetwork.qrc
+--json
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/QmlNetwork_qmllint.json

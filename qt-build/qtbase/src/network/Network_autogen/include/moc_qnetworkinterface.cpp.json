@@ -1,0 +1,52 @@
+{
+    "classes": [
+        {
+            "className": "QNetworkInterface",
+            "enums": [
+                {
+                    "alias": "InterfaceFlag",
+                    "isClass": false,
+                    "isFlag": true,
+                    "lineNumber": 79,
+                    "name": "InterfaceFlags",
+                    "values": [
+                        "IsUp",
+                        "IsRunning",
+                        "CanBroadcast",
+                        "IsLoopBack",
+                        "IsPointToPoint",
+                        "CanMulticast"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 90,
+                    "name": "InterfaceType",
+                    "values": [
+                        "Loopback",
+                        "Virtual",
+                        "Ethernet",
+                        "Slip",
+                        "CanBus",
+                        "Ppp",
+                        "Fddi",
+                        "Wifi",
+                        "Ieee80211",
+                        "Phonet",
+                        "Ieee802154",
+                        "SixLoWPAN",
+                        "Ieee80216",
+                        "Ieee1394",
+                        "Unknown"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 75,
+            "qualifiedClassName": "QNetworkInterface"
+        }
+    ],
+    "inputFile": "qnetworkinterface.h",
+    "outputRevision": 69
+}

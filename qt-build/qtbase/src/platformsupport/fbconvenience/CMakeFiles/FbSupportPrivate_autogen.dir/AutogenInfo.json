@@ -1,0 +1,182 @@
+{
+	"BUILD_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/FbSupportPrivate_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/CMakeLists.txt",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtModuleConfig.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessAliasTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/ModuleDescription.json.in"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/FbSupportPrivate_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "FbSupportPrivate_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbbackingstore_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qfbbackingstore_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbcursor_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qfbcursor_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbscreen_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qfbscreen_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbvthandler_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qfbvthandler_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbwindow_p.h",
+			"Mu",
+			"EWIEGA46WW/moc_qfbwindow_p.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/FbSupportPrivate_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/FbSupportPrivate_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"GL_SILENCE_DEPRECATION",
+		"QT_ASCII_CAST_WARNINGS",
+		"QT_BUILDING_QT",
+		"QT_BUILD_FB_SUPPORT_LIB",
+		"QT_CORE_LIB",
+		"QT_DEPRECATED_WARNINGS",
+		"QT_EXPLICIT_QFILE_CONSTRUCTION_FROM_PATH",
+		"QT_GUI_LIB",
+		"QT_LEAN_HEADERS=1",
+		"QT_MOC_COMPAT",
+		"QT_NO_CAST_FROM_ASCII",
+		"QT_NO_CAST_TO_ASCII",
+		"QT_NO_DEBUG",
+		"QT_NO_EXCEPTIONS",
+		"QT_NO_FOREACH",
+		"QT_NO_JAVA_STYLE_ITERATORS",
+		"QT_NO_NARROWING_CONVERSIONS_IN_CONNECT",
+		"QT_NO_QASCONST",
+		"QT_NO_QEXCHANGE",
+		"QT_NO_QSNPRINTF",
+		"QT_NO_SINGLE_ARGUMENT_QHASH_OVERLOAD=1",
+		"QT_NO_STD_FORMAT_SUPPORT",
+		"QT_USE_QSTRINGBUILDER",
+		"_LARGEFILE64_SOURCE",
+		"_LARGEFILE_SOURCE",
+		"_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtFbSupport",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtFbSupport/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtFbSupport/6.11.2/QtFbSupport",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/gui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui/6.11.2/QtGui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtGui",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtGui.framework/Headers",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/21/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+		"/Library/Developer/CommandLineTools/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_ENUM_NS",
+		"Q_GADGET_EXPORT"
+	],
+	"MOC_OPTIONS" : [ "--output-json" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++17",
+		"-w",
+		"-dM",
+		"-E",
+		"/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/FbSupportPrivate_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/qtfb_support-config.h",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/qtfb_support-config_p.h"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/CMakeFiles/FbSupportPrivate_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 11,
+	"SETTINGS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/platformsupport/fbconvenience/CMakeFiles/FbSupportPrivate_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbbackingstore.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbcursor.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbscreen.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbvthandler.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/platformsupport/fbconvenience/qfbwindow.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

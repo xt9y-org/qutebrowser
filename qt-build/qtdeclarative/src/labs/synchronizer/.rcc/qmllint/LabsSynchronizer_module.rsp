@@ -1,0 +1,14 @@
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/Qt/labs/synchronizer
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/labs/synchronizer/.qt/rcc/qmake_Qt_labs_synchronizer.qrc
+--module
+Qt.labs.synchronizer

@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QmlRuntime/Config/">
+    <file alias="resources/qml-64.png">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/tools/qml/resources/qml-64.png</file>
+  </qresource>
+</RCC>
+

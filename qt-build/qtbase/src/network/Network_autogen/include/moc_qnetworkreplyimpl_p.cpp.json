@@ -1,0 +1,55 @@
+{
+    "classes": [
+        {
+            "className": "QNetworkReplyImpl",
+            "lineNumber": 39,
+            "object": true,
+            "qualifiedClassName": "QNetworkReplyImpl",
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 56,
+                    "name": "_q_startOperation",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 57,
+                    "name": "_q_copyReadyRead",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 2,
+                    "lineNumber": 58,
+                    "name": "_q_copyReadChannelFinished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 3,
+                    "lineNumber": 59,
+                    "name": "_q_bufferOutgoingData",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 4,
+                    "lineNumber": 60,
+                    "name": "_q_bufferOutgoingDataFinished",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QNetworkReply"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qnetworkreplyimpl_p.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,15 @@
+--bare
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtQml/WorkerScript
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlworkerscript/.qt/rcc/qmake_QtQml_WorkerScript.qrc
+--json
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/QmlWorkerScript_qmllint.json

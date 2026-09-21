@@ -1,0 +1,46 @@
+{
+    "classes": [
+        {
+            "className": "QAbstractEventDispatcher",
+            "lineNumber": 17,
+            "object": true,
+            "qualifiedClassName": "QAbstractEventDispatcher",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 89,
+                    "name": "aboutToBlock",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 90,
+                    "name": "awake",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        },
+        {
+            "className": "QAbstractEventDispatcherV2",
+            "lineNumber": 101,
+            "object": true,
+            "qualifiedClassName": "QAbstractEventDispatcherV2",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractEventDispatcher"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qabstracteventdispatcher.h",
+    "outputRevision": 69
+}

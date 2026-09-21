@@ -1,0 +1,6 @@
+module QmlRuntime.Config
+typeinfo qml_tool.qmltypes
+prefer :/qt-project.org/imports/QmlRuntime/Config/
+ResizeItemToWindow 1.0 ResizeItemToWindow.qml
+ResizeWindowToItem 1.0 ResizeWindowToItem.qml
+

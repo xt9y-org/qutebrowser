@@ -1,0 +1,25 @@
+QmlTypeRegistrarPrivate_autogen/timestamp: \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/cmake/Qt6Core/Qt6CoreResourceInit.in.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/ModuleDescription.json.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtModuleConfig.cmake.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessAliasTargets.cmake.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessTargets.cmake.in \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/CMakeLists.txt \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qanystringviewutils_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qmetatypesjsonprocessor.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qmetatypesjsonprocessor_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmljsstreamwriter.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmljsstreamwriter_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltyperegistrar.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltyperegistrar_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltyperegistrarconstants_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltyperegistrarutils.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltyperegistrarutils_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltypesclassdescription.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltypesclassdescription_p.h \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltypescreator.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/qqmltypescreator_p.h \
+	/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in \
+	/opt/homebrew/bin/cmake

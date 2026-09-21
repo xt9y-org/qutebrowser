@@ -1,0 +1,29 @@
+{
+    "classes": [
+        {
+            "className": "QCalendar",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 73,
+                    "name": "System",
+                    "values": [
+                        "Gregorian",
+                        "Julian",
+                        "Milankovic",
+                        "Jalali",
+                        "IslamicCivil",
+                        "Last",
+                        "User"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 53,
+            "qualifiedClassName": "QCalendar"
+        }
+    ],
+    "inputFile": "qcalendar.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QtQuick/LocalStorage">
+    <file alias="qmldir">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtQuick/LocalStorage/qmldir</file>
+  </qresource>
+</RCC>
+

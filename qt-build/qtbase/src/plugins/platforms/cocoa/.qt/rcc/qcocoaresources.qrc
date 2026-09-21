@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/qt-project.org/mac/cursors">
+    <file alias="images/sizeallcursor.png">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/platforms/cocoa/images/sizeallcursor.png</file>
+    <file alias="images/spincursor.png">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/platforms/cocoa/images/spincursor.png</file>
+    <file alias="images/waitcursor.png">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/plugins/platforms/cocoa/images/waitcursor.png</file>
+  </qresource>
+</RCC>
+

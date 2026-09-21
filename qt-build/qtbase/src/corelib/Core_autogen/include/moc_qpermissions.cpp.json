@@ -1,0 +1,95 @@
+{
+    "classes": [
+        {
+            "className": "QLocationPermission",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 103,
+                    "name": "Accuracy",
+                    "type": "quint8",
+                    "values": [
+                        "Approximate",
+                        "Precise"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 112,
+                    "name": "Availability",
+                    "type": "quint8",
+                    "values": [
+                        "WhenInUse",
+                        "Always"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 99,
+            "qualifiedClassName": "QLocationPermission"
+        },
+        {
+            "className": "QCalendarPermission",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 136,
+                    "name": "AccessMode",
+                    "type": "quint8",
+                    "values": [
+                        "ReadOnly",
+                        "ReadWrite"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 132,
+            "qualifiedClassName": "QCalendarPermission"
+        },
+        {
+            "className": "QContactsPermission",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 159,
+                    "name": "AccessMode",
+                    "type": "quint8",
+                    "values": [
+                        "ReadOnly",
+                        "ReadWrite"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 155,
+            "qualifiedClassName": "QContactsPermission"
+        },
+        {
+            "className": "QBluetoothPermission",
+            "enums": [
+                {
+                    "alias": "CommunicationMode",
+                    "isClass": false,
+                    "isFlag": true,
+                    "lineNumber": 182,
+                    "name": "CommunicationModes",
+                    "type": "quint8",
+                    "values": [
+                        "Access",
+                        "Advertise",
+                        "Default"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 178,
+            "qualifiedClassName": "QBluetoothPermission"
+        }
+    ],
+    "inputFile": "qpermissions.h",
+    "outputRevision": 69
+}

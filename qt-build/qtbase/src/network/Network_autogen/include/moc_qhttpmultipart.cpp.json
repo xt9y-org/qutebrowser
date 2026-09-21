@@ -1,0 +1,18 @@
+{
+    "classes": [
+        {
+            "className": "QHttpMultiPart",
+            "lineNumber": 59,
+            "object": true,
+            "qualifiedClassName": "QHttpMultiPart",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qhttpmultipart.h",
+    "outputRevision": 69
+}

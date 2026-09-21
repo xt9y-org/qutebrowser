@@ -1,0 +1,1392 @@
+{
+    "classes": [
+        {
+            "className": "QAbstractItemModel",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 335,
+                    "name": "LayoutChangeHint",
+                    "values": [
+                        "NoLayoutChangeHint",
+                        "VerticalSortHint",
+                        "HorizontalSortHint"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 343,
+                    "name": "CheckIndexOption",
+                    "values": [
+                        "NoOption",
+                        "IndexIsValid",
+                        "DoNotUseParent",
+                        "ParentIsInvalid"
+                    ]
+                }
+            ],
+            "lineNumber": 259,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 26,
+                    "isConst": true,
+                    "lineNumber": 271,
+                    "name": "hasIndex",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "column",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 27,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 271,
+                    "name": "hasIndex",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 28,
+                    "isConst": true,
+                    "lineNumber": 272,
+                    "name": "index",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "column",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 29,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 272,
+                    "name": "index",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "child",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 30,
+                    "isConst": true,
+                    "lineNumber": 274,
+                    "name": "parent",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "idx",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 31,
+                    "isConst": true,
+                    "lineNumber": 276,
+                    "name": "sibling",
+                    "returnType": "QModelIndex"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 32,
+                    "isConst": true,
+                    "lineNumber": 277,
+                    "name": "rowCount",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "index": 33,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 277,
+                    "name": "rowCount",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 34,
+                    "isConst": true,
+                    "lineNumber": 278,
+                    "name": "columnCount",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "index": 35,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 278,
+                    "name": "columnCount",
+                    "returnType": "int"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 36,
+                    "isConst": true,
+                    "lineNumber": 279,
+                    "name": "hasChildren",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "index": 37,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 279,
+                    "name": "hasChildren",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 38,
+                    "isConst": true,
+                    "lineNumber": 281,
+                    "name": "data",
+                    "returnType": "QVariant"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 39,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 281,
+                    "name": "data",
+                    "returnType": "QVariant"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "value",
+                            "type": "QVariant"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 40,
+                    "lineNumber": 282,
+                    "name": "setData",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "value",
+                            "type": "QVariant"
+                        }
+                    ],
+                    "index": 41,
+                    "isCloned": true,
+                    "lineNumber": 282,
+                    "name": "setData",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "section",
+                            "type": "int"
+                        },
+                        {
+                            "name": "orientation",
+                            "type": "Qt::Orientation"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 42,
+                    "isConst": true,
+                    "lineNumber": 284,
+                    "name": "headerData",
+                    "returnType": "QVariant"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "section",
+                            "type": "int"
+                        },
+                        {
+                            "name": "orientation",
+                            "type": "Qt::Orientation"
+                        }
+                    ],
+                    "index": 43,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 284,
+                    "name": "headerData",
+                    "returnType": "QVariant"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 44,
+                    "lineNumber": 302,
+                    "name": "insertRows",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 45,
+                    "isCloned": true,
+                    "lineNumber": 302,
+                    "name": "insertRows",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 46,
+                    "lineNumber": 303,
+                    "name": "insertColumns",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 47,
+                    "isCloned": true,
+                    "lineNumber": 303,
+                    "name": "insertColumns",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 48,
+                    "lineNumber": 304,
+                    "name": "removeRows",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 49,
+                    "isCloned": true,
+                    "lineNumber": 304,
+                    "name": "removeRows",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 50,
+                    "lineNumber": 305,
+                    "name": "removeColumns",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 51,
+                    "isCloned": true,
+                    "lineNumber": 305,
+                    "name": "removeColumns",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceRow",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationChild",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 52,
+                    "lineNumber": 306,
+                    "name": "moveRows",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceColumn",
+                            "type": "int"
+                        },
+                        {
+                            "name": "count",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationChild",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 53,
+                    "lineNumber": 308,
+                    "name": "moveColumns",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 54,
+                    "lineNumber": 311,
+                    "name": "insertRow",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 55,
+                    "isCloned": true,
+                    "lineNumber": 311,
+                    "name": "insertRow",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 56,
+                    "lineNumber": 312,
+                    "name": "insertColumn",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 57,
+                    "isCloned": true,
+                    "lineNumber": 312,
+                    "name": "insertColumn",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 58,
+                    "lineNumber": 313,
+                    "name": "removeRow",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "row",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 59,
+                    "isCloned": true,
+                    "lineNumber": 313,
+                    "name": "removeRow",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 60,
+                    "lineNumber": 314,
+                    "name": "removeColumn",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 61,
+                    "isCloned": true,
+                    "lineNumber": 314,
+                    "name": "removeColumn",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceRow",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationChild",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 62,
+                    "lineNumber": 315,
+                    "name": "moveRow",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceColumn",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationChild",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 63,
+                    "lineNumber": 317,
+                    "name": "moveColumn",
+                    "returnType": "bool",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 64,
+                    "lineNumber": 320,
+                    "name": "fetchMore",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 65,
+                    "isConst": true,
+                    "lineNumber": 321,
+                    "name": "canFetchMore",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 66,
+                    "isConst": true,
+                    "lineNumber": 322,
+                    "name": "flags",
+                    "returnType": "Qt::ItemFlags"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        },
+                        {
+                            "name": "order",
+                            "type": "Qt::SortOrder"
+                        }
+                    ],
+                    "index": 67,
+                    "lineNumber": 323,
+                    "name": "sort",
+                    "returnType": "void",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "column",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 68,
+                    "isCloned": true,
+                    "lineNumber": 323,
+                    "name": "sort",
+                    "returnType": "void",
+                    "revision": 1540
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "start",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        },
+                        {
+                            "name": "value",
+                            "type": "QVariant"
+                        },
+                        {
+                            "name": "hits",
+                            "type": "int"
+                        },
+                        {
+                            "name": "flags",
+                            "type": "Qt::MatchFlags"
+                        }
+                    ],
+                    "index": 69,
+                    "isConst": true,
+                    "lineNumber": 325,
+                    "name": "match",
+                    "returnType": "QModelIndexList"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "start",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        },
+                        {
+                            "name": "value",
+                            "type": "QVariant"
+                        },
+                        {
+                            "name": "hits",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 70,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 325,
+                    "name": "match",
+                    "returnType": "QModelIndexList"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "start",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "role",
+                            "type": "int"
+                        },
+                        {
+                            "name": "value",
+                            "type": "QVariant"
+                        }
+                    ],
+                    "index": 71,
+                    "isCloned": true,
+                    "isConst": true,
+                    "lineNumber": 325,
+                    "name": "match",
+                    "returnType": "QModelIndexList"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "QAbstractItemModel",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "topLeft",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "bottomRight",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "roles",
+                            "type": "QList<int>"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 357,
+                    "name": "dataChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "topLeft",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "bottomRight",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 1,
+                    "isCloned": true,
+                    "lineNumber": 357,
+                    "name": "dataChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "orientation",
+                            "type": "Qt::Orientation"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 359,
+                    "name": "headerDataChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parents",
+                            "type": "QList<QPersistentModelIndex>"
+                        },
+                        {
+                            "name": "hint",
+                            "type": "QAbstractItemModel::LayoutChangeHint"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 360,
+                    "name": "layoutChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parents",
+                            "type": "QList<QPersistentModelIndex>"
+                        }
+                    ],
+                    "index": 4,
+                    "isCloned": true,
+                    "lineNumber": 360,
+                    "name": "layoutChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 5,
+                    "isCloned": true,
+                    "lineNumber": 360,
+                    "name": "layoutChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parents",
+                            "type": "QList<QPersistentModelIndex>"
+                        },
+                        {
+                            "name": "hint",
+                            "type": "QAbstractItemModel::LayoutChangeHint"
+                        }
+                    ],
+                    "index": 6,
+                    "lineNumber": 361,
+                    "name": "layoutAboutToBeChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parents",
+                            "type": "QList<QPersistentModelIndex>"
+                        }
+                    ],
+                    "index": 7,
+                    "isCloned": true,
+                    "lineNumber": 361,
+                    "name": "layoutAboutToBeChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 8,
+                    "isCloned": true,
+                    "lineNumber": 361,
+                    "name": "layoutAboutToBeChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 9,
+                    "lineNumber": 363,
+                    "name": "rowsAboutToBeInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 10,
+                    "lineNumber": 364,
+                    "name": "rowsInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 11,
+                    "lineNumber": 366,
+                    "name": "rowsAboutToBeRemoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 12,
+                    "lineNumber": 367,
+                    "name": "rowsRemoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 13,
+                    "lineNumber": 369,
+                    "name": "columnsAboutToBeInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 14,
+                    "lineNumber": 370,
+                    "name": "columnsInserted",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 15,
+                    "lineNumber": 372,
+                    "name": "columnsAboutToBeRemoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "parent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "first",
+                            "type": "int"
+                        },
+                        {
+                            "name": "last",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 16,
+                    "lineNumber": 373,
+                    "name": "columnsRemoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 17,
+                    "lineNumber": 375,
+                    "name": "modelAboutToBeReset",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 18,
+                    "lineNumber": 376,
+                    "name": "modelReset",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceStart",
+                            "type": "int"
+                        },
+                        {
+                            "name": "sourceEnd",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationRow",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 19,
+                    "lineNumber": 378,
+                    "name": "rowsAboutToBeMoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceStart",
+                            "type": "int"
+                        },
+                        {
+                            "name": "sourceEnd",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationRow",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 20,
+                    "lineNumber": 379,
+                    "name": "rowsMoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceStart",
+                            "type": "int"
+                        },
+                        {
+                            "name": "sourceEnd",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationColumn",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 21,
+                    "lineNumber": 381,
+                    "name": "columnsAboutToBeMoved",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "sourceStart",
+                            "type": "int"
+                        },
+                        {
+                            "name": "sourceEnd",
+                            "type": "int"
+                        },
+                        {
+                            "name": "destinationParent",
+                            "type": "QModelIndex"
+                        },
+                        {
+                            "name": "destinationColumn",
+                            "type": "int"
+                        }
+                    ],
+                    "index": 22,
+                    "lineNumber": 382,
+                    "name": "columnsMoved",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "public",
+                    "index": 23,
+                    "lineNumber": 385,
+                    "name": "submit",
+                    "returnType": "bool"
+                },
+                {
+                    "access": "public",
+                    "index": 24,
+                    "lineNumber": 386,
+                    "name": "revert",
+                    "returnType": "void"
+                },
+                {
+                    "access": "protected",
+                    "index": 25,
+                    "lineNumber": 389,
+                    "name": "resetInternalData",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        },
+        {
+            "className": "QAbstractTableModel",
+            "lineNumber": 451,
+            "object": true,
+            "qualifiedClassName": "QAbstractTableModel",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractItemModel"
+                }
+            ]
+        },
+        {
+            "className": "QAbstractListModel",
+            "lineNumber": 477,
+            "object": true,
+            "qualifiedClassName": "QAbstractListModel",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractItemModel"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qabstractitemmodel.h",
+    "outputRevision": 69
+}

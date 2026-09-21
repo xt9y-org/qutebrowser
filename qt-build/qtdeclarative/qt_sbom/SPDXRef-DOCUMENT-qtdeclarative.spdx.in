@@ -1,0 +1,38 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: qtdeclarative-6.11.2
+DocumentNamespace: https://qt.io/spdxdocs/qtdeclarative-6.11.2-host-darwin-arm64-target-macos-arm64-a69b510a-8ad9-5e51-ab03-bb54c11bd620
+Creator: Organization: TheQtCompany
+Creator: Tool: Qt Build System
+CreatorComment: <text>This SPDX document was created from CMake 4.4.3, using the qt
+build system from https://code.qt.io/cgit/qt/qtbase.git/tree/cmake/QtPublicSbomHelpers.cmake</text>
+Created: 2026-09-21T09:10:00Z${QT_SBOM_EXTERNAL_DOC_REFS}
+
+PackageName: qtdeclarative
+SPDXID: SPDXRef-Package-qtdeclarative-b812a27e4d8e
+ExternalRef: SECURITY cpe23Type cpe:2.3:a:qt:qtdeclarative:6.11.2:*:*:*:*:*:*:*
+ExternalRef: PACKAGE-MANAGER purl pkg:generic/TheQtCompany/qtdeclarative@6.11.2
+PackageVersion: 6.11.2
+ExternalRef: PACKAGE-MANAGER purl pkg:generic/TheQtCompany/qtdeclarative@6.11.2
+PackageSupplier: Organization: TheQtCompany
+PackageDownloadLocation: git://code.qt.io/qt/qtdeclarative.git@4e3399c26ec57246c08de019cfcbda8d23604cfa
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: Copyright (C) The Qt Company Ltd. and other contributors.
+PackageHomePage: https://qt.io
+PackageComment: <text>Built by CMake 4.4.3 with Release configuration for Darwin (arm64)
+qtdeclarative was configured with:
+    qt6/configure -release -prefix /Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu -opensource -confirm-license -nomake examples -nomake tests -webengine-proprietary-codecs -webengine-webrtc -submodules qtwebengine -- -DBUILD_qtwebengine=ON -DQT_NO_XCODE_MIN_VERSION_CHECK=ON
+</text>
+FilesAnalyzed: false
+BuiltDate: 2026-09-21T09:10:00Z
+Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-Package-qtdeclarative-b812a27e4d8e
+Relationship: SPDXRef-Package-qtdeclarative-system-build-tool-CMake-b812a27e4d8e BUILD_DEPENDENCY_OF SPDXRef-Package-qtdeclarative-b812a27e4d8e
+RelationshipComment: <text>SPDXRef-Package-qtdeclarative-b812a27e4d8e is built using CMake version 4.4.3</text>
+Relationship: SPDXRef-Package-qtdeclarative-system-build-tool-CMake-generator-Ninja-b812a27e4d8e BUILD_DEPENDENCY_OF SPDXRef-Package-qtdeclarative-b812a27e4d8e
+RelationshipComment: <text>SPDXRef-Package-qtdeclarative-b812a27e4d8e is built using generator CMAKE_GENERATOR: 'Ninja' and CMAKE_MAKE_PROGRAM: 'ninja' version '1.13.2'</text>
+Relationship: SPDXRef-Package-qtdeclarative-system-build-tool-Compiler-AppleClang-b812a27e4d8e BUILD_DEPENDENCY_OF SPDXRef-Package-qtdeclarative-b812a27e4d8e
+RelationshipComment: <text>SPDXRef-Package-qtdeclarative-b812a27e4d8e is built by compiler: 'AppleClang' version: '21.0.0.21000334' frontend variant: 'GNU'</text>
+Relationship: SPDXRef-Package-qtdeclarative-system-build-tool-Linker-AppleClang-b812a27e4d8e BUILD_DEPENDENCY_OF SPDXRef-Package-qtdeclarative-b812a27e4d8e
+RelationshipComment: <text>SPDXRef-Package-qtdeclarative-b812a27e4d8e is built by linker 'AppleClang' version '27037.1' frontend variant: 'GNU'</text>

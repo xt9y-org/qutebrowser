@@ -1,0 +1,38 @@
+SPDXVersion: SPDX-2.3
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: qtbase-6.11.2
+DocumentNamespace: https://qt.io/spdxdocs/qtbase-6.11.2-host-darwin-arm64-target-macos-arm64-7f55961c-7c32-57a9-9b1e-25706f3d9a2c
+Creator: Organization: TheQtCompany
+Creator: Tool: Qt Build System
+CreatorComment: <text>This SPDX document was created from CMake 4.4.3, using the qt
+build system from https://code.qt.io/cgit/qt/qtbase.git/tree/cmake/QtPublicSbomHelpers.cmake</text>
+Created: 2026-09-21T09:09:37Z${QT_SBOM_EXTERNAL_DOC_REFS}
+
+PackageName: qtbase
+SPDXID: SPDXRef-Package-qtbase-b9a83120e846
+ExternalRef: SECURITY cpe23Type cpe:2.3:a:qt:qtbase:6.11.2:*:*:*:*:*:*:*
+ExternalRef: PACKAGE-MANAGER purl pkg:generic/TheQtCompany/qtbase@6.11.2
+PackageVersion: 6.11.2
+ExternalRef: PACKAGE-MANAGER purl pkg:generic/TheQtCompany/qtbase@6.11.2
+PackageSupplier: Organization: TheQtCompany
+PackageDownloadLocation: git://code.qt.io/qt/qtbase.git@ef55f427f2c8b410d34f8a7681020a3000cf6866
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: Copyright (C) The Qt Company Ltd. and other contributors.
+PackageHomePage: https://qt.io
+PackageComment: <text>Built by CMake 4.4.3 with Release configuration for Darwin (arm64)
+qtbase was configured with:
+    qt6/configure -release -prefix /Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu -opensource -confirm-license -nomake examples -nomake tests -webengine-proprietary-codecs -webengine-webrtc -submodules qtwebengine -- -DBUILD_qtwebengine=ON -DQT_NO_XCODE_MIN_VERSION_CHECK=ON
+</text>
+FilesAnalyzed: false
+BuiltDate: 2026-09-21T09:09:37Z
+Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-Package-qtbase-b9a83120e846
+Relationship: SPDXRef-Package-qtbase-system-build-tool-CMake-b9a83120e846 BUILD_DEPENDENCY_OF SPDXRef-Package-qtbase-b9a83120e846
+RelationshipComment: <text>SPDXRef-Package-qtbase-b9a83120e846 is built using CMake version 4.4.3</text>
+Relationship: SPDXRef-Package-qtbase-system-build-tool-CMake-generator-Ninja-b9a83120e846 BUILD_DEPENDENCY_OF SPDXRef-Package-qtbase-b9a83120e846
+RelationshipComment: <text>SPDXRef-Package-qtbase-b9a83120e846 is built using generator CMAKE_GENERATOR: 'Ninja' and CMAKE_MAKE_PROGRAM: 'ninja' version '1.13.2'</text>
+Relationship: SPDXRef-Package-qtbase-system-build-tool-Compiler-AppleClang-b9a83120e846 BUILD_DEPENDENCY_OF SPDXRef-Package-qtbase-b9a83120e846
+RelationshipComment: <text>SPDXRef-Package-qtbase-b9a83120e846 is built by compiler: 'AppleClang' version: '21.0.0.21000334' frontend variant: 'GNU'</text>
+Relationship: SPDXRef-Package-qtbase-system-build-tool-Linker-AppleClang-b9a83120e846 BUILD_DEPENDENCY_OF SPDXRef-Package-qtbase-b9a83120e846
+RelationshipComment: <text>SPDXRef-Package-qtbase-b9a83120e846 is built by linker 'AppleClang' version '27037.1' frontend variant: 'GNU'</text>

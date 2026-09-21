@@ -1,0 +1,10 @@
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/tools/qml/.qt/rcc/qmake_QmlRuntime_Config.qrc
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/tools/qml/.qt/rcc/qml_tool_raw_qml_0.qrc
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/tools/qml/.qt/rcc/qml_tool_raw_res_0.qrc
+/qt-project.org/imports/QmlRuntime/Config/default.qml
+/qt-project.org/imports/QmlRuntime/Config/resizeToItem.qml
+/qt-project.org/imports/QmlRuntime/Config/ResizeItemToWindow.qml
+/qt-project.org/imports/QmlRuntime/Config/ResizeWindowToItem.qml

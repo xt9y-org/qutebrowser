@@ -1,0 +1,14 @@
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtQml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/.qt/rcc/qmake_QtQml.qrc
+--module
+QtQml

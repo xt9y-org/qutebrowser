@@ -1,0 +1,133 @@
+{
+    "classes": [
+        {
+            "className": "QLocalSocket",
+            "enums": [
+                {
+                    "alias": "SocketOption",
+                    "isClass": false,
+                    "isFlag": true,
+                    "lineNumber": 50,
+                    "name": "SocketOptions",
+                    "values": [
+                        "NoOptions",
+                        "AbstractNamespaceOption"
+                    ]
+                }
+            ],
+            "lineNumber": 19,
+            "object": true,
+            "properties": [
+                {
+                    "bindable": "bindableSocketOptions",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 23,
+                    "name": "socketOptions",
+                    "override": false,
+                    "read": "socketOptions",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "SocketOptions",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setSocketOptions"
+                }
+            ],
+            "qualifiedClassName": "QLocalSocket",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 97,
+                    "name": "connected",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 98,
+                    "name": "disconnected",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "socketError",
+                            "type": "QLocalSocket::LocalSocketError"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 99,
+                    "name": "errorOccurred",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "socketState",
+                            "type": "QLocalSocket::LocalSocketState"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 100,
+                    "name": "stateChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QAbstractSocket::SocketState"
+                        }
+                    ],
+                    "index": 4,
+                    "lineNumber": 117,
+                    "name": "_q_stateChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "type": "QAbstractSocket::SocketError"
+                        }
+                    ],
+                    "index": 5,
+                    "lineNumber": 118,
+                    "name": "_q_errorOccurred",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "index": 6,
+                    "lineNumber": 119,
+                    "name": "_q_connectToSocket",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "index": 7,
+                    "lineNumber": 120,
+                    "name": "_q_abortConnectionAttempt",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QIODevice"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qlocalsocket.h",
+    "outputRevision": 69
+}

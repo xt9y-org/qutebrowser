@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 PrintSupport
+Description: Qt PrintSupport module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtPrintSupport $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtPrintSupport.framework/Headers;${libdir}/QtPrintSupport.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtPrintSupport.framework/Headers;${libdir}/QtPrintSupport.framework>, -I>> $<$<BOOL:QT_PRINTSUPPORT_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_PRINTSUPPORT_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:Qt6Core;Qt6Gui;Qt6Widgets>, >

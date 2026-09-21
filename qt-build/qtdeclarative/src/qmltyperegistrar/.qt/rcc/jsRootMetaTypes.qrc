@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/meta_types">
+    <file alias="jsroot_metatypes.json">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmltyperegistrar/jsroot_metatypes.json</file>
+  </qresource>
+</RCC>
+

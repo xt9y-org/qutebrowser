@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/qt-project.org/imports/QtCore">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtCore</file>
+
+  </qresource>
+</RCC>

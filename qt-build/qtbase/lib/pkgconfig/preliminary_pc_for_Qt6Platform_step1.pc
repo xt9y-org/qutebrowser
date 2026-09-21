@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:TRUE>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 Platform
+Description: Qt Platform module
+Version: 6.11.2
+Libs: $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: $<$<BOOL:${mkspecsdir}/macx-clang;${includedir}>:-I$<JOIN:$<REMOVE_DUPLICATES:${mkspecsdir}/macx-clang;${includedir}>, -I>> $<$<BOOL:loose_compile_defs-NOTFOUND>:-D$<JOIN:$<REMOVE_DUPLICATES:loose_compile_defs-NOTFOUND>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:>, >

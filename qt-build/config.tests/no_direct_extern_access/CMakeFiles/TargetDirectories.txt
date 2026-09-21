@@ -1,0 +1,4 @@
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/config.tests/no_direct_extern_access/CMakeFiles/no_extern_access_lib.dir
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/config.tests/no_direct_extern_access/CMakeFiles/no_extern_access_main.dir
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/config.tests/no_direct_extern_access/CMakeFiles/edit_cache.dir
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/config.tests/no_direct_extern_access/CMakeFiles/rebuild_cache.dir

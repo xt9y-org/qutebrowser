@@ -1,0 +1,76 @@
+{
+    "classes": [
+        {
+            "className": "QConcatenateTablesProxyModel",
+            "lineNumber": 16,
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceModel",
+                            "type": "QAbstractItemModel*"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 25,
+                    "name": "addSourceModel",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceModel",
+                            "type": "QAbstractItemModel*"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 26,
+                    "name": "removeSourceModel",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "sourceIndex",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 2,
+                    "isConst": true,
+                    "lineNumber": 28,
+                    "name": "mapFromSource",
+                    "returnType": "QModelIndex",
+                    "revision": 1547
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "proxyIndex",
+                            "type": "QModelIndex"
+                        }
+                    ],
+                    "index": 3,
+                    "isConst": true,
+                    "lineNumber": 29,
+                    "name": "mapToSource",
+                    "returnType": "QModelIndex",
+                    "revision": 1547
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "QConcatenateTablesProxyModel",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractItemModel"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qconcatenatetablesproxymodel.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/config.tests/x86_simd_avx512vbmi2/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

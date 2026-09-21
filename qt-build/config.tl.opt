@@ -1,0 +1,15 @@
+-release
+-prefix
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+-opensource
+-confirm-license
+-nomake
+examples
+-nomake
+tests
+-submodules
+qtwebengine
+-webengine-proprietary-codecs
+-webengine-webrtc
+--
+-DQT_NO_XCODE_MIN_VERSION_CHECK=ON

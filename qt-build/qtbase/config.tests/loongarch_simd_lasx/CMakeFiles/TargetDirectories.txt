@@ -1,0 +1,3 @@
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/config.tests/loongarch_simd_lasx/CMakeFiles/SimdTestlasx.dir
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/config.tests/loongarch_simd_lasx/CMakeFiles/edit_cache.dir
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/config.tests/loongarch_simd_lasx/CMakeFiles/rebuild_cache.dir

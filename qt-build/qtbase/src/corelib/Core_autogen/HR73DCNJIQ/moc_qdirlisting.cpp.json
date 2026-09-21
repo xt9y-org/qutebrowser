@@ -1,0 +1,38 @@
+{
+    "classes": [
+        {
+            "className": "QDirListing",
+            "enums": [
+                {
+                    "alias": "IteratorFlag",
+                    "isClass": true,
+                    "isFlag": true,
+                    "lineNumber": 31,
+                    "name": "IteratorFlags",
+                    "values": [
+                        "Default",
+                        "ExcludeFiles",
+                        "ExcludeDirs",
+                        "ExcludeSpecial",
+                        "ExcludeOther",
+                        "ResolveSymlinks",
+                        "FilesOnly",
+                        "DirsOnly",
+                        "IncludeHidden",
+                        "IncludeDotAndDotDot",
+                        "CaseSensitive",
+                        "Recursive",
+                        "FollowDirSymlinks",
+                        "IncludeBrokenSymlinks",
+                        "NoNameFiltersForDirs"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 27,
+            "qualifiedClassName": "QDirListing"
+        }
+    ],
+    "inputFile": "qdirlisting.h",
+    "outputRevision": 69
+}

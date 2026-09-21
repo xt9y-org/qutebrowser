@@ -1,0 +1,60 @@
+{
+    "classes": [
+        {
+            "className": "QHttp2ProtocolHandler",
+            "lineNumber": 50,
+            "methods": [
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 64,
+                    "name": "handleConnectionClosure",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "index": 2,
+                    "lineNumber": 73,
+                    "name": "_q_receiveReply",
+                    "returnType": "void"
+                },
+                {
+                    "access": "private",
+                    "index": 3,
+                    "lineNumber": 74,
+                    "name": "sendRequest",
+                    "returnType": "bool"
+                }
+            ],
+            "object": true,
+            "qualifiedClassName": "QHttp2ProtocolHandler",
+            "slots": [
+                {
+                    "access": "private",
+                    "arguments": [
+                        {
+                            "name": "uploadData",
+                            "type": "QObject*"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 67,
+                    "name": "_q_uploadDataDestroyed",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                },
+                {
+                    "access": "public",
+                    "name": "QAbstractProtocolHandler"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qhttp2protocolhandler_p.h",
+    "outputRevision": 69
+}

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/config.tests/armintrin_sve/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

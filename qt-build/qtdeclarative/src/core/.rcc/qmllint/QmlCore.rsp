@@ -1,0 +1,13 @@
+--bare
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtCore
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+-I
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/core/.qt/rcc/qmake_QtCore.qrc

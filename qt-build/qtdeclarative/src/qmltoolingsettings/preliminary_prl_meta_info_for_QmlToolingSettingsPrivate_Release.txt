@@ -1,0 +1,1 @@
+FINAL_PRL_FILE_PATH = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/libQt6QmlToolingSettings.prl

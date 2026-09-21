@@ -1,0 +1,6 @@
+rcc_autogen/timestamp: \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/rcc/CMakeLists.txt \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/rcc/main.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/rcc/rcc.cpp \
+	/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/tools/rcc/rcc.h \
+	/opt/homebrew/bin/cmake

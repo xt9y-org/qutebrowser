@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 Qml
+Description: Qt Qml module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtQml $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtQml.framework/Headers;${libdir}/QtQml.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtQml.framework/Headers;${libdir}/QtQml.framework>, -I>> $<$<BOOL:QT_QML_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_QML_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:Qt6Core;Qt6QmlIntegration;Qt6Network>, >

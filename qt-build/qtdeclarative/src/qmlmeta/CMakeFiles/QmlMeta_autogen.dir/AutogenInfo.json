@@ -1,0 +1,242 @@
+{
+	"BUILD_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/QmlMeta_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/CMakeLists.txt",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/modulecppexports.h.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtModuleConfig.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtModuleConfigPrivate.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessAliasTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtVersionlessAliasTargets.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/ModuleDescription.json.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtPluginConfig.cmake.in",
+		"/opt/homebrew/share/cmake/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/QtCMakePackageVersionFile.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/cmake/Qt6Core/Qt6CoreConfigureFileTemplate.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qml/Qt6QmlPluginTemplate.cpp.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qml/Qt6QmlModuleDirMappingTemplate.qrc.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/cmake/PkgConfigLibrary.pc.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qml/Qt6qmldirTemplate.cmake.in",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/qmlplugin_QtQmlPlugin_in.cpp",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/pkgconfig/preliminary_pc_for_Qt6QmlMeta_step1.pc"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt6",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/QmlMeta_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "QmlMeta_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlMeta/qtqmlmetaexports.h",
+			"Mu",
+			"S6MOWUT2NO/moc_qtqmlmetaexports.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlbind_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmlbind_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlconnections_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmlconnections_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmllocaleenums_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmllocaleenums_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlloggingcategory_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmlloggingcategory_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlmetadependencies_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmlmetadependencies_p.cpp",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmltimer_p.h",
+			"Mu",
+			"GZRP3O7STM/moc_qqmltimer_p.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/QmlMeta_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/QmlMeta_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"GL_SILENCE_DEPRECATION",
+		"QT_ASCII_CAST_WARNINGS",
+		"QT_BUILDING_QT",
+		"QT_BUILD_QMLMETA_LIB",
+		"QT_CORE_LIB",
+		"QT_DEPRECATED_WARNINGS",
+		"QT_EXPLICIT_QFILE_CONSTRUCTION_FROM_PATH",
+		"QT_LEAN_HEADERS=2",
+		"QT_MOC_COMPAT",
+		"QT_NETWORK_LIB",
+		"QT_NO_CAST_TO_ASCII",
+		"QT_NO_CONTEXTLESS_CONNECT=1",
+		"QT_NO_DEBUG",
+		"QT_NO_EXCEPTIONS",
+		"QT_NO_FOREACH",
+		"QT_NO_FOREACH=1",
+		"QT_NO_JAVA_STYLE_ITERATORS",
+		"QT_NO_NARROWING_CONVERSIONS_IN_CONNECT",
+		"QT_NO_QASCONST",
+		"QT_NO_QASCONST=1",
+		"QT_NO_QEXCHANGE",
+		"QT_NO_QPAIR=1",
+		"QT_NO_QSNPRINTF",
+		"QT_NO_QSNPRINTF=1",
+		"QT_NO_SINGLE_ARGUMENT_QHASH_OVERLOAD=1",
+		"QT_NO_STD_FORMAT_SUPPORT",
+		"QT_NO_URL_CAST_FROM_STRING=1",
+		"QT_QMLINTEGRATION_LIB",
+		"QT_QMLMODELS_LIB",
+		"QT_QMLWORKERSCRIPT_LIB",
+		"QT_QML_LIB",
+		"QT_USE_QSTRINGBUILDER",
+		"QmlMeta_EXPORTS",
+		"_LARGEFILE64_SOURCE",
+		"_LARGEFILE_SOURCE",
+		"_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlMeta",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlMeta.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlMeta/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlMeta/6.11.2/QtQmlMeta",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQml",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQml.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlIntegration",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlintegration",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlintegration",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtNetwork",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtNetwork.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qml/animations",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlModels",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlModels.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlWorkerScript",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlWorkerScript.framework/Headers",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qml",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQml/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQml/6.11.2/QtQml",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmodels",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlModels/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlModels/6.11.2/QtQmlModels",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlworkerscript",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlWorkerScript/6.11.2",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtQmlWorkerScript/6.11.2/QtQmlWorkerScript",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQml.framework",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlModels.framework",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlWorkerScript.framework",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1",
+		"/Library/Developer/CommandLineTools/usr/lib/clang/21/include",
+		"/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+		"/Library/Developer/CommandLineTools/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [ "--output-json" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++17",
+		"-w",
+		"-dM",
+		"-E",
+		"/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/QmlMeta_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/.qt/rcc/qrc_qmake_QtQml.cpp",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/qmlmeta_qmltyperegistrations.cpp",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/qtqmlmeta-config.h",
+		"/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/qtqmlmeta-config_p.h"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 8,
+	"PARSE_CACHE_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/CMakeFiles/QmlMeta_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 11,
+	"SETTINGS_FILE" : "/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/qmlmeta/CMakeFiles/QmlMeta_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlbind.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlconnections.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlloggingcategory.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmlmetadependencies.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/qmlmeta/types/qqmltimer.cpp",
+			"Mu",
+			null
+		]
+	],
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

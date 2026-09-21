@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/Qt/labs/settings">
+    <file alias="qmldir">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/Qt/labs/settings/qmldir</file>
+  </qresource>
+</RCC>
+

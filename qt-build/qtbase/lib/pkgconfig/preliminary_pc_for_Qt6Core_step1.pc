@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 Core
+Description: Qt Core module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtCore $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtCore.framework/Headers;${libdir}/QtCore.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtCore.framework/Headers;${libdir}/QtCore.framework>, -I>> $<$<BOOL:QT_CORE_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_CORE_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:Qt6Platform>, >

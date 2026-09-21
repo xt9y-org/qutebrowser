@@ -1,0 +1,4 @@
+-o
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib/kernel/moc_qobject.cpp
+kernel/qobject.h
+--output-json

@@ -1,0 +1,46 @@
+{
+    "classes": [
+        {
+            "className": "RunLoopDebugger",
+            "enums": [
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 131,
+                    "name": "Activity",
+                    "values": [
+                        "kCFRunLoopEntry",
+                        "kCFRunLoopBeforeTimers",
+                        "kCFRunLoopBeforeSources",
+                        "kCFRunLoopBeforeWaiting",
+                        "kCFRunLoopAfterWaiting",
+                        "kCFRunLoopExit"
+                    ]
+                },
+                {
+                    "isClass": false,
+                    "isFlag": false,
+                    "lineNumber": 141,
+                    "name": "Result",
+                    "values": [
+                        "kCFRunLoopRunFinished",
+                        "kCFRunLoopRunStopped",
+                        "kCFRunLoopRunTimedOut",
+                        "kCFRunLoopRunHandledSource"
+                    ]
+                }
+            ],
+            "lineNumber": 123,
+            "object": true,
+            "qualifiedClassName": "RunLoopDebugger",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qeventdispatcher_cf.mm",
+    "outputRevision": 69
+}

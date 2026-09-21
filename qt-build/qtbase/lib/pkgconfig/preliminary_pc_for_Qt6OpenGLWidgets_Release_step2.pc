@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+ 
+Name: Qt6 OpenGLWidgets
+Description: Qt OpenGLWidgets module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtOpenGLWidgets  
+Cflags: -F${libdir} -I${libdir}/QtOpenGLWidgets.framework/Headers -I${libdir}/QtOpenGLWidgets.framework -DQT_OPENGLWIDGETS_LIB
+Requires: Qt6OpenGL Qt6Widgets

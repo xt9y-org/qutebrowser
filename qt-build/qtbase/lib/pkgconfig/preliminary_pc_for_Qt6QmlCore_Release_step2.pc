@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+ 
+Name: Qt6 QmlCore
+Description: Qt QmlCore module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtQmlCore  
+Cflags: -F${libdir} -I${libdir}/QtQmlCore.framework/Headers -I${libdir}/QtQmlCore.framework -DQT_QMLCORE_LIB
+Requires: Qt6Core Qt6Qml

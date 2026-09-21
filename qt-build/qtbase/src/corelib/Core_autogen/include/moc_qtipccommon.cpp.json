@@ -1,0 +1,26 @@
+{
+    "classes": [
+        {
+            "className": "QNativeIpcKey",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 22,
+                    "name": "Type",
+                    "type": "quint16",
+                    "values": [
+                        "SystemV",
+                        "PosixRealtime",
+                        "Windows"
+                    ]
+                }
+            ],
+            "gadget": true,
+            "lineNumber": 18,
+            "qualifiedClassName": "QNativeIpcKey"
+        }
+    ],
+    "inputFile": "qtipccommon.h",
+    "outputRevision": 69
+}

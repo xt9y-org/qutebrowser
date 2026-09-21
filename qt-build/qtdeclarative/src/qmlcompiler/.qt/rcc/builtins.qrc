@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QML">
+    <file alias="qmldir">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QML/qmldir</file>
+    <file alias="plugins.qmltypes">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QML/plugins.qmltypes</file>
+    <file alias="jsroot.qmltypes">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QML/jsroot.qmltypes</file>
+  </qresource>
+</RCC>
+

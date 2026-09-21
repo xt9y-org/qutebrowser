@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QtQuick/tooling">
+    <file alias="qmldir">/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/qml/QtQuick/tooling/qmldir</file>
+  </qresource>
+</RCC>
+

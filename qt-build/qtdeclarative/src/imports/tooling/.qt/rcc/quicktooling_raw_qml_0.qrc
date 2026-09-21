@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="/qt-project.org/imports/QtQuick/tooling/">
+    <file alias="Component.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Component.qml</file>
+    <file alias="Enum.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Enum.qml</file>
+    <file alias="Member.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Member.qml</file>
+    <file alias="Method.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Method.qml</file>
+    <file alias="Module.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Module.qml</file>
+    <file alias="Parameter.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Parameter.qml</file>
+    <file alias="Property.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Property.qml</file>
+    <file alias="Signal.qml">/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtdeclarative/src/imports/tooling/Signal.qml</file>
+  </qresource>
+</RCC>
+

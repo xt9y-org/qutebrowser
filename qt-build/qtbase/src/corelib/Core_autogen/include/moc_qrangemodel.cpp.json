@@ -1,0 +1,109 @@
+{
+    "classes": [
+        {
+            "classInfos": [
+                {
+                    "name": "RegisterEnumClassesUnscoped",
+                    "value": "false"
+                }
+            ],
+            "className": "QRangeModel",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 24,
+                    "name": "AutoConnectPolicy",
+                    "values": [
+                        "None",
+                        "Full",
+                        "OnRead"
+                    ]
+                }
+            ],
+            "lineNumber": 14,
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": true,
+                    "index": 0,
+                    "lineNumber": 17,
+                    "name": "roleNames",
+                    "notify": "roleNamesChanged",
+                    "override": false,
+                    "read": "roleNames",
+                    "required": false,
+                    "reset": "resetRoleNames",
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QHash<int,QByteArray>",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setRoleNames"
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "lineNumber": 19,
+                    "name": "autoConnectPolicy",
+                    "notify": "autoConnectPolicyChanged",
+                    "override": false,
+                    "read": "autoConnectPolicy",
+                    "required": false,
+                    "revision": 1547,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "AutoConnectPolicy",
+                    "user": false,
+                    "virtual": false,
+                    "write": "setAutoConnectPolicy"
+                }
+            ],
+            "qualifiedClassName": "QRangeModel",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 117,
+                    "name": "roleNamesChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "policy",
+                            "type": "AutoConnectPolicy"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 118,
+                    "name": "autoConnectPolicyChanged",
+                    "returnType": "void",
+                    "revision": 1547
+                }
+            ],
+            "slots": [
+                {
+                    "access": "protected",
+                    "index": 2,
+                    "lineNumber": 121,
+                    "name": "resetInternalData",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAbstractItemModel"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qrangemodel.h",
+    "outputRevision": 69
+}

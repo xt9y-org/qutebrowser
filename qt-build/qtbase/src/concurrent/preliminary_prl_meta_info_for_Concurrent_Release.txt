@@ -1,0 +1,1 @@
+FINAL_PRL_FILE_PATH = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtConcurrent.framework/Versions/A/Resources/QtConcurrent.prl

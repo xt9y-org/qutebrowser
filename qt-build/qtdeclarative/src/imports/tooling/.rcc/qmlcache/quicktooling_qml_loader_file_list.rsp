@@ -1,0 +1,12 @@
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/imports/tooling/.qt/rcc/qmake_QtQuick_tooling.qrc
+--resource
+/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtdeclarative/src/imports/tooling/.qt/rcc/quicktooling_raw_qml_0.qrc
+/qt-project.org/imports/QtQuick/tooling/Component.qml
+/qt-project.org/imports/QtQuick/tooling/Enum.qml
+/qt-project.org/imports/QtQuick/tooling/Member.qml
+/qt-project.org/imports/QtQuick/tooling/Method.qml
+/qt-project.org/imports/QtQuick/tooling/Module.qml
+/qt-project.org/imports/QtQuick/tooling/Parameter.qml
+/qt-project.org/imports/QtQuick/tooling/Property.qml
+/qt-project.org/imports/QtQuick/tooling/Signal.qml

@@ -1,0 +1,84 @@
+{
+    "classes": [
+        {
+            "className": "QNetworkInformationBackend",
+            "lineNumber": 28,
+            "object": true,
+            "qualifiedClassName": "QNetworkInformationBackend",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "reachability",
+                            "type": "QNetworkInformation::Reachability"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 78,
+                    "name": "reachabilityChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "behindPortal",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 79,
+                    "name": "behindCaptivePortalChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "medium",
+                            "type": "QNetworkInformation::TransportMedium"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 80,
+                    "name": "transportMediumChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "isMetered",
+                            "type": "bool"
+                        }
+                    ],
+                    "index": 3,
+                    "lineNumber": 81,
+                    "name": "isMeteredChanged",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        },
+        {
+            "className": "QNetworkInformationBackendFactory",
+            "lineNumber": 136,
+            "object": true,
+            "qualifiedClassName": "QNetworkInformationBackendFactory",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qnetworkinformation_p.h",
+    "outputRevision": 69
+}

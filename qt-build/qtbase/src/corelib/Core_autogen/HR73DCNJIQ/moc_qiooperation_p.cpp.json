@@ -1,0 +1,72 @@
+{
+    "classes": [
+        {
+            "className": "QIOOperation",
+            "enums": [
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 32,
+                    "name": "Error",
+                    "values": [
+                        "None",
+                        "FileNotOpen",
+                        "IncorrectOffset",
+                        "Read",
+                        "Write",
+                        "Flush",
+                        "Open",
+                        "Aborted"
+                    ]
+                },
+                {
+                    "isClass": true,
+                    "isFlag": false,
+                    "lineNumber": 45,
+                    "name": "Type",
+                    "type": "quint8",
+                    "values": [
+                        "Unknown",
+                        "Read",
+                        "Write",
+                        "Flush",
+                        "Open"
+                    ]
+                }
+            ],
+            "lineNumber": 27,
+            "object": true,
+            "qualifiedClassName": "QIOOperation",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 62,
+                    "name": "finished",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "err",
+                            "type": "Error"
+                        }
+                    ],
+                    "index": 1,
+                    "lineNumber": 63,
+                    "name": "errorOccurred",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qiooperation_p.h",
+    "outputRevision": 69
+}

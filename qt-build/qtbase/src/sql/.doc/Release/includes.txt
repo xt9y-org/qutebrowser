@@ -1,0 +1,16 @@
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/sql/Sql_autogen/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtSql
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtSql.framework/Headers
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/src/sql
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/sql
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtSql/6.11.2
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtSql/6.11.2/QtSql
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/Headers
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt6/qtbase/mkspecs/macx-clang
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/src/corelib
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2
+-I/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/include/QtCore/6.11.2/QtCore

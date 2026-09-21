@@ -8,6 +8,7 @@ import os
 import sys
 import argparse
 import pathlib
+import shlex
 from typing import Any, TypeAlias
 from collections.abc import Iterator, Sequence, Callable
 
@@ -300,6 +301,15 @@ _WEBENGINE_SETTINGS: dict[str, dict[Any, _SettingValueType | None]] = {
         # might be overridden in webenginesettings.py
         False: '--disable-reading-from-canvas',
     },
+    'content.webgpu': {
+        'auto': None,
+        # Chromium's WebGPU path is guarded behind these switches in some
+        # QtWebEngine builds. This enables the browser-side WebGPU pipeline;
+        # the final adapter availability still depends on QtWebEngine's Dawn
+        # backend.
+        'always': '--enable-unsafe-webgpu --ignore-gpu-blocklist',
+        'never': '--disable-webgpu',
+    },
     'content.webrtc_ip_handling_policy': {
         'all-interfaces': None,
         'default-public-and-private-interfaces':
@@ -375,7 +385,7 @@ def _qtwebengine_settings_args(versions: version.WebEngineVersions) -> Iterator[
                 ), f"qt.settings feature detection returned an invalid type: {type(result)} for {setting}"
                 yield result
         elif arg is not None:
-            yield arg
+            yield from shlex.split(arg)
 
 
 def _warn_qtwe_flags_envvar() -> None:

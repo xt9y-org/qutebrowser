@@ -1,0 +1,62 @@
+{
+    "classes": [
+        {
+            "className": "QSequentialAnimationGroup",
+            "lineNumber": 17,
+            "object": true,
+            "properties": [
+                {
+                    "bindable": "bindableCurrentAnimation",
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "lineNumber": 20,
+                    "name": "currentAnimation",
+                    "notify": "currentAnimationChanged",
+                    "override": false,
+                    "read": "currentAnimation",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QAbstractAnimation*",
+                    "user": false,
+                    "virtual": false
+                }
+            ],
+            "qualifiedClassName": "QSequentialAnimationGroup",
+            "signals": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "current",
+                            "type": "QAbstractAnimation*"
+                        }
+                    ],
+                    "index": 0,
+                    "lineNumber": 35,
+                    "name": "currentAnimationChanged",
+                    "returnType": "void"
+                }
+            ],
+            "slots": [
+                {
+                    "access": "private",
+                    "index": 1,
+                    "lineNumber": 48,
+                    "name": "_q_uncontrolledAnimationFinished",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QAnimationGroup"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qsequentialanimationgroup.h",
+    "outputRevision": 69
+}

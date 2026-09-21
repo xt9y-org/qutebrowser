@@ -1,0 +1,7 @@
+RCC_OBJECTS = 
+QMAKE_PRL_TARGET = QtQmlModels
+QMAKE_PRL_TARGET_PATH_FOR_CMAKE = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQmlModels.framework/QtQmlModels
+QMAKE_PRL_CONFIG = shared lib_bundle
+QMAKE_PRL_VERSION = 6.11.2
+QMAKE_PRL_LIBS_FOR_CMAKE = /Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtQml.framework/QtQml;/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtNetwork.framework/QtNetwork;/Users/felixjaschul/CLionProjects/qutebrowser/qt-build/qtbase/lib/QtCore.framework/QtCore;-framework IOKit;-framework DiskArbitration;-framework UniformTypeIdentifiers
+

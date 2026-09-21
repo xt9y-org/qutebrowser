@@ -1,0 +1,14 @@
+prefix=/Users/felixjaschul/CLionProjects/qutebrowser/qt-webgpu
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+$<$<BOOL:>:mkspecsdir=${prefix}/mkspecs>
+$<1: >
+Name: Qt6 LabsQmlModels
+Description: Qt LabsQmlModels module
+Version: 6.11.2
+Libs: -F${libdir} -framework QtLabsQmlModels $<$<BOOL:loose_link_options-NOTFOUND>:$<JOIN:$<REMOVE_DUPLICATES:loose_link_options-NOTFOUND>, >> $<JOIN:$<REMOVE_DUPLICATES:>, >
+Cflags: -F${libdir} $<$<BOOL:${libdir}/QtLabsQmlModels.framework/Headers;${libdir}/QtLabsQmlModels.framework>:-I$<JOIN:$<REMOVE_DUPLICATES:${libdir}/QtLabsQmlModels.framework/Headers;${libdir}/QtLabsQmlModels.framework>, -I>> $<$<BOOL:QT_LABSQMLMODELS_LIB>:-D$<JOIN:$<REMOVE_DUPLICATES:QT_LABSQMLMODELS_LIB>, -D>>
+Requires: $<JOIN:$<REMOVE_DUPLICATES:>, >

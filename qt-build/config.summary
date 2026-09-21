@@ -1,0 +1,299 @@
+
+Building for: macx-clang (arm64, CPU features: cx16 neon crc32 crypto)
+Compiler: clang (Apple) 21.0.0.21000334
+Build options:
+  Mode ................................... release
+  Optimize release build for size ........ no
+  Fully optimize release builds (-O3) .... no
+  Building shared libraries (alias of  BUILD_SHARED_LIBS)  yes
+  Using ccache ........................... no
+  Unity Build ............................ no
+  Relocatable ............................ yes
+  Using Link Time Optimization (LTCG) .... no
+  Using Intel Control-flow Enforcement Technology (CET)  no
+  Using Glibc function fortification level 3, if it's supported, otherwise level 2  no
+  Using -ftrivial-auto-var-init=pattern .. yes
+  Using -fstack-protector-strong ......... yes
+  Using -fstack-clash-protection ......... no
+  Using libstdc++ assertions ............. no
+  Using libc++ hardening ................. yes
+  Using -z relro -z now when linking ..... no
+  Target compiler supports:
+    ARM Extensions ....................... NEON CRC32 AES SVE
+  Sanitizers:
+    Addresses ............................ no
+    Threads .............................. no
+    Memory ............................... no
+    Fuzzer (instrumentation only) ........ no
+    Undefined ............................ no
+  Build parts ............................ libs tools
+  Install examples sources ............... no
+  App store compliance ................... no
+Qt modules and options:
+  Qt Concurrent .......................... yes
+  Qt D-Bus ............................... yes
+  Qt D-Bus directly linked to libdbus .... no
+  Qt Gui ................................. yes
+  Qt Network ............................. yes
+  Qt PrintSupport ........................ yes
+  Qt Sql ................................. yes
+  Qt Testlib ............................. yes
+  Qt Widgets ............................. yes
+  Qt Xml ................................. yes
+Support enabled for:
+  Using pkg-config ....................... no
+  Using vcpkg ............................ no
+  udev ................................... no
+  liburing ............................... no
+  OpenSSL ................................ no
+    Qt directly linked to OpenSSL ........ no
+  OpenSSL 1.1 ............................ no
+  OpenSSL 3.0 ............................ no
+  Using system zlib ...................... yes
+  Zstandard support ...................... no
+  Thread support ......................... yes
+  Using 16KB page sizes in Android ....... no
+Common build options:
+  Linker can resolve circular dependencies  yes
+Qt Core:
+  backtrace .............................. yes
+  C++23 <stacktrace> ..................... no
+  DoubleConversion ....................... yes
+    Using system DoubleConversion ........ no
+  GLib ................................... no
+  ICU .................................... no
+  JeMalloc ............................... no
+  liburing ............................... no
+  Windows I/O Ring ....................... no
+  Windows I/O Ring IORING_CREATE_SKIP_BUILDER_PARAM_CHECKS  no
+  std::chrono::tzdb QTZ backend .......... no
+  Using system libb2 ..................... no
+  Built-in copy of the MIME database ..... yes
+  Application permissions ................ yes
+  Defaulting legacy IPC to POSIX ......... no
+  Tracing backend ........................ <none>
+  OpenSSL based cryptographic hash ....... no
+  Logging backends:
+    journald ............................. no
+    syslog ............................... no
+    slog2 ................................ no
+  PCRE2 .................................. yes
+    Using system PCRE2 ................... no
+Qt Sql:
+  SQL item models ........................ yes
+Qt Network:
+  getifaddrs() ........................... yes
+  IPv6 ifname ............................ yes
+  libproxy ............................... no
+  SecureTransport ........................ yes
+  DTLS ................................... no
+  OCSP-stapling .......................... no
+  SCTP ................................... no
+  Use system proxies ..................... yes
+  GSSAPI ................................. yes
+  Brotli Decompression Support ........... no
+  qIsEffectiveTLD() ...................... yes
+    Built-in publicsuffix database ....... yes
+    System publicsuffix database ......... no
+Core tools:
+  Android deployment tool ................ yes
+  macOS deployment tool .................. yes
+  Windows deployment tool ................ no
+  qmake .................................. yes
+Wayland tools:
+  qtwaylandscanner ....................... no
+Qt Gui:
+  Accessibility .......................... yes
+  Emoji Segmenter ........................ yes
+  FreeType ............................... yes
+    Using system FreeType ................ no
+  HarfBuzz ............................... yes
+    Using system HarfBuzz ................ no
+  Fontconfig ............................. no
+  Image formats:
+    GIF .................................. yes
+    ICO .................................. yes
+    JPEG ................................. yes
+      Using system libjpeg ............... no
+    PNG .................................. yes
+      Using system libpng ................ no
+  Text formats:
+    HtmlParser ........................... yes
+    CssParser ............................ yes
+    OdfWriter ............................ yes
+    MarkdownReader ....................... yes
+      Using system libmd4c ............... no
+    MarkdownWriter ....................... yes
+  EGL .................................... no
+  OpenVG ................................. no
+  OpenGL:
+    Desktop OpenGL ....................... yes
+    OpenGL ES 2.0 ........................ no
+    OpenGL ES 3.0 ........................ no
+    OpenGL ES 3.1 ........................ no
+    OpenGL ES 3.2 ........................ no
+  Vulkan ................................. no
+  Metal .................................. yes
+  QGraphicsFrameCapture .................. yes
+  Session Management ..................... yes
+  Multi-threaded image and painting helpers  yes
+Features used by QPA backends:
+  evdev .................................. no
+  libinput ............................... no
+  HiRes wheel support in libinput ........ no
+  INTEGRITY HID .......................... no
+  mtdev .................................. no
+  tslib .................................. no
+  xkbcommon .............................. no
+  vxworksevdev ........................... no
+  X11 specific:
+    XLib ................................. no
+    XCB Xlib ............................. no
+    EGL on X11 ........................... no
+    xkbcommon-x11 ........................ no
+    xcb-sm ............................... no
+QPA backends:
+  DirectFB ............................... no
+  EGLFS .................................. no
+  EGLFS details:
+    EGLFS OpenWFD ........................ no
+    EGLFS i.Mx6 .......................... no
+    EGLFS i.Mx6 Wayland .................. no
+    EGLFS RCAR ........................... no
+    EGLFS EGLDevice ...................... no
+    EGLFS GBM ............................ no
+    EGLFS VSP2 ........................... no
+    EGLFS Mali ........................... no
+    EGLFS Raspberry Pi ................... no
+    EGLFS X11 ............................ no
+  LinuxFB ................................ no
+  VNC .................................... no
+  VK_KHR_display ......................... no
+  QNX:
+    lgmon ................................ no
+    IMF .................................. no
+  XCB:
+    Using system-provided xcb-xinput ..... no
+    GL integrations:
+      GLX Plugin ......................... no
+        XCB GLX .......................... no
+      EGL-X11 Plugin ..................... no
+  Windows:
+    Direct 2D ............................ no
+    Direct 2D 1.1 ........................ no
+    DirectWrite .......................... no
+    DirectWrite 3 ........................ no
+    DirectWrite COLRv1 Support ........... no
+  Wayland:
+    Client ............................... no
+    Hardware Integrations:
+      EGL ................................ no
+      Raspberry Pi ....................... no
+      DRM EGL ............................ no
+      libhybris EGL ...................... no
+      Linux dma-buf server buffer ........ no
+      Shm emulation server buffer ........ no
+      Vulkan-based server buffer ......... no
+    Shell Integrations:
+      xdg-shell .......................... no
+      wl-shell (deprecated) .............. no
+Qt Widgets:
+  GTK+ ................................... no
+  Styles ................................. Fusion macOS Windows
+Qt Testlib:
+  Tester for item models ................. yes
+  Batch tests ............................ no
+Qt PrintSupport:
+  CUPS ................................... yes
+Qt Sql Drivers:
+  DB2 (IBM) .............................. no
+  InterBase .............................. no
+  MySql .................................. no
+  OCI (Oracle) ........................... no
+  ODBC ................................... no
+  PostgreSQL ............................. no
+  SQLite ................................. yes
+    Using system provided SQLite ......... no
+  Mimer .................................. no
+Qt QML:
+  QML network support .................... yes
+  QML debugging and profiling support .... yes
+  Qt Labs ................................ yes
+  QML just-in-time compiler .............. no
+  QML XML http request ................... yes
+  QML Locale ............................. yes
+  QML SSL support ........................ yes
+Qt QML Models:
+  QML list model ......................... yes
+  QML delegate model ..................... yes
+  QML sortfilterproxy model .............. yes
+Qt Quick:
+  Qt Quick support ....................... no
+  WebEngine Repository Build Options:
+    Build Gn ............................. yes
+    Jumbo Build .......................... yes
+    Developer build ...................... no
+    Build with rust ...................... no
+    Use precompiled headers for 3rdparty . yes
+    Build QtWebEngine Modules:
+      Build QtWebEngineCore .............. no
+      Build QtWebEngineWidgets ........... no
+      Build QtWebEngineQuick ............. no
+    Build QtPdf Modules:
+      Build QtPdfWidgets ................. no
+      Build QtPdfQuick ................... no
+    Optional system libraries:
+      re2 ................................ no
+      icu ................................ no
+      libwebp, libwebpmux and libwebpdemux  no
+      opus ............................... no
+      ffmpeg ............................. no
+      libvpx ............................. no
+      snappy ............................. no
+      glib ............................... no
+      zlib ............................... no
+      minizip ............................ no
+      libxml2 and libxslt ................ no
+      lcms2 .............................. no
+      png ................................ no
+      tiff ............................... no
+      jpeg ............................... no
+      libopenjpeg2 ....................... no
+      harfbuzz ........................... no
+      freetype ........................... no
+      libpci ............................. no
+      libudev ............................ no
+      openh264 ........................... no
+  SBOM:
+    Generate SBOM ........................ yes
+    Generate SPDX v2.3 ................... yes
+    Generate SPDX v2.3 JSON .............. yes (skipped if dependencies are missing)
+    Verify   SPDX v2.3 JSON .............. yes (skipped if dependencies are missing)
+    Generate CycloneDX v1.6 .............. no (skipped if dependencies are missing)
+    Verify   CycloneDX v1.6 .............. yes (skipped if dependencies are missing)
+    SBOM Python interpreter .............. Not found
+    Generate source SPDX SBOM ............ no
+Note: Qt Quick modules not built due to not finding the qtshadertools 'qsb' tool.
+WARNING: Qt WebEngine And Qt Pdf SBOM generation will be skipped due to missing dependencies. QT_INTERNAL_SBOM_PYTHON_EXECUTABLE is missing a valid path to a python interpreter
+Required Python dependencies NOT found:  spdx_tools.spdx.clitools.pyspdxtools
+
+WARNING: QtPdf won't be built. The following configure errors were found:
+ * Missing required Qt::Quick.
+WARNING: QtWebEngine has warnings. The following configure warnings were found:
+ * No openh264 library with version 2.4.1 or later. Using built-in one
+ * No libavformat library with version 60.16.100 or later. Using built-in one
+ * No libavcodec library with version 60.31.102 or later. Using built-in one
+ * No libavutil library with version 58.29.100 or later. Using built-in one
+ * No vpx library with version 1.10.0 or later. Using built-in one
+ * No opus library with version 1.3.1 or later. Using built-in one
+ * No icu library with version 70 or later. Using built-in one
+ * No re2 library with version 11.0.0 or later. Using built-in one
+ * No libtiff library with version 4.5.0 or later. Using built-in one
+ * No libpng library with version 1.6.0 or later. Using built-in one
+ * No libudev library with version  or later. Using built-in one
+ * No harfbuzz library with version 4.3.0 or later. Using built-in one
+ * No glib library with version 2.32.0 or later. Using built-in one
+WARNING: QtWebEngine won't be built. The following configure errors were found:
+ * Build requires Metal Toolchain to be installed via 'xcodebuild -downloadComponent MetalToolchain'
+ * Python3 html5lib is missing (/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14).
+ * Missing required Qt::Quick.

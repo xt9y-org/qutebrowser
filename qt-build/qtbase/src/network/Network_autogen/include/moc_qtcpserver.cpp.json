@@ -1,0 +1,47 @@
+{
+    "classes": [
+        {
+            "className": "QTcpServer",
+            "lineNumber": 22,
+            "object": true,
+            "qualifiedClassName": "QTcpServer",
+            "signals": [
+                {
+                    "access": "public",
+                    "index": 0,
+                    "lineNumber": 69,
+                    "name": "newConnection",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "index": 1,
+                    "lineNumber": 70,
+                    "name": "pendingConnectionAvailable",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "socketError",
+                            "type": "QAbstractSocket::SocketError"
+                        }
+                    ],
+                    "index": 2,
+                    "lineNumber": 71,
+                    "name": "acceptError",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "qtcpserver.h",
+    "outputRevision": 69
+}
